@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  sessions  Session[]
+  createdAt DateTime  @default(now())
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  adminId   String
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Site {
+  id              String @id @default("site")
+  nameEn          String
+  nameFa          String
+  roleEn          String
+  roleFa          String
+  introEn         String
+  introFa         String
+  locationEn      String
+  locationFa      String
+  email           String
+  portraitUrl     String
+  resumeUrl       String
+  availabilityEn  String
+  availabilityFa  String
+  metaEn           String
+  metaFa           String
+  issue            String @default("Nº 04")
+  contactTitleEn   String @default("Let's build something.")
+  contactTitleFa   String @default("چیزی بسازیم.")
+  contactBodyEn    String @default("Have a product, a publication, or a problem that needs a precise interface. Write. I read everything.")
+  contactBodyFa    String @default("محصول، نشریه، یا مسئله‌ای دارید که به یک رابط دقیق نیاز دارد. بنویسید. همه‌چیز را می‌خوانم.")
+}
+
+model About {
+  id        String @id @default("about")
+  headingEn String
+  headingFa String
+  bodyEn    String
+  bodyFa    String
+}
+
+model FocusArea {
+  id      String @id @default(cuid())
+  index   Int
+  titleEn String
+  titleFa String
+  bodyEn  String
+  bodyFa  String
+}
+
+model Skill {
+  id       String @id @default(cuid())
+  index    Int
+  name     String
+  category String
+}
+
+model Project {
+  id            String  @id @default(cuid())
+  index         Int
+  slug          String  @unique
+  titleEn       String
+  titleFa       String
+  descriptionEn String
+  descriptionFa String
+  year          String
+  imageUrl      String
+  demoUrl       String?
+  githubUrl     String?
+  layout        String  @default("image-start")
+  techs         String
+  featured      Boolean @default(true)
+}
+
+model Experience {
+  id         String @id @default(cuid())
+  index      Int
+  yearStart  String
+  yearEnd    String
+  titleEn    String
+  titleFa    String
+  orgEn      String
+  orgFa      String
+  locationEn String
+  locationFa String
+  bodyEn     String
+  bodyFa     String
+}
+
+model Education {
+  id         String @id @default(cuid())
+  index      Int
+  yearStart  String
+  yearEnd    String
+  titleEn    String
+  titleFa    String
+  orgEn      String
+  orgFa      String
+  locationEn String
+  locationFa String
+  bodyEn     String
+  bodyFa     String
+}
+
+model Social {
+  id     String @id @default(cuid())
+  index  Int
+  name   String
+  handle String
+  url    String
+}

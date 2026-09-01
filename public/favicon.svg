@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#111110"/>
+  <rect x="2" y="2" width="60" height="60" fill="none" stroke="#E8E4DA" stroke-width="2"/>
+  <text x="8" y="46" fill="#E8E4DA" font-family="Georgia, serif" font-size="28" font-weight="700">KR</text>
+  <rect x="50" y="50" width="8" height="8" fill="#E22B12"/>
+</svg>
