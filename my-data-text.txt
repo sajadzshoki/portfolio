@@ -1,0 +1,79 @@
+# SAJAD SHOKRAEI
+
+**Frontend Developer | Vue.js, Nuxt & TypeScript**
+
+Tehran, Iran | +98 910 906 9118 | [Sajadzshoki80@gmail.com](mailto:Sajadzshoki80@gmail.com)
+GitHub: sajadshoki | LinkedIn: sajadshokraei
+
+---
+
+## SUMMARY
+
+Frontend Developer with nearly 2 years of professional experience building modern web applications with Vue.js, Nuxt, TypeScript, and modern frontend technologies. Contributed to approximately 20 real-world projects across different domains, with strong experience in frontend architecture, reusable component design, responsive UI development, API integration, and database modeling.
+
+Experienced in taking frontend projects from architecture and technical planning through implementation, debugging, optimization, and production delivery. Strong ability to work with AI-assisted development workflows while maintaining ownership of architecture, technical decisions, code quality, and implementation.
+
+---
+
+## EXPERIENCE
+
+### Frontend Developer — VistaApp
+
+**November 2024 – Present | Tehran, Iran**
+
+* Developed and contributed to approximately 20 production web applications using **Vue.js, Nuxt, TypeScript, and modern frontend technologies**.
+* Designed scalable frontend architectures, reusable components, and structured UI systems for complex applications.
+* Built responsive, mobile-first, and RTL interfaces based on Figma designs and product requirements.
+* Implemented complex data-driven features including search, filtering, pagination, API integration, and optimized data fetching.
+* Designed and managed relational database structures using **Prisma ORM** and collaborated across frontend and backend architecture.
+* Implemented real-time application features using **WebSockets**.
+* Worked with authentication flows including password-based authentication, OTP, JWT, and refresh tokens.
+* Improved application performance through optimized data loading, pagination, and caching strategies, including **Redis caching** for AI-related data.
+* Used AI-assisted development extensively for rapid implementation while independently defining architecture, feature requirements, component structure, and technical decisions.
+* Debugged production issues through systematic logging, request tracing, and isolating problematic application flows.
+
+---
+
+## SELECTED PROJECT
+
+### Dayan — Financial Management Platform
+
+* Developed a modern financial management application using **Nuxt, Vue.js, TypeScript, Prisma, and UnoCSS**.
+* Designed reusable components and a consistent frontend architecture for complex financial workflows.
+* Implemented data-driven dashboards, API integrations, and structured financial entities.
+* Designed relational database models and application data structures using Prisma.
+* Built responsive and RTL interfaces optimized for desktop and mobile experiences.
+* Contributed to the overall architecture and feature planning while using AI-assisted development for implementation and iteration.
+
+---
+
+## TECHNICAL SKILLS
+
+**Frontend:** Vue.js, Nuxt, TypeScript, JavaScript, HTML5, CSS3, Responsive Design, RTL, Mobile-First Development
+
+**UI & Styling:** UnoCSS, Tailwind CSS, Nuxt UI, Design Systems, Figma-to-Code, Component Architecture
+
+**Data & Backend:** Prisma ORM, REST APIs, Database Modeling, WebSockets, Redis, Authentication Flows, JWT, OTP
+
+**Mobile:** Capacitor, Android
+
+**Tools:** Git, GitLab, Cursor, AI-Assisted Development
+
+**Additional:** React, AdonisJS, Docker
+
+---
+
+## EDUCATION
+
+### Bachelor of Computer Engineering
+
+**Islamic Azad University, Tehran South Branch**
+2020 – 2026
+
+---
+
+## LANGUAGES
+
+**Persian:** Native
+**English:** Fluent
+**German:** Familiar

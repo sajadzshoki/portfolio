@@ -20,16 +20,16 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'Kian Rahimi — Frontend Developer',
-      meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Frontend developer. Interfaces with editorial discipline — type, grid, motion, code. Amsterdam.' },
-        { name: 'theme-color', content: '#E8E4DA' },
-        { name: 'color-scheme', content: 'light dark' },
-        { property: 'og:title', content: 'Kian Rahimi — Frontend Developer' },
-        { property: 'og:description', content: 'Editorial interfaces. Swiss grid. Brutal honesty.' },
-        { property: 'og:type', content: 'website' }
-      ],
+      title: 'SAJAD SHOKRAEI — Frontend Developer',
+        meta: [
+          { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+          { name: 'description', content: 'Frontend Developer | Vue.js, Nuxt & TypeScript — Tehran, Iran.' },
+          { name: 'theme-color', content: '#E8E4DA' },
+          { name: 'color-scheme', content: 'light dark' },
+          { property: 'og:title', content: 'SAJAD SHOKRAEI — Frontend Developer' },
+          { property: 'og:description', content: 'Frontend Developer building modern web applications with Vue, Nuxt and TypeScript.' },
+          { property: 'og:type', content: 'website' }
+        ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },

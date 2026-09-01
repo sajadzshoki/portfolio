@@ -24,35 +24,35 @@ async function main() {
 
   await prisma.site.create({
     data: {
-      nameEn: 'Kian Rahimi',
-      nameFa: 'کیان رحیمی',
-      roleEn: 'Frontend Developer',
-      roleFa: 'توسعه‌دهنده فرانت‌اند',
-      introEn: 'I build interfaces with the discipline of a typesetter and the nerve of a material. Grid, type, motion, code — nothing extra.',
-      introFa: 'رابط می‌سازم با انضباط یک حروف‌چین و جسارت یک ماده. گرید، حروف، حرکت، کد — هیچ چیز اضافه.',
-      locationEn: 'Amsterdam',
-      locationFa: 'آمستردام',
-      email: 'hello@kianrahimi.dev',
+      nameEn: 'SAJAD SHOKRAEI',
+      nameFa: 'سجاد شکرایی',
+      roleEn: 'Frontend Developer | Vue.js, Nuxt & TypeScript',
+      roleFa: 'توسعه‌دهنده فرانت‌اند | Vue.js, Nuxt و TypeScript',
+      introEn: 'Frontend Developer with nearly 2 years of professional experience building modern web applications with Vue.js, Nuxt and TypeScript.',
+      introFa: 'توسعه‌دهنده فرانت‌اند با نزدیک به ۲ سال تجربه حرفه‌ای در ساخت برنامه‌های وب مدرن با Vue.js، Nuxt و TypeScript.',
+      locationEn: 'Tehran, Iran',
+      locationFa: 'تهران، ایران',
+      email: 'Sajadzshoki80@gmail.com',
       portraitUrl: '/images/portrait.jpg',
       resumeUrl: '/resume',
-      availabilityEn: 'Q3–Q4 2026',
-      availabilityFa: 'سه‌ماهه ۳ و ۴ ۲۰۲۶',
-      metaEn: 'NUXT · VUE · TS',
-      metaFa: 'NUXT · VUE · TS',
-      issue: 'Nº 04',
-      contactTitleEn: "Let's build something.",
-      contactTitleFa: 'چیزی بسازیم.',
-      contactBodyEn: 'Have a product, a publication, or a problem that needs a precise interface. Write. I read everything.',
-      contactBodyFa: 'محصول، نشریه، یا مسئله‌ای دارید که به یک رابط دقیق نیاز دارد. بنویسید. همه‌چیز را می‌خوانم.'
+      availabilityEn: 'Available',
+      availabilityFa: 'در دسترس',
+      metaEn: 'Vue · Nuxt · TypeScript · Prisma',
+      metaFa: 'Vue · Nuxt · TypeScript · Prisma',
+      issue: 'Nº 01',
+      contactTitleEn: "Let's collaborate.",
+      contactTitleFa: 'همکاری کنیم.',
+      contactBodyEn: 'Email me to discuss opportunities, freelance work, or collaborations.',
+      contactBodyFa: 'برای فرصت‌ها، پروژه‌های فریلنس یا همکاری‌ها ایمیل بفرستید.'
     }
   })
 
   await prisma.about.create({
     data: {
-      headingEn: 'Editorial software. Brutal honesty.',
-      headingFa: 'نرم‌افزار سرمقاله‌ای. صداقت بی‌تعارف.',
-      bodyEn: 'I work where product, publication and interface meet. Long-form systems. Tight components. Motion that explains hierarchy instead of decorating it.',
-      bodyFa: 'جایی کار می‌کنم که محصول، نشر و رابط به هم می‌رسند. سیستم‌های بلندمدت. قطعات دقیق. حرکتی که سلسله‌مراتب را توضیح می‌دهد، نه تزئین.'
+      headingEn: 'Frontend Developer focused on scalable, maintainable interfaces',
+      headingFa: 'توسعه‌دهنده فرانت‌اند، متمرکز بر رابط‌های مقیاس‌پذیر و قابل نگهداری',
+      bodyEn: 'Experienced in frontend architecture, reusable component design, responsive UI development, API integration, and database modeling. I take projects from planning to production while maintaining code quality and performance.',
+      bodyFa: 'تجربه در معماری فرانت‌اند، طراحی کامپوننت‌های قابل استفاده مجدد، توسعه رابط پاسخگو، یکپارچه‌سازی API و مدل‌سازی دیتابیس. پروژه‌ها را از برنامه‌ریزی تا تولید هدایت می‌کنم.'
     }
   })
 
@@ -69,17 +69,23 @@ async function main() {
   await prisma.skill.createMany({
     data: [
       { index: 0, name: 'Nuxt', category: 'Framework' },
-      { index: 1, name: 'Vue', category: 'UI Runtime' },
-      { index: 2, name: 'Nuxt UI', category: 'System' },
-      { index: 3, name: 'Tailwind CSS', category: 'Styling' },
-      { index: 4, name: 'TypeScript', category: 'Language' },
-      { index: 5, name: 'JavaScript', category: 'Language' },
-      { index: 6, name: 'Prisma', category: 'Data' },
-      { index: 7, name: 'MongoDB', category: 'Data' },
-      { index: 8, name: 'AdonisJS', category: 'Backend' },
-      { index: 9, name: 'Node.js', category: 'Runtime' },
+      { index: 1, name: 'Vue', category: 'UI' },
+      { index: 2, name: 'TypeScript', category: 'Language' },
+      { index: 3, name: 'JavaScript', category: 'Language' },
+      { index: 4, name: 'HTML5', category: 'Markup' },
+      { index: 5, name: 'CSS3', category: 'Styling' },
+      { index: 6, name: 'UnoCSS', category: 'Styling' },
+      { index: 7, name: 'Tailwind CSS', category: 'Styling' },
+      { index: 8, name: 'Prisma', category: 'Data' },
+      { index: 9, name: 'REST APIs', category: 'Data' },
       { index: 10, name: 'WebSockets', category: 'Realtime' },
-      { index: 11, name: 'Capacitor', category: 'Native' }
+      { index: 11, name: 'Redis', category: 'Data' },
+      { index: 12, name: 'JWT', category: 'Auth' },
+      { index: 13, name: 'OTP', category: 'Auth' },
+      { index: 14, name: 'Capacitor', category: 'Mobile' },
+      { index: 15, name: 'Docker', category: 'DevOps' },
+      { index: 16, name: 'React', category: 'UI' },
+      { index: 17, name: 'AdonisJS', category: 'Backend' }
     ]
   })
 
@@ -87,63 +93,18 @@ async function main() {
     data: [
       {
         index: 0,
-        slug: 'norma',
-        titleEn: 'Norma',
-        titleFa: 'نورما',
-        descriptionEn: 'An editorial CMS for independent magazines. Issue structure, typographic presets, and a print-aware preview — built like a composing room, not a dashboard.',
-        descriptionFa: 'یک سیستم مدیریت محتوای سرمقاله‌ای برای مجلات مستقل. ساختار شماره، پیش‌تنظیم‌های حروف، و پیش‌نمایش آگاه از چاپ — مثل اتاق حروف‌چینی، نه داشبورد.',
-        year: '2026',
-        imageUrl: '/images/projects/norma.jpg',
-        demoUrl: 'https://norma.example',
-        githubUrl: 'https://github.com/kianrahimi/norma',
+        slug: 'dayan',
+        titleEn: 'Dayan',
+        titleFa: 'Dayan',
+        descriptionEn: 'Financial management platform built with Nuxt, Vue and Prisma. Reusable components, responsive RTL interfaces, and structured financial entities.',
+        descriptionFa: 'پلتفرم مدیریت مالی ساخته‌شده با Nuxt، Vue و Prisma. کامپوننت‌های قابل استفاده مجدد، رابط‌های پاسخگو و ساختار داده مالی.',
+        year: '2024',
+        imageUrl: '/images/projects/dayan.jpg',
+        demoUrl: null,
+        githubUrl: null,
         layout: 'image-start',
         featured: true,
-        techs: JSON.stringify(['Nuxt', 'Prisma', 'Tailwind CSS', 'TypeScript'])
-      },
-      {
-        index: 1,
-        slug: 'pulse',
-        titleEn: 'Pulse',
-        titleFa: 'پالس',
-        descriptionEn: 'A real-time operations board. Monospace telemetry, hard rules, no chrome. Built for rooms that cannot afford decoration.',
-        descriptionFa: 'تابلوی عملیات بلادرنگ. تله‌متری مونواسپیس، خطوط سخت، بدون تزئین. برای اتاق‌هایی که تحمل دکوراسیون ندارند.',
-        year: '2025',
-        imageUrl: '/images/projects/pulse.jpg',
-        demoUrl: 'https://pulse.example',
-        githubUrl: 'https://github.com/kianrahimi/pulse',
-        layout: 'image-end',
-        featured: true,
-        techs: JSON.stringify(['Vue', 'WebSockets', 'Node.js', 'TypeScript'])
-      },
-      {
-        index: 2,
-        slug: 'saffron',
-        titleEn: 'Saffron',
-        titleFa: 'زعفران',
-        descriptionEn: 'A mobile-first marketplace for makers. Large type, few taps, native shell. Commerce treated as a publication, not a catalogue dump.',
-        descriptionFa: 'بازار موبایل‌محور برای سازنده‌ها. حروف بزرگ، لمس کم، پوسته بومی. تجارت به‌مثابه نشر، نه انبار کاتالوگ.',
-        year: '2025',
-        imageUrl: '/images/projects/saffron.jpg',
-        demoUrl: 'https://saffron.example',
-        githubUrl: null,
-        layout: 'overlay',
-        featured: true,
-        techs: JSON.stringify(['Nuxt', 'Capacitor', 'MongoDB', 'Tailwind CSS'])
-      },
-      {
-        index: 3,
-        slug: 'atelier',
-        titleEn: 'Atelier',
-        titleFa: 'آتلیه',
-        descriptionEn: 'SaaS for small design studios: proposals, proofs, and production calendars. A product that behaves like a well-kept desk.',
-        descriptionFa: 'نرم‌افزار ابری برای استودیوهای کوچک طراحی: پیشنهاد، نمونه و تقویم تولید. محصولی که مثل یک میز مرتب رفتار می‌کند.',
-        year: '2024',
-        imageUrl: '/images/projects/atelier.jpg',
-        demoUrl: 'https://atelier.example',
-        githubUrl: 'https://github.com/kianrahimi/atelier',
-        layout: 'stacked',
-        featured: false,
-        techs: JSON.stringify(['Vue', 'AdonisJS', 'Prisma', 'TypeScript'])
+        techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Prisma', 'UnoCSS'])
       }
     ]
   })
@@ -152,42 +113,16 @@ async function main() {
     data: [
       {
         index: 0,
-        yearStart: '2024',
-        yearEnd: 'Now',
-        titleEn: 'Senior Frontend',
-        titleFa: 'فرانت‌اند ارشد',
-        orgEn: 'Atelier Digital',
-        orgFa: 'آتلیه دیجیتال',
-        locationEn: 'Amsterdam',
-        locationFa: 'آمستردام',
-        bodyEn: 'Lead interface architecture for publication-grade SaaS. Design systems, motion language, and the boring reliability underneath.',
-        bodyFa: 'معماری رابط برای محصولات در سطح نشر. سیستم طراحی، زبان حرکت، و قابلیت اطمینان بی‌هیاهو در زیر.'
-      },
-      {
-        index: 1,
-        yearStart: '2022',
-        yearEnd: '2024',
-        titleEn: 'Frontend Engineer',
-        titleFa: 'مهندس فرانت‌اند',
-        orgEn: 'Nexora',
-        orgFa: 'نکسورا',
-        locationEn: 'Berlin',
-        locationFa: 'برلین',
-        bodyEn: 'Shipped real-time consoles and the component library that kept them honest across three product lines.',
-        bodyFa: 'کنسول‌های بلادرنگ و کتابخانه قطعاتی که سه خط محصول را صادق نگه داشت.'
-      },
-      {
-        index: 2,
-        yearStart: '2020',
-        yearEnd: '2022',
-        titleEn: 'UI Engineer',
-        titleFa: 'مهندس رابط کاربری',
-        orgEn: 'Independent',
-        orgFa: 'مستقل',
-        locationEn: 'Tehran / Remote',
-        locationFa: 'تهران / ریموت',
-        bodyEn: 'Studios, magazines, early SaaS. Learned that most products need less interface and more decision.',
-        bodyFa: 'استودیو، مجله، محصولات نوپا. فهمیدم بیشتر محصول‌ها رابط کمتر می‌خواهند و تصمیم بیشتر.'
+        yearStart: '2024-11',
+        yearEnd: 'Present',
+        titleEn: 'Frontend Developer',
+        titleFa: 'توسعه‌دهنده فرانت‌اند',
+        orgEn: 'VistaApp',
+        orgFa: 'VistaApp',
+        locationEn: 'Tehran, Iran',
+        locationFa: 'تهران، ایران',
+        bodyEn: 'Developed and contributed to ~20 production web applications using Vue.js, Nuxt and TypeScript. Designed scalable frontend architectures, responsive RTL interfaces, and implemented authentication flows and real-time features.',
+        bodyFa: 'توسعه و مشارکت در حدود ۲۰ برنامه وب تولیدی با Vue.js، Nuxt و TypeScript. طراحی معماری مقیاس‌پذیر فرانت‌اند، رابط‌های RTL پاسخگو و اجرای جریان‌های احراز هویت و ویژگی‌های بلادرنگ.'
       }
     ]
   })
@@ -196,27 +131,25 @@ async function main() {
     data: [
       {
         index: 0,
-        yearStart: '2016',
-        yearEnd: '2020',
-        titleEn: 'B.Sc. Computer Engineering',
+        yearStart: '2020',
+        yearEnd: '2026',
+        titleEn: "Bachelor of Computer Engineering",
         titleFa: 'کارشناسی مهندسی کامپیوتر',
-        orgEn: 'University of Tehran',
-        orgFa: 'دانشگاه تهران',
-        locationEn: 'Tehran',
-        locationFa: 'تهران',
-        bodyEn: 'Systems, compilers, and a quiet obsession with how information is set on a page.',
-        bodyFa: 'سیستم، کامپایلر، و وسواس آرام نسبت به نشستن اطلاعات روی صفحه.'
+        orgEn: 'Islamic Azad University, Tehran South Branch',
+        orgFa: 'دانشگاه آزاد اسلامی واحد تهران جنوب',
+        locationEn: 'Tehran, Iran',
+        locationFa: 'تهران، ایران',
+        bodyEn: '',
+        bodyFa: ''
       }
     ]
   })
 
   await prisma.social.createMany({
     data: [
-      { index: 0, name: 'GitHub', handle: 'kianrahimi', url: 'https://github.com/kianrahimi' },
-      { index: 1, name: 'LinkedIn', handle: '/in/kianrahimi', url: 'https://linkedin.com/in/kianrahimi' },
-      { index: 2, name: 'Telegram', handle: '@kianrahimi', url: 'https://t.me/kianrahimi' },
-      { index: 3, name: 'Instagram', handle: '@kian.rahimi', url: 'https://instagram.com/kian.rahimi' },
-      { index: 4, name: 'Email', handle: 'hello@kianrahimi.dev', url: 'mailto:hello@kianrahimi.dev' }
+      { index: 0, name: 'GitHub', handle: 'sajadshoki', url: 'https://github.com/sajadshoki' },
+      { index: 1, name: 'LinkedIn', handle: 'sajadshokraei', url: 'https://linkedin.com/in/sajadshokraei' },
+      { index: 2, name: 'Email', handle: 'Sajadzshoki80@gmail.com', url: 'mailto:Sajadzshoki80@gmail.com' }
     ]
   })
 }

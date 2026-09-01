@@ -2,7 +2,7 @@
 const { t, field } = useLocale()
 const { data } = usePortfolio()
 
-const mail = computed(() => data.value?.site.email || 'hello@kianrahimi.dev')
+const mail = computed(() => data.value?.site.email || 'Sajadzshoki80@gmail.com')
 const resumeHref = computed(() => data.value?.site.resumeUrl || '/resume')
 const resumeDownload = computed(() => {
   const url = resumeHref.value
