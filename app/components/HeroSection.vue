@@ -48,10 +48,10 @@ function go(id: string) {
       </div>
 
       <div class="col-span-12 md:col-span-8 md:row-start-2">
-        <h1 class="display-name">
+        <h2 class="display-name ">
           <span class="text-reveal"><span>{{ first }}</span></span>
           <span class="text-reveal" style="transition-delay: 90ms"><span>{{ last }}<span class="text-signal">.</span></span></span>
-        </h1>
+        </h2>
       </div>
 
       <div class="col-span-12 mt-6 md:col-span-4 md:col-start-9 md:row-start-2 md:row-span-2 md:mt-2 md:self-start">

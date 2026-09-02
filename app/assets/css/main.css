@@ -159,8 +159,8 @@ body {
 .display-name {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(4.2rem, 16vw, 13.5rem);
-  line-height: 0.78;
+  font-size: clamp(4.2rem, 16vw, 8.5rem);
+  line-height: 1;
   letter-spacing: -0.055em;
   text-transform: uppercase;
 }
