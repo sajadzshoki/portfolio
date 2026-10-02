@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   if (!ALLOWED.has(ext)) {
     throw createError({ statusCode: 400, statusMessage: 'Unsupported file type' })
   }
-  const dir = join(process.cwd(), 'public', 'uploads')
+  const dir = process.env.UPLOAD_DIR || join(process.cwd(), 'public', 'uploads')
   await mkdir(dir, { recursive: true })
   const name = `${randomUUID()}${ext}`
   await writeFile(join(dir, name), file.data)

@@ -54,7 +54,10 @@ export default defineNuxtConfig({
     authSecret: process.env.AUTH_SECRET || 'atlas-dev-secret-change-me'
   },
   nitro: {
-    experimental: { wasm: false }
+    experimental: { wasm: false },
+    externals: {
+      external: ['@prisma/client', '.prisma/client']
+    }
   },
   vite: {
     plugins: [tailwindcss()],

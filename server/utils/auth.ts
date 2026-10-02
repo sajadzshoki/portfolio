@@ -53,13 +53,22 @@ export async function requireAdmin(event: Parameters<typeof getCookie>[0]) {
   return session.admin
 }
 
+function requestIsHttps(event: Parameters<typeof setCookie>[0]) {
+  const forwarded = getRequestHeader(event, 'x-forwarded-proto')
+  if (typeof forwarded === 'string' && forwarded.split(',')[0].trim().toLowerCase() === 'https') {
+    return true
+  }
+  const socket = event.node?.req?.socket as { encrypted?: boolean } | undefined
+  return socket?.encrypted === true
+}
+
 export function setSessionCookie(event: Parameters<typeof setCookie>[0], token: string) {
   setCookie(event, COOKIE, token, {
     httpOnly: true,
     sameSite: 'lax',
     path: '/',
     maxAge: WEEK / 1000,
-    secure: process.env.NODE_ENV === 'production'
+    secure: requestIsHttps(event)
   })
 }
 

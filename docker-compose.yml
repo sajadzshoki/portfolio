@@ -1,0 +1,56 @@
+services:
+  app:
+    image: node:22
+    container_name: portfolio-app
+    working_dir: /app
+    command:
+      - bash
+      - -lc
+      - |
+        set -euo pipefail
+        npm install --include=dev
+        npx prisma generate
+        npm run build
+        mkdir -p /data/uploads
+        npx prisma db push
+        set +e
+        node --input-type=module -e 'import { PrismaClient } from "@prisma/client"; const p = new PrismaClient(); const n = await p.admin.count(); process.exit(n > 0 ? 0 : 2)'
+        status=$$?
+        set -e
+        if [ "$$status" -eq 2 ]; then
+          npm run db:seed
+        elif [ "$$status" -ne 0 ]; then
+          exit "$$status"
+        fi
+        exec node .output/server/index.mjs
+    ports:
+      - "3003:3000"
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "3000"
+      NITRO_HOST: 0.0.0.0
+      NITRO_PORT: "3000"
+      DATABASE_URL: file:/data/portfolio.db
+      UPLOAD_DIR: /data/uploads
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - portfolio-node-modules:/app/node_modules
+      - portfolio-data:/data
+    networks:
+      - default
+      - main
+    restart: unless-stopped
+
+volumes:
+  portfolio-data:
+    name: portfolio-data
+  portfolio-node-modules:
+    name: portfolio-node-modules
+
+networks:
+  main:
+    external: true
+    name: main
