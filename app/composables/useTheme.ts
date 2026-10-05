@@ -1,7 +1,7 @@
 import type { Theme } from '~~/shared/types'
 
 export function useTheme() {
-  const theme = useState<Theme>('theme', () => 'light')
+  const theme = useState<Theme>('theme', () => 'dark')
 
   function apply(next: Theme, persist = true) {
     theme.value = next
@@ -9,7 +9,7 @@ export function useTheme() {
     document.documentElement.classList.toggle('dark', next === 'dark')
     document.documentElement.style.colorScheme = next
     const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', next === 'dark' ? '#0e0e0c' : '#e8e4da')
+    if (meta) meta.setAttribute('content', next === 'dark' ? '#0a0f0d' : '#eef1eb')
     if (persist) localStorage.setItem('atlas-theme', next)
   }
 
@@ -24,8 +24,8 @@ export function useTheme() {
       apply(stored, true)
       return
     }
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    apply(prefersDark ? 'dark' : 'light', false)
+    // Dark-first default
+    apply('dark', false)
   }
 
   return { theme, apply, toggleTheme, init }

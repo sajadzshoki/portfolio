@@ -5,12 +5,12 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="border-t-2 border-ink">
-    <div class="site-shell flex flex-col gap-6 py-8 md:flex-row md:items-end md:justify-between">
+  <footer class="border-t border-rule">
+    <div class="site-shell flex flex-col gap-4 py-8 md:flex-row md:items-end md:justify-between">
       <div>
-        <p class="font-display text-xl tracking-[-0.03em]">
+        <p class="font-mono text-sm">
+          <span class="text-signal">$</span>
           {{ data ? field(data.site.nameEn, data.site.nameFa) : '' }}
-          <span class="text-signal">.</span>
         </p>
         <p class="mt-2 text-sm text-muted">
           © {{ year }} — {{ t.footer.rights }}

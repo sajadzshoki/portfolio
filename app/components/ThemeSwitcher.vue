@@ -6,14 +6,11 @@ const { t } = useLocale()
 <template>
   <button
     type="button"
-    class="group relative grid size-9 place-items-center border-2 border-ink bg-paper transition-colors hover:bg-ink hover:text-paper"
+    class="grid size-9 place-items-center border border-ink bg-paper font-mono text-[0.65rem] tracking-[0.08em] uppercase transition-colors hover:border-signal hover:text-signal"
     :aria-label="theme === 'dark' ? t.theme.light : t.theme.dark"
     :aria-pressed="theme === 'dark'"
     @click="toggleTheme"
   >
-    <span class="meta leading-none">{{ theme === 'dark' ? 'A' : 'B' }}</span>
-    <span
-      class="pointer-events-none absolute -bottom-1 start-1/2 h-1.5 w-1.5 -translate-x-1/2 translate-y-full bg-signal opacity-0 transition-opacity group-hover:opacity-100 [dir=rtl]:translate-x-1/2"
-    />
+    {{ theme === 'dark' ? 'LT' : 'DK' }}
   </button>
 </template>

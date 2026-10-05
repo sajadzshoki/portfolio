@@ -9,13 +9,13 @@ const { active, sectionLabel } = useSectionProgress()
     <div class="noise" aria-hidden="true" />
     <AppHeader />
     <p
-      class="pointer-events-none fixed bottom-8 start-5 z-40 hidden font-mono text-[0.65rem] tracking-[0.22em] uppercase text-muted xl:block"
+      class="pointer-events-none fixed bottom-8 start-4 z-40 hidden font-mono text-[0.62rem] tracking-[0.18em] uppercase text-muted xl:block"
       style="writing-mode: vertical-rl; transform: rotate(180deg);"
     >
-      ATLAS {{ data?.site.issue || 'Nº 04' }}
-      <span class="mx-2 text-signal">—</span>
+      {{ t.hero.path }}
+      <span class="mx-2 text-signal">·</span>
       {{ active.num }} {{ sectionLabel(t) }}
-      <span class="mx-2 text-signal">—</span>
+      <span class="mx-2 text-signal">·</span>
       {{ data ? field(data.site.locationEn, data.site.locationFa) : '' }}
     </p>
     <main id="main">

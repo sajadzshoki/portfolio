@@ -13,8 +13,9 @@ const github = computed(() => data.value?.socials.find(s => s.name.toLowerCase()
 const items = computed(() => {
   const list = [
     { id: 'about', label: t.value.nav.about, hint: '#about', run: () => go('#about') },
+    { id: 'skills', label: t.value.nav.skills, hint: '#skills', run: () => go('#skills') },
     { id: 'work', label: t.value.nav.work, hint: '#work', run: () => go('#work') },
-    { id: 'studio', label: t.value.experience.title, hint: '#studio', run: () => go('#studio') },
+    { id: 'studio', label: t.value.nav.studio, hint: '#studio', run: () => go('#studio') },
     { id: 'contact', label: t.value.nav.contact, hint: '#contact', run: () => go('#contact') },
     { id: 'github', label: 'GitHub', hint: '↗', run: () => window.open(github.value, '_blank', 'noreferrer') },
     { id: 'theme', label: theme.value === 'dark' ? t.value.theme.light : t.value.theme.dark, hint: 'theme', run: () => toggleTheme() },
@@ -84,36 +85,37 @@ onMounted(() => {
   <Teleport to="body">
     <div
       v-if="open"
-      class="fixed inset-0 z-[70] flex items-start justify-center bg-ink/40 px-4 pt-[12vh] backdrop-blur-[2px]"
+      class="fixed inset-0 z-[70] flex items-start justify-center bg-paper/70 px-4 pt-[12vh] backdrop-blur-[3px]"
       @click.self="close"
     >
-      <div class="w-full max-w-xl border-2 border-ink bg-paper shadow-[8px_8px_0_var(--ink)]">
-        <div class="border-b-2 border-ink">
+      <div class="w-full max-w-xl border border-ink bg-paper shadow-[6px_6px_0_color-mix(in_srgb,var(--signal)_40%,transparent)]">
+        <div class="flex items-center gap-2 border-b border-rule px-3">
+          <span class="font-mono text-signal">></span>
           <input
             ref="input"
             v-model="query"
-            class="border-0 px-4 py-4 font-display text-lg tracking-[-0.02em] focus:outline-none"
+            class="border-0 px-1 py-4 font-mono text-sm tracking-tight focus:outline-none"
             :placeholder="t.cmd.placeholder"
             autocomplete="off"
             spellcheck="false"
           >
         </div>
         <ul class="max-h-[50vh] overflow-auto">
-          <li v-if="!items.length" class="px-4 py-6 text-sm text-muted">{{ t.cmd.empty }}</li>
+          <li v-if="!items.length" class="px-4 py-6 font-mono text-sm text-muted">{{ t.cmd.empty }}</li>
           <li v-for="(item, i) in items" :key="item.id">
             <button
               type="button"
-              class="flex w-full items-center justify-between px-4 py-3 text-start font-display text-lg tracking-[-0.02em] transition-colors"
-              :class="i === active ? 'bg-ink text-paper' : 'hover:bg-[color-mix(in_srgb,var(--ink)_6%,transparent)]'"
+              class="flex w-full items-center justify-between px-4 py-3 text-start font-mono text-sm transition-colors"
+              :class="i === active ? 'bg-signal text-[color:#06110c]' : 'hover:bg-panel'"
               @mouseenter="active = i"
               @click="run(i)"
             >
               <span>{{ item.label }}</span>
-              <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] opacity-70">{{ item.hint }}</span>
+              <span class="text-[0.65rem] uppercase tracking-[0.12em] opacity-70">{{ item.hint }}</span>
             </button>
           </li>
         </ul>
-        <div class="flex justify-between border-t-2 border-ink px-4 py-2">
+        <div class="flex justify-between border-t border-rule px-4 py-2">
           <span class="meta text-muted">{{ t.cmd.hint }}</span>
           <span class="meta text-muted">ESC</span>
         </div>

@@ -4,67 +4,70 @@ export const ui = {
   en: {
     skip: 'Skip to content',
     index: 'Index',
-    issue: 'Issue',
-    available: 'Available',
-    location: 'Location',
-    stack: 'Stack',
+    issue: 'Build',
+    available: 'status',
+    location: 'location',
+    stack: 'stack',
     nav: {
       about: 'About',
+      skills: 'Skills',
       work: 'Work',
-      studio: 'Studio',
+      studio: 'Experience',
       contact: 'Contact'
     },
     present: 'Now',
     menu: 'Menu',
     hero: {
-      kicker: 'Hero',
-      vol: 'Vol. II',
-      ctaPrimary: 'View Projects',
-      ctaSecondary: 'Contact Me',
-      portrait: 'Portrait',
-      based: 'Based in'
+      kicker: 'init',
+      vol: 'spec',
+      ctaPrimary: 'View Work',
+      ctaSecondary: 'Contact',
+      portrait: 'portrait',
+      based: 'based in',
+      prompt: 'role',
+      path: '~/portfolio'
     },
     about: {
-      kicker: 'What I do',
-      title: 'Practice'
+      kicker: 'readme',
+      title: 'About'
     },
     skills: {
-      kicker: 'Toolkit',
-      title: 'Selected tools'
+      kicker: 'toolchain',
+      title: 'Skills'
     },
     projects: {
-      kicker: 'Selected work',
+      kicker: 'shipped',
       title: 'Projects',
       demo: 'Live',
-      code: 'Code',
-      view: 'View',
-      featured: 'Featured'
+      code: 'Source',
+      view: 'Open',
+      featured: 'featured'
     },
     experience: {
-      kicker: 'Path',
+      kicker: 'changelog',
       title: 'Experience',
       work: 'Work',
       education: 'Education'
     },
     social: {
-      kicker: 'Elsewhere',
-      title: 'Channels'
+      kicker: 'links',
+      title: 'Elsewhere'
     },
     contact: {
-      kicker: 'Next',
-      title: "Let's build something.",
-      body: 'Have a product, a publication, or a problem that needs a precise interface. Write. I read everything.',
-      cta: 'Contact Me',
-      resume: 'Download Resume',
-      email: 'Email'
+      kicker: 'connect',
+      title: "Let's build.",
+      body: 'Have a product or interface problem that needs precise engineering. Write — I read everything.',
+      cta: 'Email Me',
+      resume: 'Resume',
+      email: 'Copy email'
     },
     footer: {
       rights: 'All rights reserved',
-      designed: 'Designed & built by',
-      cmd: 'to command'
+      designed: 'Built by',
+      cmd: 'command'
     },
     cmd: {
-      placeholder: 'Go somewhere…',
+      placeholder: 'Jump to…',
       empty: 'No matches',
       hint: 'Navigate'
     },
@@ -95,64 +98,67 @@ export const ui = {
   fa: {
     skip: 'رفتن به محتوا',
     index: 'فهرست',
-    issue: 'شماره',
+    issue: 'بیلد',
     available: 'وضعیت',
     location: 'مکان',
     stack: 'استک',
     nav: {
       about: 'درباره',
+      skills: 'مهارت‌ها',
       work: 'کارها',
-      studio: 'استودیو',
+      studio: 'تجربه',
       contact: 'تماس'
     },
     present: 'اکنون',
     menu: 'منو',
     hero: {
-      kicker: 'سرآغاز',
-      vol: 'جلد ۲',
-      ctaPrimary: 'دیدن پروژه‌ها',
-      ctaSecondary: 'تماس با من',
+      kicker: 'شروع',
+      vol: 'مشخصات',
+      ctaPrimary: 'دیدن کارها',
+      ctaSecondary: 'تماس',
       portrait: 'پرتره',
-      based: 'مستقر در'
+      based: 'مستقر در',
+      prompt: 'نقش',
+      path: '~/portfolio'
     },
     about: {
-      kicker: 'چه می‌سازم',
-      title: 'حوزه کار'
+      kicker: 'معرفی',
+      title: 'درباره'
     },
     skills: {
       kicker: 'ابزار',
-      title: 'ابزارهای منتخب'
+      title: 'مهارت‌ها'
     },
     projects: {
-      kicker: 'کارهای منتخب',
+      kicker: 'ارسال‌شده',
       title: 'پروژه‌ها',
-      demo: 'نسخه زنده',
-      code: 'کد',
-      view: 'مشاهده',
+      demo: 'زنده',
+      code: 'سورس',
+      view: 'باز کردن',
       featured: 'برگزیده'
     },
     experience: {
-      kicker: 'مسیر',
+      kicker: 'changelog',
       title: 'تجربه',
       work: 'کار',
       education: 'تحصیل'
     },
     social: {
-      kicker: 'جایی دیگر',
-      title: 'کانال‌ها'
+      kicker: 'لینک‌ها',
+      title: 'جایی دیگر'
     },
     contact: {
-      kicker: 'بعدی',
-      title: 'چیزی بسازیم.',
-      body: 'محصول، نشریه، یا مسئله‌ای دارید که به یک رابط دقیق نیاز دارد. بنویسید. همه‌چیز را می‌خوانم.',
-      cta: 'تماس با من',
-      resume: 'دانلود رزومه',
-      email: 'ایمیل'
+      kicker: 'ارتباط',
+      title: 'بسازیم.',
+      body: 'محصول یا مسئله‌ای دارید که به مهندسی دقیق رابط نیاز دارد. بنویسید — همه‌چیز را می‌خوانم.',
+      cta: 'ایمیل',
+      resume: 'رزومه',
+      email: 'کپی ایمیل'
     },
     footer: {
       rights: 'تمام حقوق محفوظ است',
-      designed: 'طراحی و ساخت',
-      cmd: 'برای فرمان'
+      designed: 'ساخت',
+      cmd: 'فرمان'
     },
     cmd: {
       placeholder: 'برو به…',

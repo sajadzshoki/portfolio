@@ -9,32 +9,32 @@ const { data } = usePortfolio()
 
     <div class="grid grid-cols-12 gap-x-5 gap-y-10">
       <Reveal class="col-span-12 md:col-span-5">
-        <h3 class="font-display text-[clamp(1.7rem,3vw,2.6rem)] leading-[1.05] tracking-[-0.035em]">
+        <h3 class="font-display text-[clamp(1.6rem,2.8vw,2.4rem)] leading-[1.08] tracking-[-0.035em]">
           {{ data ? field(data.about.headingEn, data.about.headingFa) : '' }}
         </h3>
       </Reveal>
       <Reveal class="col-span-12 md:col-span-6 md:col-start-7" :delay="80">
-        <p class="text-[1.08rem] leading-[1.7] text-muted">
+        <p class="text-[1.05rem] leading-[1.75] text-muted">
           {{ data ? field(data.about.bodyEn, data.about.bodyFa) : '' }}
         </p>
       </Reveal>
     </div>
 
-    <ol class="mt-16 border-t-2 border-ink">
+    <ol class="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2">
       <Reveal
         v-for="(item, i) in data?.focusAreas || []"
         :key="item.id"
         as="li"
         :delay="i * 50"
-        class="grid grid-cols-12 items-baseline gap-x-4 border-b-2 border-ink py-6 md:py-8"
+        class="sheet p-5 md:p-6"
       >
-        <span class="col-span-2 font-mono text-sm text-signal md:col-span-1">
+        <p class="meta text-signal mb-3">
           {{ String(i + 1).padStart(2, '0') }}
-        </span>
-        <h4 class="col-span-10 font-display text-[clamp(1.35rem,2.4vw,2rem)] tracking-[-0.03em] md:col-span-4">
+        </p>
+        <h4 class="font-display text-[clamp(1.25rem,2vw,1.6rem)] tracking-[-0.03em]">
           {{ field(item.titleEn, item.titleFa) }}
         </h4>
-        <p class="col-span-12 mt-3 text-[0.98rem] leading-relaxed text-muted md:col-span-7 md:col-start-6 md:mt-0">
+        <p class="mt-3 text-[0.95rem] leading-relaxed text-muted">
           {{ field(item.bodyEn, item.bodyFa) }}
         </p>
       </Reveal>

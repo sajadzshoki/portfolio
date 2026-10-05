@@ -1,33 +1,53 @@
 <script setup lang="ts">
 const { t } = useLocale()
 const { data } = usePortfolio()
-const active = ref<string | null>(null)
+
+const groups = computed(() => {
+  const map = new Map<string, { name: string, id: string }[]>()
+  for (const skill of data.value?.skills || []) {
+    const key = skill.category || 'General'
+    if (!map.has(key)) map.set(key, [])
+    map.get(key)!.push({ name: skill.name, id: skill.id })
+  }
+  return Array.from(map.entries()).map(([category, items]) => ({ category, items }))
+})
 </script>
 
 <template>
-  <section id="skills" class="scroll-mt-24 border-y-2 border-ink bg-[color-mix(in_srgb,var(--ink)_4%,var(--paper))] py-24 md:py-32">
+  <section id="skills" class="scroll-mt-24 border-y border-rule bg-panel py-24 md:py-32">
     <div class="site-shell">
       <SectionHeader index="03" :kicker="t.skills.kicker" :title="t.skills.title" />
 
-      <ul class="divide-y-2 divide-ink border-y-2 border-ink">
-        <li
-          v-for="(skill, i) in data?.skills || []"
-          :key="skill.id"
-          class="group grid grid-cols-12 items-center gap-3 py-3 transition-colors hover:bg-ink hover:text-paper"
-          @mouseenter="active = skill.id"
-          @mouseleave="active = null"
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <Reveal
+          v-for="(group, gi) in groups"
+          :key="group.category"
+          :delay="gi * 70"
+          class="sheet p-5 md:p-6"
         >
-          <span class="col-span-2 font-mono text-xs text-signal group-hover:text-paper md:col-span-1">
-            {{ String(i + 1).padStart(2, '0') }}
-          </span>
-          <span class="col-span-6 font-display text-[clamp(1.2rem,2.2vw,1.85rem)] tracking-[-0.03em] md:col-span-7">
-            {{ skill.name }}
-          </span>
-          <span class="col-span-4 text-end font-mono text-[0.68rem] uppercase tracking-[0.14em] text-muted group-hover:text-paper">
-            {{ skill.category }}
-          </span>
-        </li>
-      </ul>
+          <p class="meta text-signal mb-4">
+            // {{ group.category }}
+          </p>
+          <ul class="space-y-1">
+            <li
+              v-for="(skill, i) in group.items"
+              :key="skill.id"
+              class="group flex items-center justify-between gap-3 border-b border-dashed border-[color-mix(in_srgb,var(--ink)_18%,transparent)] py-2.5 last:border-b-0"
+            >
+              <span class="flex items-center gap-3">
+                <span class="font-mono text-[0.65rem] text-muted">{{ String(i + 1).padStart(2, '0') }}</span>
+                <span class="font-display text-lg tracking-[-0.03em] transition-colors group-hover:text-signal">
+                  {{ skill.name }}
+                </span>
+              </span>
+              <span
+                class="h-1.5 w-10 bg-[color-mix(in_srgb,var(--ink)_12%,transparent)] transition-colors group-hover:bg-signal"
+                aria-hidden="true"
+              />
+            </li>
+          </ul>
+        </Reveal>
+      </div>
     </div>
   </section>
 </template>

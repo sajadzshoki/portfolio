@@ -13,7 +13,7 @@ const { data } = usePortfolio()
       </template>
     </SectionHeader>
 
-    <div class="border-t-2 border-ink">
+    <div class="space-y-5">
       <ProjectBlock
         v-for="(project, i) in data?.projects || []"
         :key="project.id"

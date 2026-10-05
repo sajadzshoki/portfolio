@@ -20,21 +20,33 @@ const body = computed(() => {
     : ''
   return fromCms || t.value.contact.body
 })
+
+const copied = ref(false)
+async function copyEmail() {
+  try {
+    await navigator.clipboard.writeText(mail.value)
+    copied.value = true
+    window.setTimeout(() => { copied.value = false }, 1600)
+  } catch {
+    window.location.href = `mailto:${mail.value}`
+  }
+}
 </script>
 
 <template>
-  <section id="contact" class="scroll-mt-24 py-24 md:py-36">
-    <div class="site-shell">
+  <section id="contact" class="relative scroll-mt-24 overflow-hidden py-24 md:py-36">
+    <div class="pointer-events-none absolute inset-0 blueprint-dots opacity-40" />
+    <div class="site-shell relative">
       <Reveal>
         <p class="meta text-muted mb-6">
           <span class="text-signal">07</span>
-          <span class="mx-2">/</span>
+          <span class="mx-2">//</span>
           <span>{{ t.contact.kicker }}</span>
         </p>
-        <h2 class="font-display text-[clamp(3rem,10vw,8.5rem)] leading-[0.82] tracking-[-0.05em]">
+        <h2 class="font-display text-[clamp(2.8rem,9vw,6.5rem)] leading-[0.9] tracking-[-0.05em]">
           <span class="text-reveal"><span>{{ title }}</span></span>
         </h2>
-        <p class="mt-8 max-w-xl text-[1.08rem] leading-relaxed text-muted">
+        <p class="mt-8 max-w-xl text-[1.05rem] leading-relaxed text-muted">
           {{ body }}
         </p>
       </Reveal>
@@ -43,8 +55,8 @@ const body = computed(() => {
         <SiteButton :href="`mailto:${mail}`" variant="primary" size="lg" magnetic>
           {{ t.contact.cta }}
         </SiteButton>
-        <SiteButton :href="`mailto:${mail}`" size="lg">
-          {{ t.contact.email }}
+        <SiteButton size="lg" @click="copyEmail">
+          {{ copied ? 'OK' : t.contact.email }}
         </SiteButton>
         <SiteButton :href="resumeHref" size="lg" :download="resumeDownload">
           {{ t.contact.resume }}
@@ -52,6 +64,7 @@ const body = computed(() => {
       </Reveal>
 
       <p class="mt-10 font-mono text-sm text-muted">
+        <span class="text-signal">mailto:</span>
         {{ mail }}
       </p>
     </div>

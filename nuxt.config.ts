@@ -8,8 +8,8 @@ export default defineNuxtConfig({
   fonts: {
     families: [
       { name: 'Space Grotesk', provider: 'google', weights: [400, 500, 600, 700] },
+      { name: 'IBM Plex Sans', provider: 'google', weights: [400, 500, 600] },
       { name: 'Vazirmatn', provider: 'google', weights: [400, 500, 600, 700] },
-      { name: 'Inter', provider: 'google', weights: [400, 500, 600] },
       { name: 'JetBrains Mono', provider: 'google', weights: [400, 500, 600] }
     ]
   },
@@ -24,8 +24,8 @@ export default defineNuxtConfig({
         meta: [
           { name: 'viewport', content: 'width=device-width, initial-scale=1' },
           { name: 'description', content: 'Frontend Developer | Vue.js, Nuxt & TypeScript — Tehran, Iran.' },
-          { name: 'theme-color', content: '#E8E4DA' },
-          { name: 'color-scheme', content: 'light dark' },
+          { name: 'theme-color', content: '#0a0f0d' },
+          { name: 'color-scheme', content: 'dark light' },
           { property: 'og:title', content: 'SAJAD SHOKRAEI — Frontend Developer' },
           { property: 'og:description', content: 'Frontend Developer building modern web applications with Vue, Nuxt and TypeScript.' },
           { property: 'og:type', content: 'website' }
@@ -36,12 +36,13 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap'
         }
       ],
       script: [
         {
-          innerHTML: `(function(){try{var t=localStorage.getItem('atlas-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}var l=localStorage.getItem('atlas-locale')||'en';document.documentElement.lang=l;document.documentElement.dir=l==='fa'?'rtl':'ltr'}catch(e){}})()`,
+          // Dark-first: default dark unless user explicitly chose light
+          innerHTML: `(function(){try{var t=localStorage.getItem('atlas-theme');if(t!=='light'){document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}else{document.documentElement.style.colorScheme='light'}var l=localStorage.getItem('atlas-locale')||'en';document.documentElement.lang=l;document.documentElement.dir=l==='fa'?'rtl':'ltr'}catch(e){document.documentElement.classList.add('dark')}})()`,
           tagPriority: 'critical'
         }
       ]
@@ -57,12 +58,16 @@ export default defineNuxtConfig({
     experimental: { wasm: false },
     externals: {
       external: ['@prisma/client', '.prisma/client']
+    },
+    routeRules: {
+      '/api/**': { cors: true }
     }
   },
   vite: {
     plugins: [tailwindcss()],
     server: {
       host: '0.0.0.0',
+      cors: true,
       allowedHosts: true
     }
   },
