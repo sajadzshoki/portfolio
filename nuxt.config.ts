@@ -7,10 +7,10 @@ export default defineNuxtConfig({
   modules: ['@nuxt/fonts', '@nuxt/image'],
   fonts: {
     families: [
-      { name: 'Space Grotesk', provider: 'google', weights: [400, 500, 600, 700] },
+      { name: 'Plus Jakarta Sans', provider: 'google', weights: [500, 600, 700] },
       { name: 'Vazirmatn', provider: 'google', weights: [400, 500, 600, 700] },
       { name: 'Inter', provider: 'google', weights: [400, 500, 600] },
-      { name: 'JetBrains Mono', provider: 'google', weights: [400, 500, 600] }
+      { name: 'JetBrains Mono', provider: 'google', weights: [400, 500] }
     ]
   },
   image: {
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
         meta: [
           { name: 'viewport', content: 'width=device-width, initial-scale=1' },
           { name: 'description', content: 'Frontend Developer | Vue.js, Nuxt & TypeScript — Tehran, Iran.' },
-          { name: 'theme-color', content: '#E8E4DA' },
+          { name: 'theme-color', content: '#10110f' },
           { name: 'color-scheme', content: 'light dark' },
           { property: 'og:title', content: 'SAJAD SHOKRAEI — Frontend Developer' },
           { property: 'og:description', content: 'Frontend Developer building modern web applications with Vue, Nuxt and TypeScript.' },
@@ -36,12 +36,12 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap'
         }
       ],
       script: [
         {
-          innerHTML: `(function(){try{var t=localStorage.getItem('atlas-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark'}var l=localStorage.getItem('atlas-locale')||'en';document.documentElement.lang=l;document.documentElement.dir=l==='fa'?'rtl':'ltr'}catch(e){}})()`,
+          innerHTML: `(function(){try{var t=localStorage.getItem('atlas-theme');var dark=t!=='light';document.documentElement.classList.toggle('dark',dark);document.documentElement.style.colorScheme=dark?'dark':'light';var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',dark?'#10110f':'#f3f0e8');var l=localStorage.getItem('atlas-locale')||'en';document.documentElement.lang=l;document.documentElement.dir=l==='fa'?'rtl':'ltr'}catch(e){}})()`,
           tagPriority: 'critical'
         }
       ]

@@ -1,25 +1,23 @@
 <script setup lang="ts">
 const { t } = useLocale()
 const { data } = usePortfolio()
+
+const projects = computed(() => {
+  const all = data.value?.projects || []
+  const featured = all.filter(project => project.featured)
+  return featured.length ? featured : all
+})
 </script>
 
 <template>
-  <section id="work" class="site-shell scroll-mt-24 py-24 md:py-32">
-    <SectionHeader index="04" :kicker="t.projects.kicker" :title="t.projects.title">
-      <template #aside>
-        <p class="hidden font-mono text-sm text-muted md:block">
-          {{ String(data?.projects.length || 0).padStart(2, '0') }}
-        </p>
-      </template>
-    </SectionHeader>
-
-    <div class="border-t-2 border-ink">
-      <ProjectBlock
-        v-for="(project, i) in data?.projects || []"
-        :key="project.id"
-        :project="project"
-        :index="i"
-      />
+  <section v-if="projects.length" id="projects" class="band">
+    <div class="shell-wide">
+      <SectionHeader :eyebrow="t.projects.eyebrow" :title="t.projects.title">
+        <template #action>
+          <SiteButton to="/projects" variant="ghost" arrow>{{ t.projects.all }}</SiteButton>
+        </template>
+      </SectionHeader>
+      <ProjectShowcase :projects="projects" />
     </div>
   </section>
 </template>

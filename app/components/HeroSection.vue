@@ -3,14 +3,10 @@ const { t, field } = useLocale()
 const { data } = usePortfolio()
 const ready = ref(false)
 
-const first = computed(() => {
-  const name = data.value ? field(data.value.site.nameEn, data.value.site.nameFa) : ''
-  return name.split(/\s+/)[0] || ''
-})
-const last = computed(() => {
-  const name = data.value ? field(data.value.site.nameEn, data.value.site.nameFa) : ''
-  return name.split(/\s+/).slice(1).join(' ')
-})
+const site = computed(() => data.value?.site)
+const name = computed(() => site.value ? presentName(field(site.value.nameEn, site.value.nameFa)) : '')
+const role = computed(() => site.value ? splitRole(field(site.value.roleEn, site.value.roleFa)) : { lead: '', rest: '' })
+const intro = computed(() => site.value ? field(site.value.introEn, site.value.introFa) : '')
 
 onMounted(() => {
   requestAnimationFrame(() => {
@@ -18,94 +14,227 @@ onMounted(() => {
   })
 })
 
-function go(id: string) {
-  document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
+function scrollToProjects() {
+  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
 
 <template>
-  <section
-    id="top"
-    class="relative min-h-[100dvh] pt-16"
-    :class="{ 'hero-ready': ready }"
-  >
-    <div class="pointer-events-none absolute inset-0 grid-lines opacity-70" />
+  <section id="top" class="hero" :class="{ ready }">
+    <div v-if="site?.portraitUrl" class="media" aria-hidden="true">
+      <img :src="site.portraitUrl" alt="">
+    </div>
 
-    <div class="site-shell relative grid min-h-[calc(100dvh-4rem)] grid-cols-12 gap-x-4 pb-10 pt-8 md:pt-12">
-      <div class="col-span-12 mb-6 flex items-center justify-between md:col-span-12">
-        <p class="meta text-muted">
-          <span class="text-signal">01</span>
-          <span class="mx-2">/</span>
-          <span>{{ t.hero.kicker }}</span>
-        </p>
-        <p class="meta text-muted">
-          {{ data?.site.issue || 'Nº 04' }}
-          <span class="mx-2">—</span>
-          {{ t.hero.vol }}
-          <span class="mx-2">—</span>
-          2026
-        </p>
-      </div>
-
-      <div class="col-span-12 md:col-span-8 md:row-start-2">
-        <h2 class="display-name ">
-          <span class="text-reveal"><span>{{ first }}</span></span>
-          <span class="text-reveal" style="transition-delay: 90ms"><span>{{ last }}<span class="text-signal">.</span></span></span>
-        </h2>
-      </div>
-
-      <div class="col-span-12 mt-6 md:col-span-4 md:col-start-9 md:row-start-2 md:row-span-2 md:mt-2 md:self-start">
-        <div class="relative ms-auto w-[min(100%,320px)] md:w-full">
-          <div class="absolute -z-0 h-full w-full translate-x-3 translate-y-3 bg-signal [dir=rtl]:-translate-x-3" />
-          <figure class="img-frame relative aspect-[4/5] crop">
-            <SiteImage
-              v-if="data?.site.portraitUrl"
-              :src="data.site.portraitUrl"
-              :alt="t.hero.portrait"
-              :width="720"
-              :height="900"
-              eager
-            />
-            <figcaption class="absolute inset-x-0 bottom-0 flex justify-between bg-ink px-3 py-2 text-paper">
-              <span class="meta">{{ t.hero.portrait }}</span>
-              <span class="meta">35MM</span>
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-
-      <div class="col-span-12 mt-10 md:col-span-7 md:mt-8">
-        <p class="font-display text-[clamp(1.6rem,3.4vw,2.75rem)] leading-[1.05] tracking-[-0.035em]">
-          {{ data ? field(data.site.roleEn, data.site.roleFa) : '' }}
-        </p>
-        <p class="mt-6 max-w-[36rem] text-[1.05rem] leading-relaxed text-muted md:text-[1.12rem]">
-          {{ data ? field(data.site.introEn, data.site.introFa) : '' }}
-        </p>
-
-        <div class="mt-8 flex flex-wrap items-center gap-3">
-          <SiteButton variant="primary" size="lg" magnetic @click="go('#work')">
-            {{ t.hero.ctaPrimary }}
-          </SiteButton>
-          <SiteButton size="lg" @click="go('#contact')">
-            {{ t.hero.ctaSecondary }}
-          </SiteButton>
-        </div>
-      </div>
-
-      <div class="col-span-12 mt-12 grid grid-cols-2 gap-px border-2 border-ink bg-ink md:col-span-12 lg:col-span-8">
-        <div class="bg-paper p-4">
-          <p class="meta text-muted mb-1">{{ t.available }}</p>
-          <p class="font-mono text-sm">{{ data ? field(data.site.availabilityEn, data.site.availabilityFa) : '' }}</p>
-        </div>
-        <div class="bg-paper p-4">
-          <p class="meta text-muted mb-1">{{ t.location }}</p>
-          <p class="font-mono text-sm">{{ data ? field(data.site.locationEn, data.site.locationFa) : '' }}</p>
-        </div>
-        <div class="col-span-2 bg-paper p-4">
-          <p class="meta text-muted mb-1">{{ t.stack }}</p>
-          <p class="font-mono text-sm">{{ data ? field(data.site.metaEn, data.site.metaFa) : '' }}</p>
+    <div class="inner">
+      <div class="copy">
+        <p class="eyebrow">{{ role.lead || t.hero.eyebrow }}</p>
+        <h1 class="display name">{{ name }}</h1>
+        <p v-if="role.rest" class="statement">{{ role.rest }}</p>
+        <p class="lede intro">{{ intro }}</p>
+        <div class="actions">
+          <SiteButton variant="primary" arrow @click="scrollToProjects">{{ t.hero.ctaPrimary }}</SiteButton>
+          <SiteButton to="/about" variant="secondary">{{ t.hero.ctaSecondary }}</SiteButton>
         </div>
       </div>
     </div>
+
+    <a class="scroll" href="#projects">
+      <span class="scroll-mark" aria-hidden="true" />
+      {{ t.hero.scroll }}
+    </a>
   </section>
 </template>
+
+<style scoped>
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100dvh;
+  padding-top: var(--header-h);
+  padding-bottom: 4.5rem;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.media {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: min(68%, 920px);
+  z-index: 0;
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+
+.media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, var(--bg) 0%, color-mix(in srgb, var(--bg) 72%, transparent) 18%, transparent 46%),
+    linear-gradient(to top, var(--bg) 0%, transparent 28%),
+    linear-gradient(to left, color-mix(in srgb, var(--bg) 35%, transparent), transparent 18%);
+  pointer-events: none;
+}
+
+[dir="rtl"] .media::after {
+  background:
+    linear-gradient(to left, var(--bg) 0%, color-mix(in srgb, var(--bg) 72%, transparent) 18%, transparent 46%),
+    linear-gradient(to top, var(--bg) 0%, transparent 28%),
+    linear-gradient(to right, color-mix(in srgb, var(--bg) 35%, transparent), transparent 18%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: min(1320px, calc(100% - var(--page-gutter) * 2));
+  margin-inline: auto;
+}
+
+.copy {
+  width: min(38rem, 100%);
+  padding-block: 1rem;
+}
+
+.name {
+  margin-top: 1.35rem;
+  font-size: clamp(2.85rem, 6vw, 5.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+.statement {
+  margin-top: 1.35rem;
+  max-width: 28rem;
+  color: var(--text-2);
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 2.6vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.22;
+}
+
+.intro {
+  margin-top: 1.35rem;
+  max-width: 34rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.actions :deep(.site-btn) {
+  min-height: 3rem;
+  padding-inline: 1.25rem;
+  border-radius: 999px;
+}
+
+.scroll {
+  position: absolute;
+  z-index: 1;
+  inset-inline-start: var(--page-gutter);
+  bottom: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[lang="fa"] .scroll {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.84rem;
+}
+
+.scroll-mark {
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  position: relative;
+}
+
+.scroll-mark::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 50%;
+  top: 0.35rem;
+  width: 1px;
+  height: 0.55rem;
+  background: var(--text-2);
+  transform: translateX(-50%);
+}
+
+[dir="rtl"] .scroll-mark::before {
+  transform: translateX(50%);
+}
+
+.ready .media img {
+  animation: settle 1.3s var(--ease) both;
+}
+
+@keyframes settle {
+  from { transform: scale(1.06); }
+  to { transform: none; }
+}
+
+@media (max-width: 860px) {
+  .hero {
+    display: block;
+    min-height: 0;
+    padding-top: var(--header-h);
+    padding-bottom: 4.5rem;
+  }
+
+  .media {
+    position: relative;
+    width: 100%;
+    height: min(58vw, 320px);
+    inset-inline-end: auto;
+  }
+
+  .media::after,
+  [dir="rtl"] .media::after {
+    background: linear-gradient(to top, var(--bg) 0%, transparent 42%);
+  }
+
+  .inner {
+    width: min(1320px, calc(100% - var(--page-gutter) * 2));
+    padding-top: 1.75rem;
+  }
+
+  .copy {
+    width: 100%;
+    padding-block: 0;
+  }
+
+  .name,
+  .statement {
+    max-width: none;
+  }
+
+  .scroll {
+    inset-inline-start: var(--page-gutter);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ready .media img {
+    animation: none;
+  }
+}
+</style>

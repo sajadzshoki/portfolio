@@ -2,58 +2,109 @@
 const { t, field } = useLocale()
 const { data } = usePortfolio()
 
-const mail = computed(() => data.value?.site.email || 'Sajadzshoki80@gmail.com')
-const resumeHref = computed(() => data.value?.site.resumeUrl || '/resume')
-const resumeDownload = computed(() => {
-  const url = resumeHref.value
-  return /\.(pdf|docx?)$/i.test(url) ? (url.split('/').pop() || 'resume') : undefined
-})
+const site = computed(() => data.value?.site)
 const title = computed(() => {
-  const fromCms = data.value
-    ? field(data.value.site.contactTitleEn, data.value.site.contactTitleFa)
-    : ''
-  return fromCms || t.value.contact.title
+  const custom = site.value ? field(site.value.contactTitleEn, site.value.contactTitleFa) : ''
+  return custom || t.value.contact.title
 })
 const body = computed(() => {
-  const fromCms = data.value
-    ? field(data.value.site.contactBodyEn, data.value.site.contactBodyFa)
-    : ''
-  return fromCms || t.value.contact.body
+  const custom = site.value ? field(site.value.contactBodyEn, site.value.contactBodyFa) : ''
+  return custom || t.value.contact.body
 })
+const email = computed(() => site.value?.email || '')
 </script>
 
 <template>
-  <section id="contact" class="scroll-mt-24 py-24 md:py-36">
-    <div class="site-shell">
-      <Reveal>
-        <p class="meta text-muted mb-6">
-          <span class="text-signal">07</span>
-          <span class="mx-2">/</span>
-          <span>{{ t.contact.kicker }}</span>
-        </p>
-        <h2 class="font-display text-[clamp(3rem,10vw,8.5rem)] leading-[0.82] tracking-[-0.05em]">
-          <span class="text-reveal"><span>{{ title }}</span></span>
-        </h2>
-        <p class="mt-8 max-w-xl text-[1.08rem] leading-relaxed text-muted">
-          {{ body }}
-        </p>
-      </Reveal>
+  <section id="contact" class="band contact">
+    <div class="shell-wide">
+      <p class="eyebrow">{{ t.contact.eyebrow }}</p>
+      <h2 class="display title">{{ title }}</h2>
+      <p class="lede">{{ body }}</p>
 
-      <Reveal class="mt-12 flex flex-wrap items-center gap-3" :delay="80">
-        <SiteButton :href="`mailto:${mail}`" variant="primary" size="lg" magnetic>
-          {{ t.contact.cta }}
-        </SiteButton>
-        <SiteButton :href="`mailto:${mail}`" size="lg">
-          {{ t.contact.email }}
-        </SiteButton>
-        <SiteButton :href="resumeHref" size="lg" :download="resumeDownload">
-          {{ t.contact.resume }}
-        </SiteButton>
-      </Reveal>
+      <div class="row">
+        <a v-if="email" class="mail" :href="`mailto:${email}`">{{ email }}</a>
+        <div class="actions">
+          <SiteButton v-if="email" :href="`mailto:${email}`" variant="primary" arrow>{{ t.contact.cta }}</SiteButton>
+          <SiteButton v-if="site?.resumeUrl" :to="site.resumeUrl" variant="secondary">{{ t.contact.resume }}</SiteButton>
+        </div>
+      </div>
 
-      <p class="mt-10 font-mono text-sm text-muted">
-        {{ mail }}
-      </p>
+      <div class="socials">
+        <a
+          v-for="item in data?.socials || []"
+          :key="item.id"
+          :href="safeHref(item.url)"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>{{ item.name }}</span>
+          <span>{{ item.handle }}</span>
+        </a>
+      </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.title {
+  margin-top: 0.85rem;
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  max-width: 12ch;
+}
+
+.lede {
+  margin-top: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+
+.mail {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.mail:hover {
+  border-bottom-color: var(--accent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.socials {
+  display: grid;
+  margin-top: 2.2rem;
+  border-top: 1px solid var(--line);
+}
+
+.socials a {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+}
+
+.socials a span:last-child {
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.socials a:hover span:first-child {
+  color: var(--accent-contrast);
+}
+</style>

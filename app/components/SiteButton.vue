@@ -7,36 +7,46 @@ const props = withDefaults(defineProps<{
   size?: 'md' | 'lg'
   type?: 'button' | 'submit'
   download?: string
+  arrow?: boolean
 }>(), {
   variant: 'secondary',
   magnetic: false,
   size: 'md',
-  type: 'button'
+  type: 'button',
+  arrow: false
 })
 
-const { el, onMove, onLeave, style } = useMagnetic(0.28)
 const tag = computed(() => props.href ? 'a' : props.to ? resolveComponent('NuxtLink') : 'button')
+const external = computed(() => Boolean(props.href && /^https?:/i.test(props.href)))
 const classes = computed(() => [
   'site-btn',
   props.variant === 'primary' ? 'site-btn-primary' : props.variant === 'ghost' ? 'site-btn-ghost' : 'site-btn-secondary',
-  props.size === 'lg' ? 'px-7 py-4 text-[1.05rem]' : 'px-5 py-3 text-[0.95rem]'
+  props.size === 'lg' ? 'site-btn-lg' : ''
 ])
 </script>
 
 <template>
   <component
     :is="tag"
-    ref="el"
     :href="href"
     :to="to"
     :download="download"
+    :type="tag === 'button' ? type : undefined"
     :class="classes"
-    :style="magnetic ? style : undefined"
-    :target="href && href.startsWith('http') ? '_blank' : undefined"
-    :rel="href && href.startsWith('http') ? 'noreferrer' : undefined"
-    @mousemove="magnetic ? onMove($event) : undefined"
-    @mouseleave="magnetic ? onLeave() : undefined"
+    :target="external ? '_blank' : undefined"
+    :rel="external ? 'noreferrer' : undefined"
   >
     <slot />
+    <svg v-if="arrow" class="arrow" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
   </component>
 </template>
+
+<style scoped>
+.site-btn-lg {
+  min-height: 3rem;
+  padding-inline: 1.2rem;
+  font-size: 1rem;
+}
+</style>

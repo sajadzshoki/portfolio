@@ -46,6 +46,10 @@ export interface Skill {
   index: number
   name: string
   category: string
+  logoUrl: string
+  descriptionEn: string
+  descriptionFa: string
+  isActive: boolean
 }
 
 export interface Project {
@@ -58,6 +62,7 @@ export interface Project {
   descriptionFa: string
   year: string
   imageUrl: string
+  mobileImageUrl: string
   demoUrl: string | null
   githubUrl: string | null
   layout: ProjectLayout | string

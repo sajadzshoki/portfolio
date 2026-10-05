@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin' })
 
-const email = ref('admin@atlas.dev')
+const email = ref('')
 const password = ref('')
 const error = ref('')
 const loading = ref(false)
@@ -17,33 +17,52 @@ async function submit() {
     })
     await navigateTo('/admin')
   } catch {
-    error.value = 'Invalid credentials'
+    error.value = t.value.admin.invalid
   } finally {
     loading.value = false
   }
 }
+
 </script>
 
 <template>
-  <div class="mx-auto max-w-md py-16">
-    <p class="meta text-muted mb-3">07 / ACCESS</p>
-    <h1 class="font-display text-5xl tracking-[-0.04em]">{{ t.admin.login }}</h1>
-    <form class="mt-10 space-y-5" @submit.prevent="submit">
+  <div class="login">
+    <p class="eyebrow">{{ t.admin.desk }}</p>
+    <h1 class="display">{{ t.admin.login }}</h1>
+    <form @submit.prevent="submit">
       <div>
-        <label class="field-label">Email</label>
-        <input v-model="email" type="email" autocomplete="username" required>
+        <label class="field-label" for="email">Email</label>
+        <input id="email" v-model="email" type="email" autocomplete="username" required>
       </div>
       <div>
-        <label class="field-label">Password</label>
-        <input v-model="password" type="password" autocomplete="current-password" required>
+        <label class="field-label" for="password">Password</label>
+        <input id="password" v-model="password" type="password" autocomplete="current-password" required>
       </div>
-      <p v-if="error" class="text-sm text-signal">{{ error }}</p>
-      <SiteButton variant="primary" type="submit" :magnetic="false">
-        {{ loading ? '…' : t.admin.login }}
-      </SiteButton>
+      <p v-if="error" class="err">{{ error }}</p>
+      <button class="site-btn site-btn-primary" type="submit">{{ loading ? '…' : t.admin.login }}</button>
     </form>
-    <p class="mt-8 font-mono text-xs text-muted">
-      Default: admin@atlas.dev / atlas-admin
-    </p>
   </div>
 </template>
+
+<style scoped>
+.login {
+  max-width: 28rem;
+  padding-top: 2rem;
+}
+
+.display {
+  margin-top: 0.7rem;
+  font-size: 3rem;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.6rem;
+}
+
+.err {
+  color: var(--danger);
+  font-size: 0.92rem;
+}
+</style>

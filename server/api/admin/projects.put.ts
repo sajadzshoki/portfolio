@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
         descriptionFa: String(item.descriptionFa || ''),
         year: String(item.year || ''),
         imageUrl: String(item.imageUrl || ''),
+        mobileImageUrl: String(item.mobileImageUrl || ''),
         demoUrl: item.demoUrl ? String(item.demoUrl) : null,
         githubUrl: item.githubUrl ? String(item.githubUrl) : null,
         layout: String(item.layout || 'image-start'),

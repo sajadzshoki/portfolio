@@ -6,14 +6,36 @@ const { t } = useLocale()
 <template>
   <button
     type="button"
-    class="group relative grid size-9 place-items-center border-2 border-ink bg-paper transition-colors hover:bg-ink hover:text-paper"
-    :aria-label="theme === 'dark' ? t.theme.light : t.theme.dark"
+    class="theme"
+    :aria-label="t.theme.toggle"
     :aria-pressed="theme === 'dark'"
     @click="toggleTheme"
   >
-    <span class="meta leading-none">{{ theme === 'dark' ? 'A' : 'B' }}</span>
-    <span
-      class="pointer-events-none absolute -bottom-1 start-1/2 h-1.5 w-1.5 -translate-x-1/2 translate-y-full bg-signal opacity-0 transition-opacity group-hover:opacity-100 [dir=rtl]:translate-x-1/2"
-    />
+    <svg v-if="theme === 'dark'" viewBox="0 0 20 20" aria-hidden="true">
+      <circle cx="10" cy="10" r="3.2" fill="none" stroke="currentColor" stroke-width="1.4" />
+      <path d="M10 2.5v1.8M10 15.7v1.8M2.5 10h1.8M15.7 10h1.8M4.4 4.4l1.3 1.3M14.3 14.3l1.3 1.3M15.6 4.4l-1.3 1.3M5.7 14.3l-1.3 1.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+    </svg>
+    <svg v-else viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M14.5 12.2A5.2 5.2 0 0 1 7.8 5.5 5.4 5.4 0 1 0 14.5 12.2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+    </svg>
   </button>
 </template>
+
+<style scoped>
+.theme {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.theme svg {
+  width: 1rem;
+  height: 1rem;
+}
+</style>

@@ -66,10 +66,14 @@ model FocusArea {
 }
 
 model Skill {
-  id       String @id @default(cuid())
-  index    Int
-  name     String
-  category String
+  id            String  @id @default(cuid())
+  index         Int
+  name          String
+  category      String
+  logoUrl       String  @default("")
+  descriptionEn String  @default("")
+  descriptionFa String  @default("")
+  isActive      Boolean @default(true)
 }
 
 model Project {
@@ -78,13 +82,14 @@ model Project {
   slug          String  @unique
   titleEn       String
   titleFa       String
-  descriptionEn String
-  descriptionFa String
-  year          String
-  imageUrl      String
-  demoUrl       String?
-  githubUrl     String?
-  layout        String  @default("image-start")
+  descriptionEn  String
+  descriptionFa  String
+  year           String
+  imageUrl       String
+  mobileImageUrl String  @default("")
+  demoUrl        String?
+  githubUrl      String?
+  layout         String  @default("image-start")
   techs         String
   featured      Boolean @default(true)
 }

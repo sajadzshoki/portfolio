@@ -1,119 +1,266 @@
 <script setup lang="ts">
-const { t, field } = useLocale()
+const { t } = useLocale()
 const { data } = usePortfolio()
-const { toggle } = useCommandPalette()
-const { current } = useSectionProgress()
+const route = useRoute()
 const scrolled = ref(false)
 const open = ref(false)
 
+const mark = computed(() => initials(data.value?.site.nameEn || 'Sajad Shokraei'))
+
 const links = computed(() => [
-  { href: '#about', id: 'about', label: t.value.nav.about, num: '01' },
-  { href: '#work', id: 'work', label: t.value.nav.work, num: '02' },
-  { href: '#studio', id: 'studio', label: t.value.nav.studio, num: '03' },
-  { href: '#contact', id: 'contact', label: t.value.nav.contact, num: '04' }
+  { to: '/projects', label: t.value.nav.projects },
+  { to: '/about', label: t.value.nav.about },
+  { to: '/skills', label: t.value.nav.skills },
+  { to: '/experience', label: t.value.nav.experience },
+  { to: '/contact', label: t.value.nav.contact }
 ])
 
-const initials = computed(() => {
-  const name = data.value ? field(data.value.site.nameEn, data.value.site.nameFa) : 'KR'
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map(w => w[0])
-    .join('')
-    .toUpperCase()
+const solid = computed(() => route.path !== '/' || scrolled.value || open.value)
+
+function current(path: string) {
+  return route.path === path || route.path.startsWith(`${path}/`)
+}
+
+function onScroll() {
+  scrolled.value = window.scrollY > 8
+}
+
+watch(open, (value) => {
+  if (!import.meta.client) return
+  document.body.style.overflow = value ? 'hidden' : ''
+})
+
+watch(() => route.fullPath, () => {
+  open.value = false
 })
 
 onMounted(() => {
-  const onScroll = () => {
-    scrolled.value = window.scrollY > 12
-  }
   onScroll()
   window.addEventListener('scroll', onScroll, { passive: true })
-  onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 })
 
-function go(href: string) {
-  open.value = false
-  document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
-}
-
-function isActive(id: string) {
-  if (id === 'about') return current.value === 'about' || current.value === 'skills'
-  if (id === 'work') return current.value === 'work'
-  if (id === 'studio') return current.value === 'studio' || current.value === 'social'
-  if (id === 'contact') return current.value === 'contact'
-  return false
-}
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll)
+  document.body.style.overflow = ''
+})
 </script>
 
 <template>
-  <header
-    class="fixed inset-x-0 top-0 z-50 border-b-2 border-ink bg-paper/90 backdrop-blur-[6px] transition-[box-shadow,background-color,border-color,color] duration-300"
-    :class="scrolled ? 'shadow-[0_2px_0_var(--ink)]' : ''"
-  >
-    <div class="site-shell flex h-16 items-center justify-between gap-4">
-      <a href="#top" class="font-display text-[1.35rem] font-semibold tracking-[-0.06em] leading-none">
-        {{ initials }}
-        <span class="text-signal">.</span>
-      </a>
+  <header class="site-header" :class="{ 'is-solid': solid, 'is-open': open }">
+    <div class="shell-wide bar">
+      <NuxtLink to="/" class="mark" :aria-label="t.nav.home">{{ mark }}</NuxtLink>
 
-      <nav class="hidden items-center gap-7 lg:flex" :aria-label="t.index">
-        <a
+      <nav class="desk" :aria-label="t.index">
+        <NuxtLink
           v-for="link in links"
-          :key="link.href"
-          :href="link.href"
-          class="group flex items-baseline gap-2 text-[0.95rem] font-display tracking-[-0.02em]"
-          :aria-current="isActive(link.id) ? 'location' : undefined"
-          @click.prevent="go(link.href)"
+          :key="link.to"
+          :to="link.to"
+          :aria-current="current(link.to) ? 'page' : undefined"
         >
-          <span class="meta transition-colors duration-300" :class="isActive(link.id) ? 'text-signal' : 'text-muted group-hover:text-signal'">{{ link.num }}</span>
-          <span class="relative">
-            {{ link.label }}
-            <span
-              class="absolute inset-x-0 -bottom-1 h-0.5 origin-left bg-signal transition-transform duration-300 [dir=rtl]:origin-right"
-              :class="isActive(link.id) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
-            />
-          </span>
-        </a>
+          {{ link.label }}
+        </NuxtLink>
       </nav>
 
-      <div class="flex items-center gap-3">
-        <LanguageSwitcher class="hidden sm:flex" />
+      <div class="tools">
+        <LanguageSwitcher />
         <ThemeSwitcher />
+        <SiteButton class="talk" to="/contact" variant="primary" arrow>{{ t.nav.talk }}</SiteButton>
         <button
           type="button"
-          class="hidden items-center gap-2 border-2 border-ink px-2 py-1 font-mono text-[0.65rem] tracking-[0.12em] uppercase md:inline-flex hover:bg-ink hover:text-paper"
-          @click="toggle"
-        >
-          <span>⌘K</span>
-        </button>
-        <button
-          type="button"
-          class="grid size-9 place-items-center border-2 border-ink lg:hidden"
+          class="menu-btn"
           :aria-expanded="open"
-          :aria-label="t.menu"
+          :aria-label="open ? t.close : t.menu"
           @click="open = !open"
         >
-          <span class="meta">{{ open ? '×' : '≡' }}</span>
+          <span />
+          <span />
         </button>
       </div>
     </div>
 
-    <div v-if="open" class="border-t-2 border-ink bg-paper lg:hidden">
-      <div class="site-shell py-5">
-        <LanguageSwitcher class="mb-5 sm:hidden" />
-        <a
-          v-for="link in links"
-          :key="link.href"
-          :href="link.href"
-          class="flex items-baseline justify-between border-b border-rule py-3 font-display text-2xl tracking-[-0.03em]"
-          @click.prevent="go(link.href)"
-        >
-          <span>{{ link.label }}</span>
-          <span class="meta" :class="isActive(link.id) ? 'text-signal' : 'text-muted'">{{ link.num }}</span>
-        </a>
+    <Transition name="menu">
+      <div v-if="open" class="overlay">
+        <nav class="shell" :aria-label="t.menu">
+          <NuxtLink
+            v-for="(link, index) in links"
+            :key="link.to"
+            :to="link.to"
+            :style="{ transitionDelay: `${80 + index * 40}ms` }"
+          >
+            <span>{{ String(index + 1).padStart(2, '0') }}</span>
+            {{ link.label }}
+          </NuxtLink>
+          <SiteButton to="/contact" variant="primary" arrow>{{ t.nav.talk }}</SiteButton>
+        </nav>
       </div>
-    </div>
+    </Transition>
   </header>
 </template>
+
+<style scoped>
+.site-header {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 70;
+  height: var(--header-h);
+  color: var(--text);
+}
+
+.site-header.is-solid {
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  gap: 1rem;
+}
+
+.mark {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+}
+
+.desk {
+  display: none;
+  align-items: center;
+  gap: 1.35rem;
+}
+
+.desk a {
+  color: var(--text-2);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.desk a[aria-current="page"],
+.desk a:hover {
+  color: var(--text);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.talk {
+  display: none;
+}
+
+.menu-btn {
+  display: grid;
+  gap: 6px;
+  width: 2.4rem;
+  height: 2.4rem;
+  place-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  cursor: pointer;
+}
+
+.menu-btn span {
+  display: block;
+  width: 0.9rem;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform 0.3s var(--ease);
+}
+
+.is-open .menu-btn span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.is-open .menu-btn span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 2.5rem;
+  background: color-mix(in srgb, var(--bg) 96%, black);
+}
+
+.overlay nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.overlay a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 8vw, 3.3rem);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+}
+
+html[lang="fa"] .overlay a {
+  font-family: var(--font-persian);
+}
+
+.overlay a span {
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.overlay .site-btn {
+  margin-top: 1.25rem;
+  align-self: flex-start;
+}
+
+.menu-enter-active,
+.menu-leave-active {
+  transition: opacity 0.28s ease;
+}
+
+.menu-enter-active a,
+.menu-leave-active a {
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+}
+
+.menu-enter-from a {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+@media (min-width: 980px) {
+  .desk,
+  .talk {
+    display: inline-flex;
+  }
+
+  .menu-btn,
+  .overlay {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-enter-from a {
+    transform: none;
+  }
+}
+</style>

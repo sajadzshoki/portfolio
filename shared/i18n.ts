@@ -3,74 +3,111 @@ import type { Locale } from './types'
 export const ui = {
   en: {
     skip: 'Skip to content',
-    index: 'Index',
-    issue: 'Issue',
-    available: 'Available',
-    location: 'Location',
-    stack: 'Stack',
-    nav: {
-      about: 'About',
-      work: 'Work',
-      studio: 'Studio',
-      contact: 'Contact'
-    },
-    present: 'Now',
     menu: 'Menu',
+    close: 'Close',
+    index: 'Index',
+    nav: {
+      home: 'Home',
+      projects: 'Projects',
+      about: 'About',
+      skills: 'Skills',
+      experience: 'Experience',
+      contact: 'Contact',
+      talk: "Let's talk",
+      work: 'Work',
+      studio: 'Studio'
+    },
     hero: {
-      kicker: 'Hero',
-      vol: 'Vol. II',
+      eyebrow: 'Front-end Developer',
+      kicker: 'Front-end Developer',
+      statement: 'Interfaces for real products.',
       ctaPrimary: 'View Projects',
-      ctaSecondary: 'Contact Me',
+      ctaSecondary: 'About Me',
+      scroll: 'Scroll',
       portrait: 'Portrait',
-      based: 'Based in'
+      based: 'Based in',
+      vol: ''
     },
     about: {
-      kicker: 'What I do',
-      title: 'Practice'
+      eyebrow: 'About',
+      kicker: 'About',
+      title: 'About me',
+      focus: 'What I work on',
+      company: 'Current company',
+      since: 'Since'
     },
     skills: {
-      kicker: 'Toolkit',
-      title: 'Selected tools'
+      eyebrow: 'Stack',
+      kicker: 'Stack',
+      title: 'Technologies I work with',
+      lede: 'Tools I use to design, build, and ship interfaces.',
+      all: 'View all skills',
+      empty: 'No technologies published yet.'
     },
     projects: {
+      eyebrow: 'Selected work',
       kicker: 'Selected work',
-      title: 'Projects',
-      demo: 'Live',
-      code: 'Code',
-      view: 'View',
+      title: 'Selected work',
+      all: 'All projects',
+      demo: 'Live site',
+      code: 'GitHub',
+      view: 'View project',
+      next: 'Next project',
+      prev: 'Previous project',
+      back: 'All projects',
+      empty: 'Projects will show up here once they are published.',
+      preview: 'Preview',
       featured: 'Featured'
     },
     experience: {
-      kicker: 'Path',
+      eyebrow: 'Experience',
+      kicker: 'Experience',
       title: 'Experience',
       work: 'Work',
-      education: 'Education'
+      education: 'Education',
+      present: 'Present'
+    },
+    contact: {
+      eyebrow: 'Contact',
+      kicker: 'Contact',
+      title: 'Have a project in mind?',
+      body: 'Write me about a product, a role, or a collaboration.',
+      cta: 'Email me',
+      resume: 'Resume',
+      email: 'Email'
     },
     social: {
       kicker: 'Elsewhere',
-      title: 'Channels'
-    },
-    contact: {
-      kicker: 'Next',
-      title: "Let's build something.",
-      body: 'Have a product, a publication, or a problem that needs a precise interface. Write. I read everything.',
-      cta: 'Contact Me',
-      resume: 'Download Resume',
-      email: 'Email'
+      title: 'Elsewhere'
     },
     footer: {
       rights: 'All rights reserved',
-      designed: 'Designed & built by',
-      cmd: 'to command'
+      designed: 'Designed and built by',
+      cmd: 'Command'
+    },
+    theme: {
+      light: 'Light',
+      dark: 'Dark',
+      toggle: 'Toggle color theme'
+    },
+    lang: {
+      toggle: 'Switch language',
+      en: 'EN',
+      fa: 'فا'
+    },
+    error: {
+      title: 'This page doesn’t exist.',
+      body: 'The link may be old, or the page was never here.',
+      home: 'Back home'
+    },
+    resume: {
+      title: 'Resume',
+      print: 'Print'
     },
     cmd: {
       placeholder: 'Go somewhere…',
       empty: 'No matches',
       hint: 'Navigate'
-    },
-    theme: {
-      light: 'Light',
-      dark: 'Dark'
     },
     admin: {
       desk: 'Desk',
@@ -81,6 +118,14 @@ export const ui = {
       add: 'Add',
       remove: 'Remove',
       upload: 'Upload',
+      up: 'Up',
+      down: 'Down',
+      active: 'Visible',
+      logo: 'Logo',
+      clearLogo: 'Remove logo',
+      invalid: 'Invalid credentials',
+      mobile: 'Mobile screenshot',
+      desktop: 'Desktop screenshot',
       tabs: {
         site: 'Site',
         about: 'About',
@@ -94,74 +139,111 @@ export const ui = {
   },
   fa: {
     skip: 'رفتن به محتوا',
-    index: 'فهرست',
-    issue: 'شماره',
-    available: 'وضعیت',
-    location: 'مکان',
-    stack: 'استک',
-    nav: {
-      about: 'درباره',
-      work: 'کارها',
-      studio: 'استودیو',
-      contact: 'تماس'
-    },
-    present: 'اکنون',
     menu: 'منو',
+    close: 'بستن',
+    index: 'فهرست',
+    nav: {
+      home: 'خانه',
+      projects: 'پروژه‌ها',
+      about: 'درباره',
+      skills: 'مهارت‌ها',
+      experience: 'تجربه',
+      contact: 'تماس',
+      talk: 'گفتگو',
+      work: 'کارها',
+      studio: 'استودیو'
+    },
     hero: {
-      kicker: 'سرآغاز',
-      vol: 'جلد ۲',
+      eyebrow: 'توسعه‌دهنده فرانت‌اند',
+      kicker: 'توسعه‌دهنده فرانت‌اند',
+      statement: 'رابط برای محصول‌های واقعی.',
       ctaPrimary: 'دیدن پروژه‌ها',
-      ctaSecondary: 'تماس با من',
+      ctaSecondary: 'درباره من',
+      scroll: 'پایین',
       portrait: 'پرتره',
-      based: 'مستقر در'
+      based: 'مستقر در',
+      vol: ''
     },
     about: {
-      kicker: 'چه می‌سازم',
-      title: 'حوزه کار'
+      eyebrow: 'درباره',
+      kicker: 'درباره',
+      title: 'درباره من',
+      focus: 'حوزه‌های کار',
+      company: 'شرکت فعلی',
+      since: 'از'
     },
     skills: {
-      kicker: 'ابزار',
-      title: 'ابزارهای منتخب'
+      eyebrow: 'ابزارها',
+      kicker: 'ابزارها',
+      title: 'تکنولوژی‌هایی که با آن‌ها کار می‌کنم',
+      lede: 'ابزارهایی که برای طراحی و ساخت رابط‌ها استفاده می‌کنم.',
+      all: 'همه مهارت‌ها',
+      empty: 'هنوز تکنولوژی‌ای منتشر نشده.'
     },
     projects: {
-      kicker: 'کارهای منتخب',
-      title: 'پروژه‌ها',
-      demo: 'نسخه زنده',
-      code: 'کد',
-      view: 'مشاهده',
+      eyebrow: 'کارها',
+      kicker: 'کارها',
+      title: 'کارهای منتخب',
+      all: 'همه پروژه‌ها',
+      demo: 'سایت',
+      code: 'گیت‌هاب',
+      view: 'مشاهده پروژه',
+      next: 'پروژه بعدی',
+      prev: 'پروژه قبلی',
+      back: 'همه پروژه‌ها',
+      empty: 'پروژه‌ها بعد از انتشار اینجا دیده می‌شوند.',
+      preview: 'پیش‌نمایش',
       featured: 'برگزیده'
     },
     experience: {
-      kicker: 'مسیر',
+      eyebrow: 'تجربه',
+      kicker: 'تجربه',
       title: 'تجربه',
       work: 'کار',
-      education: 'تحصیل'
+      education: 'تحصیل',
+      present: 'اکنون'
+    },
+    contact: {
+      eyebrow: 'تماس',
+      kicker: 'تماس',
+      title: 'پروژه‌ای در ذهن دارید؟',
+      body: 'درباره محصول، موقعیت شغلی یا همکاری بنویسید.',
+      cta: 'ایمیل',
+      resume: 'رزومه',
+      email: 'ایمیل'
     },
     social: {
       kicker: 'جایی دیگر',
-      title: 'کانال‌ها'
-    },
-    contact: {
-      kicker: 'بعدی',
-      title: 'چیزی بسازیم.',
-      body: 'محصول، نشریه، یا مسئله‌ای دارید که به یک رابط دقیق نیاز دارد. بنویسید. همه‌چیز را می‌خوانم.',
-      cta: 'تماس با من',
-      resume: 'دانلود رزومه',
-      email: 'ایمیل'
+      title: 'جایی دیگر'
     },
     footer: {
       rights: 'تمام حقوق محفوظ است',
       designed: 'طراحی و ساخت',
-      cmd: 'برای فرمان'
+      cmd: 'فرمان'
+    },
+    theme: {
+      light: 'روشن',
+      dark: 'تیره',
+      toggle: 'تغییر تم'
+    },
+    lang: {
+      toggle: 'تغییر زبان',
+      en: 'EN',
+      fa: 'فا'
+    },
+    error: {
+      title: 'این صفحه وجود ندارد.',
+      body: 'لینک ممکن است قدیمی باشد.',
+      home: 'بازگشت به خانه'
+    },
+    resume: {
+      title: 'رزومه',
+      print: 'چاپ'
     },
     cmd: {
       placeholder: 'برو به…',
       empty: 'موردی نیست',
       hint: 'پیمایش'
-    },
-    theme: {
-      light: 'روشن',
-      dark: 'تیره'
     },
     admin: {
       desk: 'میز کار',
@@ -172,6 +254,14 @@ export const ui = {
       add: 'افزودن',
       remove: 'حذف',
       upload: 'بارگذاری',
+      up: 'بالا',
+      down: 'پایین',
+      active: 'نمایش',
+      logo: 'لوگو',
+      clearLogo: 'حذف لوگو',
+      invalid: 'اطلاعات ورود درست نیست.',
+      mobile: 'تصویر موبایل',
+      desktop: 'تصویر دسکتاپ',
       tabs: {
         site: 'سایت',
         about: 'درباره',

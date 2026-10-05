@@ -60,9 +60,19 @@ export async function getPortfolio(): Promise<PortfolioContent> {
       bodyFa: about.bodyFa
     },
     focusAreas,
-    skills,
+    skills: skills.map(skill => ({
+      id: skill.id,
+      index: skill.index,
+      name: skill.name,
+      category: skill.category,
+      logoUrl: skill.logoUrl || '',
+      descriptionEn: skill.descriptionEn || '',
+      descriptionFa: skill.descriptionFa || '',
+      isActive: skill.isActive !== false
+    })),
     projects: projects.map(p => ({
       ...p,
+      mobileImageUrl: p.mobileImageUrl || '',
       techs: splitTechs(p.techs),
       featured: Boolean(p.featured)
     })),

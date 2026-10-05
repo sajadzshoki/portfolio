@@ -2,9 +2,15 @@
 const { data } = usePortfolio()
 const { field, t, locale } = useLocale()
 
-useHead(() => ({
-  title: data.value ? `Resume — ${field(data.value.site.nameEn, data.value.site.nameFa)}` : 'Resume'
-}))
+const site = computed(() => data.value?.site)
+const name = computed(() => site.value ? presentName(field(site.value.nameEn, site.value.nameFa)) : '')
+const role = computed(() => site.value ? field(site.value.roleEn, site.value.roleFa) : '')
+
+useSeoMeta({
+  title: () => `${t.value.resume.title} — ${name.value}`,
+  description: () => site.value ? field(site.value.introEn, site.value.introFa) : '',
+  robots: 'noindex'
+})
 
 function printPage() {
   window.print()
@@ -12,64 +18,138 @@ function printPage() {
 </script>
 
 <template>
-  <div class="site-shell py-28">
-    <div class="mb-10 flex flex-wrap items-end justify-between gap-4 print:hidden">
-      <div>
-        <p class="meta text-muted mb-2">CV / 2026</p>
-        <h1 class="font-display text-5xl tracking-[-0.04em]">
-          {{ data ? field(data.site.nameEn, data.site.nameFa) : '' }}
-        </h1>
+  <div class="page">
+    <div class="shell sheet">
+      <div class="top no-print">
+        <NuxtLink to="/">{{ name }}</NuxtLink>
+        <button type="button" class="site-btn site-btn-primary" @click="printPage">{{ t.resume.print }}</button>
       </div>
-      <SiteButton variant="primary" @click="printPage">
-        {{ t.contact.resume }}
-      </SiteButton>
-    </div>
 
-    <div class="grid grid-cols-12 gap-8 border-t-2 border-ink pt-10">
-      <aside class="col-span-12 md:col-span-4">
-        <p class="font-display text-2xl tracking-[-0.03em]">
-          {{ data ? field(data.site.roleEn, data.site.roleFa) : '' }}
+      <header>
+        <p class="eyebrow">{{ t.resume.title }}</p>
+        <h1 class="display">{{ name }}</h1>
+        <p class="role">{{ role }}</p>
+        <p class="meta-line">
+          <span>{{ site ? field(site.locationEn, site.locationFa) : '' }}</span>
+          <a v-if="site?.email" :href="`mailto:${site.email}`">{{ site.email }}</a>
         </p>
-        <p class="mt-3 text-muted">{{ data ? field(data.site.locationEn, data.site.locationFa) : '' }}</p>
-        <p class="mt-1 font-mono text-sm">{{ data?.site.email }}</p>
-        <ul class="mt-8 space-y-2">
-          <li v-for="s in data?.socials || []" :key="s.id" class="font-mono text-xs">
-            <a :href="s.url" class="hover:text-signal">{{ s.name }} — {{ s.handle }}</a>
-          </li>
-        </ul>
-      </aside>
+      </header>
 
-      <div class="col-span-12 md:col-span-8">
-        <p class="text-[1.05rem] leading-relaxed">
-          {{ data ? field(data.about.bodyEn, data.about.bodyFa) : '' }}
-        </p>
+      <p class="lede">{{ data ? field(data.about.bodyEn, data.about.bodyFa) : '' }}</p>
 
-        <h2 class="mt-12 border-b-2 border-ink pb-2 font-display text-2xl">{{ t.experience.work }}</h2>
-        <article v-for="item in data?.experience || []" :key="item.id" class="border-b border-rule py-5">
-          <p class="font-mono text-sm text-signal">{{ item.yearStart }}—{{ item.yearEnd }}</p>
-          <h3 class="mt-1 font-display text-xl">{{ field(item.titleEn, item.titleFa) }} — {{ field(item.orgEn, item.orgFa) }}</h3>
-          <p class="mt-2 text-sm text-muted">{{ field(item.bodyEn, item.bodyFa) }}</p>
+      <section v-if="data?.experience.length">
+        <h2>{{ t.experience.work }}</h2>
+        <article v-for="item in data.experience" :key="item.id">
+          <p class="when">{{ item.yearStart }} — {{ item.yearEnd }}</p>
+          <h3>{{ field(item.titleEn, item.titleFa) }} — {{ field(item.orgEn, item.orgFa) }}</h3>
+          <p>{{ field(item.bodyEn, item.bodyFa) }}</p>
         </article>
+      </section>
 
-        <h2 class="mt-10 border-b-2 border-ink pb-2 font-display text-2xl">{{ t.experience.education }}</h2>
-        <article v-for="item in data?.education || []" :key="item.id" class="py-5">
-          <p class="font-mono text-sm text-signal">{{ item.yearStart }}—{{ item.yearEnd }}</p>
-          <h3 class="mt-1 font-display text-xl">{{ field(item.titleEn, item.titleFa) }}</h3>
-          <p class="text-sm text-muted">{{ field(item.orgEn, item.orgFa) }}</p>
+      <section v-if="data?.education.length">
+        <h2>{{ t.experience.education }}</h2>
+        <article v-for="item in data.education" :key="item.id">
+          <p class="when">{{ item.yearStart }} — {{ item.yearEnd }}</p>
+          <h3>{{ field(item.titleEn, item.titleFa) }}</h3>
+          <p>{{ field(item.orgEn, item.orgFa) }}<span v-if="field(item.locationEn, item.locationFa)"> · {{ field(item.locationEn, item.locationFa) }}</span></p>
         </article>
+      </section>
 
-        <h2 class="mt-10 border-b-2 border-ink pb-2 font-display text-2xl">{{ locale === 'fa' ? 'ابزار' : 'Tools' }}</h2>
-        <p class="mt-4 font-mono text-sm leading-7">
-          {{ data?.skills.map(s => s.name).join('  ·  ') }}
-        </p>
-      </div>
+      <section v-if="data?.skills.length">
+        <h2>{{ t.skills.title }}</h2>
+        <p class="tools">{{ data.skills.filter(skill => skill.isActive !== false).map(skill => skill.name).join(' · ') }}</p>
+      </section>
+
+      <section v-if="data?.projects.length">
+        <h2>{{ t.projects.title }}</h2>
+        <article v-for="item in data.projects" :key="item.id">
+          <h3>{{ field(item.titleEn, item.titleFa) }} <span>{{ item.year }}</span></h3>
+          <p>{{ field(item.descriptionEn, item.descriptionFa) }}</p>
+        </article>
+      </section>
     </div>
   </div>
 </template>
 
-<style>
-@media print {
-  header, footer, .noise, .skip-link { display: none !important; }
-  body, html { background: white !important; color: black !important; }
+<style scoped>
+.top,
+.meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.display {
+  margin-top: 0.7rem;
+  font-size: clamp(2.8rem, 7vw, 4.6rem);
+}
+
+.role,
+.lede {
+  margin-top: 0.8rem;
+}
+
+.meta-line {
+  justify-content: flex-start;
+  margin-top: 0.7rem;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+section {
+  margin-top: 2.2rem;
+}
+
+h2 {
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+html[lang="fa"] h2 {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.95rem;
+}
+
+article {
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.when {
+  color: var(--accent-contrast);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+h3 {
+  margin-top: 0.2rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+h3 span,
+article p {
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+article p {
+  margin-top: 0.35rem;
+  line-height: 1.65;
+}
+
+.tools {
+  margin-top: 0.9rem;
+  line-height: 1.8;
 }
 </style>
