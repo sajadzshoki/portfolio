@@ -2,6 +2,8 @@
 const route = useRoute()
 const { t } = useLocale()
 
+useHead({ title: 'Desk — SAZAN' })
+
 async function logout() {
   await $fetch('/api/admin/logout', { method: 'POST' })
   await navigateTo('/admin/login')
@@ -9,20 +11,22 @@ async function logout() {
 </script>
 
 <template>
-  <div class="min-h-dvh bg-paper text-ink">
-    <header class="border-b-2 border-ink">
-      <div class="site-shell flex h-16 items-center justify-between">
-        <NuxtLink to="/admin" class="font-display text-xl tracking-[-0.04em]">
-          ATLAS <span class="text-muted">/ {{ t.admin.desk }}</span>
+  <div class="admin-root min-h-dvh bg-bg text-ink">
+    <header class="border-b border-line">
+      <div class="site-shell flex h-16 items-center justify-between gap-4">
+        <NuxtLink to="/admin" class="flex items-center gap-2 font-display text-lg font-semibold tracking-[-0.04em]">
+          <span class="text-primary"><SazanMark /></span>
+          SAZAN
+          <span class="text-sm font-medium text-muted">/ {{ t.admin.desk }}</span>
         </NuxtLink>
         <div class="flex items-center gap-3">
+          <SazanThemeSwitch />
           <LanguageSwitcher />
-          <ThemeSwitcher />
-          <NuxtLink to="/" class="meta border-2 border-ink px-2 py-1 hover:bg-ink hover:text-paper">Site</NuxtLink>
+          <NuxtLink to="/" class="text-sm hover:text-primary">Site</NuxtLink>
           <button
             v-if="route.path !== '/admin/login'"
             type="button"
-            class="meta border-2 border-ink px-2 py-1 hover:bg-signal hover:text-white hover:border-signal"
+            class="text-sm text-muted hover:text-primary"
             @click="logout"
           >
             {{ t.admin.logout }}

@@ -8,9 +8,16 @@ export function useMagnetic(strength = 0.32) {
       || window.matchMedia('(pointer: coarse)').matches
   }
 
+  function node() {
+    const value = el.value as (HTMLElement & { $el?: HTMLElement }) | null
+    if (!value) return null
+    return value instanceof HTMLElement ? value : value.$el || null
+  }
+
   function onMove(e: MouseEvent) {
-    if (!el.value || reduced()) return
-    const r = el.value.getBoundingClientRect()
+    const target = node()
+    if (!target || reduced()) return
+    const r = target.getBoundingClientRect()
     x.value = (e.clientX - r.left - r.width / 2) * strength
     y.value = (e.clientY - r.top - r.height / 2) * strength
   }

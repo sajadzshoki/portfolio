@@ -1,15 +1,13 @@
 <script setup lang="ts">
-const { locale, t, field } = useLocale()
-const { data } = usePortfolio()
+const { locale, t } = useLocale()
+const { theme } = useTheme()
 
 useHead(() => ({
   htmlAttrs: {
     lang: locale.value,
-    dir: locale.value === 'fa' ? 'rtl' : 'ltr'
-  },
-  title: data.value
-    ? `${field(data.value.site.nameEn, data.value.site.nameFa)} — ${field(data.value.site.roleEn, data.value.site.roleFa)}`
-    : undefined
+    dir: locale.value === 'fa' ? 'rtl' : 'ltr',
+    class: theme.value === 'dark' ? 'dark' : ''
+  }
 }))
 </script>
 

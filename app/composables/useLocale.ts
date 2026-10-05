@@ -27,6 +27,7 @@ export function useLocale() {
       document.documentElement.lang = next
       document.documentElement.dir = next === 'fa' ? 'rtl' : 'ltr'
       localStorage.setItem('atlas-locale', next)
+      document.cookie = `atlas-locale=${next}; path=/; max-age=31536000; samesite=lax`
     }
   }
 

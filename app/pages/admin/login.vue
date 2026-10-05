@@ -26,7 +26,8 @@ async function submit() {
 
 <template>
   <div class="mx-auto max-w-md py-16">
-    <p class="meta text-muted mb-3">07 / ACCESS</p>
+    <SazanMark :size="72" class="mb-5" />
+    <p class="sz-kicker mb-3">SAZAN</p>
     <h1 class="font-display text-5xl tracking-[-0.04em]">{{ t.admin.login }}</h1>
     <form class="mt-10 space-y-5" @submit.prevent="submit">
       <div>

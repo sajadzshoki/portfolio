@@ -3,25 +3,24 @@ const { locale, setLocale } = useLocale()
 </script>
 
 <template>
-  <div class="flex items-center gap-1 font-mono text-[0.7rem] font-medium tracking-[0.14em] uppercase">
+  <div class="inline-flex items-center rounded-full border border-line bg-surface p-0.5 text-xs font-semibold">
     <button
       type="button"
-      class="px-1.5 py-1 transition-colors"
-      :class="locale === 'en' ? 'text-ink' : 'text-muted hover:text-ink'"
+      class="rounded-full px-2.5 py-1"
+      :class="locale === 'en' ? 'bg-ink text-bg' : 'text-muted'"
       :aria-pressed="locale === 'en'"
       @click="setLocale('en')"
     >
       EN
     </button>
-    <span class="text-muted">—</span>
     <button
       type="button"
-      class="px-1.5 py-1 transition-colors"
-      :class="locale === 'fa' ? 'text-ink' : 'text-muted hover:text-ink'"
+      class="rounded-full px-2.5 py-1"
+      :class="locale === 'fa' ? 'bg-ink text-bg' : 'text-muted'"
       :aria-pressed="locale === 'fa'"
       @click="setLocale('fa')"
     >
-      FA
+      فا
     </button>
   </div>
 </template>

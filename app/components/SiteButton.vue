@@ -14,13 +14,9 @@ const props = withDefaults(defineProps<{
   type: 'button'
 })
 
-const { el, onMove, onLeave, style } = useMagnetic(0.28)
+const { el, onMove, onLeave, style } = useMagnetic(0.16)
+const external = computed(() => Boolean(props.href && /^https?:/i.test(props.href)))
 const tag = computed(() => props.href ? 'a' : props.to ? resolveComponent('NuxtLink') : 'button')
-const classes = computed(() => [
-  'site-btn',
-  props.variant === 'primary' ? 'site-btn-primary' : props.variant === 'ghost' ? 'site-btn-ghost' : 'site-btn-secondary',
-  props.size === 'lg' ? 'px-7 py-4 text-[1.05rem]' : 'px-5 py-3 text-[0.95rem]'
-])
 </script>
 
 <template>
@@ -29,11 +25,16 @@ const classes = computed(() => [
     ref="el"
     :href="href"
     :to="to"
+    :type="href || to ? undefined : type"
     :download="download"
-    :class="classes"
+    :target="external ? '_blank' : undefined"
+    :rel="external ? 'noopener noreferrer' : undefined"
+    class="sz-btn"
+    :class="[
+      variant === 'primary' ? 'sz-btn-primary' : variant === 'ghost' ? 'sz-btn-ghost' : 'sz-btn-secondary',
+      size === 'lg' ? 'sz-btn-lg' : 'sz-btn-md'
+    ]"
     :style="magnetic ? style : undefined"
-    :target="href && href.startsWith('http') ? '_blank' : undefined"
-    :rel="href && href.startsWith('http') ? 'noreferrer' : undefined"
     @mousemove="magnetic ? onMove($event) : undefined"
     @mouseleave="magnetic ? onLeave() : undefined"
   >
