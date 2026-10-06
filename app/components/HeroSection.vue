@@ -21,8 +21,24 @@ function scrollToProjects() {
 
 <template>
   <section id="top" class="hero" :class="{ ready }">
-    <div v-if="site?.portraitUrl" class="media" aria-hidden="true">
-      <img :src="site.portraitUrl" alt="">
+    <div class="media" aria-hidden="true">
+      <img
+        class="shot shot-dark"
+        src="/images/sajad-hero-dark.png"
+        alt=""
+        width="1774"
+        height="887"
+        fetchpriority="high"
+        decoding="async"
+      >
+      <img
+        class="shot shot-light"
+        src="/images/sajad-hero-light.png"
+        alt=""
+        width="2019"
+        height="779"
+        decoding="async"
+      >
     </div>
 
     <div class="inner">
@@ -50,7 +66,7 @@ function scrollToProjects() {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 100dvh;
+  min-height: 70dvh;
   padding-top: var(--header-h);
   padding-bottom: 4.5rem;
   overflow: hidden;
@@ -65,12 +81,18 @@ function scrollToProjects() {
   z-index: 0;
 }
 
-.media img {
+.shot {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: 62% center;
   display: block;
+}
+
+.shot-light {
+  visibility: hidden;
 }
 
 .media::after {
@@ -183,7 +205,7 @@ html[lang="fa"] .scroll {
   transform: translateX(50%);
 }
 
-.ready .media img {
+.ready .shot {
   animation: settle 1.3s var(--ease) both;
 }
 
@@ -203,7 +225,7 @@ html[lang="fa"] .scroll {
   .media {
     position: relative;
     width: 100%;
-    height: min(58vw, 320px);
+    height: min(40.6vw, 224px);
     inset-inline-end: auto;
   }
 
@@ -233,8 +255,18 @@ html[lang="fa"] .scroll {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ready .media img {
+  .ready .shot {
     animation: none;
   }
+}
+</style>
+
+<style>
+html:not(.dark) .hero .shot-dark {
+  visibility: hidden;
+}
+
+html:not(.dark) .hero .shot-light {
+  visibility: visible;
 }
 </style>
