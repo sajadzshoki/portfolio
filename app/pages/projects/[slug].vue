@@ -39,12 +39,12 @@ useHead(() => ({
 <template>
   <article v-if="project" class="page">
     <div class="shell-wide">
-      <NuxtLink class="back" to="/projects">{{ t.projects.back }}</NuxtLink>
+      <NuxtLink class="mb-[1.4rem] inline-block font-mono text-[0.75rem] tracking-[0.08em] text-[var(--text-3)] uppercase fa:text-[0.9rem] fa:tracking-normal fa:normal-case" to="/projects">{{ t.projects.back }}</NuxtLink>
       <p class="eyebrow">{{ project.year }}</p>
-      <h1 class="display title">{{ titleText }}</h1>
-      <p class="lede">{{ description }}</p>
-      <p v-if="project.techs.length" class="stack">{{ project.techs.join(' · ') }}</p>
-      <div class="actions">
+      <h1 class="display mt-[0.8rem] text-[clamp(3rem,8vw,6rem)]">{{ titleText }}</h1>
+      <p class="lede mt-4">{{ description }}</p>
+      <p v-if="project.techs.length" class="mt-4 font-mono text-[0.82rem] text-[var(--text-3)]">{{ project.techs.join(' · ') }}</p>
+      <div class="mt-[1.4rem] flex flex-wrap gap-[0.6rem]">
         <SiteButton v-if="project.demoUrl" :href="safeHref(project.demoUrl)" variant="primary" arrow>
           {{ t.projects.demo }}
         </SiteButton>
@@ -53,103 +53,15 @@ useHead(() => ({
         </SiteButton>
       </div>
 
-      <div class="previews">
+      <div class="mt-10 grid items-end gap-6 min-[900px]:grid-cols-[minmax(0,1fr)_230px]">
         <LaptopFrame :src="project.imageUrl" :alt="titleText" :live="project.demoUrl ? safeHref(project.demoUrl) : ''" />
-        <PhoneFrame :src="project.mobileImageUrl || project.imageUrl" :alt="titleText" :live="project.demoUrl ? safeHref(project.demoUrl) : ''" />
+        <PhoneFrame class="w-[min(100%,240px)] justify-self-center min-[900px]:justify-self-end" :src="project.mobileImageUrl || project.imageUrl" :alt="titleText" :live="project.demoUrl ? safeHref(project.demoUrl) : ''" />
       </div>
 
-      <NuxtLink v-if="next" class="next" :to="`/projects/${next.slug}`">
-        <span>{{ t.projects.next }}</span>
-        <strong>{{ field(next.titleEn, next.titleFa) }}</strong>
+      <NuxtLink v-if="next" class="mt-12 flex items-baseline justify-between gap-4 border-t border-[var(--line)] pt-[1.2rem]" :to="`/projects/${next.slug}`">
+        <span class="font-mono text-[0.75rem] tracking-[0.1em] text-[var(--text-3)] uppercase">{{ t.projects.next }}</span>
+        <strong class="text-[clamp(1.6rem,3vw,2.4rem)] font-[650] tracking-[-0.04em] [font-family:var(--font-display)]">{{ field(next.titleEn, next.titleFa) }}</strong>
       </NuxtLink>
     </div>
   </article>
 </template>
-
-<style scoped>
-.back {
-  display: inline-block;
-  margin-bottom: 1.4rem;
-  color: var(--text-3);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-html[lang="fa"] .back {
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: 0.9rem;
-}
-
-.title {
-  margin-top: 0.8rem;
-  font-size: clamp(3rem, 8vw, 6rem);
-}
-
-.lede,
-.stack {
-  margin-top: 1rem;
-}
-
-.stack {
-  color: var(--text-3);
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.4rem;
-}
-
-.previews {
-  display: grid;
-  gap: 1.5rem;
-  align-items: end;
-  margin-top: 2.5rem;
-}
-
-.previews :deep(.phone) {
-  width: min(100%, 240px);
-  justify-self: center;
-}
-
-.next {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 3rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--line);
-}
-
-.next span {
-  color: var(--text-3);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.next strong {
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 650;
-  letter-spacing: -0.04em;
-}
-
-@media (min-width: 900px) {
-  .previews {
-    grid-template-columns: minmax(0, 1fr) 230px;
-  }
-
-  .previews :deep(.phone) {
-    justify-self: end;
-  }
-}
-</style>

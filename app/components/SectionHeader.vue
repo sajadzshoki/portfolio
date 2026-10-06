@@ -7,49 +7,14 @@ defineProps<{
 </script>
 
 <template>
-  <header class="section-head">
+  <header class="mb-[clamp(1.75rem,4vw,2.75rem)] grid gap-4 min-[800px]:grid-cols-[minmax(0,1fr)_auto] min-[800px]:items-end">
     <div>
       <p class="eyebrow">{{ eyebrow }}</p>
-      <h2 class="display title">{{ title }}</h2>
+      <h2 class="display mt-[0.85rem] max-w-[18ch] text-[clamp(2.1rem,4.6vw,3.6rem)]">{{ title }}</h2>
     </div>
-    <p v-if="lede" class="lede">{{ lede }}</p>
-    <div v-if="$slots.action" class="action">
+    <p v-if="lede" class="lede min-[800px]:col-start-1">{{ lede }}</p>
+    <div v-if="$slots.action" class="justify-self-start min-[800px]:col-start-2 min-[800px]:row-start-1 min-[800px]:justify-self-end">
       <slot name="action" />
     </div>
   </header>
 </template>
-
-<style scoped>
-.section-head {
-  display: grid;
-  gap: 1rem;
-  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
-}
-
-.title {
-  margin-top: 0.85rem;
-  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
-  max-width: 18ch;
-}
-
-.action {
-  justify-self: start;
-}
-
-@media (min-width: 800px) {
-  .section-head {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-  }
-
-  .lede {
-    grid-column: 1;
-  }
-
-  .action {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: end;
-  }
-}
-</style>

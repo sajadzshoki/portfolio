@@ -18,93 +18,30 @@ const email = computed(() => site.value?.email || '')
   <section id="contact" class="band contact">
     <div class="shell-wide">
       <p class="eyebrow">{{ t.contact.eyebrow }}</p>
-      <h2 class="display title">{{ title }}</h2>
-      <p class="lede">{{ body }}</p>
+      <h2 class="display mt-[0.85rem] max-w-[12ch] text-[clamp(2.6rem,7vw,5.4rem)]">{{ title }}</h2>
+      <p class="lede mt-4">{{ body }}</p>
 
-      <div class="row">
-        <a v-if="email" class="mail" :href="`mailto:${email}`">{{ email }}</a>
-        <div class="actions">
+      <div class="mt-[1.8rem] flex flex-wrap items-end justify-between gap-4">
+        <a v-if="email" class="border-b border-[var(--line-strong)] text-[clamp(1.15rem,2vw,1.6rem)] font-semibold tracking-[-0.03em] [font-family:var(--font-display)] hover:border-[var(--accent)]" :href="`mailto:${email}`">{{ email }}</a>
+        <div class="flex flex-wrap gap-[0.6rem]">
           <SiteButton v-if="email" :href="`mailto:${email}`" variant="primary" arrow>{{ t.contact.cta }}</SiteButton>
           <SiteButton v-if="site?.resumeUrl" :to="site.resumeUrl" variant="secondary">{{ t.contact.resume }}</SiteButton>
         </div>
       </div>
 
-      <div class="socials">
+      <div class="mt-[2.2rem] grid border-t border-[var(--line)]">
         <a
           v-for="item in data?.socials || []"
           :key="item.id"
           :href="safeHref(item.url)"
+          class="group flex justify-between gap-4 border-b border-[var(--line)] py-[0.9rem] text-[var(--text)]"
           target="_blank"
           rel="noreferrer"
         >
-          <span>{{ item.name }}</span>
-          <span>{{ item.handle }}</span>
+          <span class="group-hover:text-[var(--accent-contrast)]">{{ item.name }}</span>
+          <span class="font-mono text-[0.78rem] text-[var(--text-3)]">{{ item.handle }}</span>
         </a>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-.title {
-  margin-top: 0.85rem;
-  font-size: clamp(2.6rem, 7vw, 5.4rem);
-  max-width: 12ch;
-}
-
-.lede {
-  margin-top: 1rem;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 1.8rem;
-}
-
-.mail {
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2vw, 1.6rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  border-bottom: 1px solid var(--line-strong);
-}
-
-.mail:hover {
-  border-bottom-color: var(--accent);
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.socials {
-  display: grid;
-  margin-top: 2.2rem;
-  border-top: 1px solid var(--line);
-}
-
-.socials a {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-block: 0.9rem;
-  border-bottom: 1px solid var(--line);
-  color: var(--text);
-}
-
-.socials a span:last-child {
-  color: var(--text-3);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-}
-
-.socials a:hover span:first-child {
-  color: var(--accent-contrast);
-}
-</style>

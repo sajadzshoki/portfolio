@@ -49,128 +49,63 @@ onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
-  <div v-if="project" ref="root" class="showcase">
-    <div class="meta">
-      <button v-if="projects.length > 1" type="button" class="arrow" :aria-label="t.projects.prev" @click="step(-1)">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+  <div v-if="project" ref="root" class="relative grid items-center gap-7 min-[1080px]:grid-cols-[minmax(210px,250px)_minmax(0,1fr)_minmax(210px,250px)] min-[1080px]:gap-x-6 min-[1080px]:gap-y-5">
+    <div>
+      <button v-if="projects.length > 1" type="button" class="mb-[0.8rem] grid size-[2.1rem] cursor-pointer place-items-center rounded-full border border-[var(--line-strong)] bg-transparent text-[var(--text)]" :aria-label="t.projects.prev" @click="step(-1)">
+        <svg class="size-[0.9rem] rtl:-scale-x-100" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </button>
-      <h3 class="display">{{ title }}</h3>
-      <p class="year">{{ project.year }}</p>
-      <p class="lede">{{ description }}</p>
-      <ul v-if="project.techs.length" class="pills">
-        <li v-for="tech in project.techs" :key="tech">{{ tech }}</li>
+      <h3 class="display text-[clamp(1.8rem,3vw,2.4rem)] leading-[1.05]">{{ title }}</h3>
+      <p class="mt-[0.45rem] font-mono text-[0.75rem] tracking-[0.04em] text-[var(--text-3)]">{{ project.year }}</p>
+      <p class="lede mt-[0.85rem] line-clamp-4 text-[0.95rem]">{{ description }}</p>
+      <ul v-if="project.techs.length" class="m-0 mt-4 flex list-none flex-wrap gap-[0.4rem] p-0">
+        <li v-for="tech in project.techs" :key="tech" class="rounded-full border border-[var(--line-strong)] px-[0.65rem] py-[0.28rem] text-[0.78rem] text-[var(--text-2)]">{{ tech }}</li>
       </ul>
-      <div class="links">
-        <SiteButton v-if="live" :href="live" variant="secondary" arrow>{{ t.projects.demo }}</SiteButton>
-        <SiteButton v-if="project.githubUrl" :href="safeHref(project.githubUrl)" variant="ghost">{{ t.projects.code }}</SiteButton>
-        <SiteButton :to="`/projects/${project.slug}`" variant="ghost" arrow>{{ t.projects.view }}</SiteButton>
+      <div class="mt-[1.15rem] flex flex-wrap gap-x-[0.8rem] gap-y-[0.45rem]">
+        <SiteButton v-if="live" :href="live" variant="secondary" arrow class="rounded-full">{{ t.projects.demo }}</SiteButton>
+        <SiteButton v-if="project.githubUrl" :href="safeHref(project.githubUrl)" variant="ghost" class="rounded-full">{{ t.projects.code }}</SiteButton>
+        <SiteButton :to="`/projects/${project.slug}`" variant="ghost" arrow class="rounded-full">{{ t.projects.view }}</SiteButton>
       </div>
     </div>
 
-    <div class="stage">
+    <div class="min-w-0">
       <Transition name="swap" mode="out-in">
-        <div :key="project.id" class="devices">
+        <div :key="project.id" class="devices relative pe-[11%] pb-[0.4rem] max-[860px]:pe-0">
           <LaptopFrame :src="project.imageUrl" :alt="title" :live="armed ? live : ''" />
-          <PhoneFrame :src="project.mobileImageUrl || project.imageUrl" :alt="title" :live="armed ? live : ''" />
+          <div class="absolute end-0 bottom-0 z-[2] w-[min(30%,188px)] max-[860px]:relative max-[860px]:end-auto max-[860px]:bottom-auto max-[860px]:z-auto max-[860px]:mt-[-22%] max-[860px]:ms-auto max-[860px]:w-[min(52%,190px)]">
+            <PhoneFrame :src="project.mobileImageUrl || project.imageUrl" :alt="title" :live="armed ? live : ''" />
+          </div>
         </div>
       </Transition>
     </div>
 
-    <div class="picker" role="tablist" :aria-label="t.projects.title">
+    <div class="flex gap-[0.55rem] overflow-x-auto pb-[0.2rem] min-[1080px]:flex-col min-[1080px]:items-stretch min-[1080px]:overflow-visible" role="tablist" :aria-label="t.projects.title">
       <button
         v-for="(item, index) in projects"
         :key="item.id"
         type="button"
         role="tab"
+        class="flex w-[min(100%,240px)] flex-none cursor-pointer items-center gap-[0.7rem] rounded-[14px] border border-transparent bg-transparent p-[0.45rem] text-start text-[var(--text-2)] hover:border-[var(--line-strong)] hover:bg-[color-mix(in_srgb,var(--text)_5%,transparent)] hover:text-[var(--text)] aria-selected:border-[var(--line-strong)] aria-selected:bg-[color-mix(in_srgb,var(--text)_5%,transparent)] aria-selected:text-[var(--text)] min-[1080px]:w-full"
         :aria-selected="index === active"
-        :class="{ on: index === active }"
         @click="select(index)"
       >
-        <span class="thumb">
-          <img v-if="item.imageUrl" :src="item.imageUrl" alt="">
+        <span class="size-[3.1rem] flex-none overflow-hidden rounded-[10px] bg-[var(--surface-2)]">
+          <img v-if="item.imageUrl" class="size-full object-cover object-top" :src="item.imageUrl" alt="">
         </span>
-        <span class="info">
-          <strong>{{ field(item.titleEn, item.titleFa) }}</strong>
-          <em>{{ item.year }}</em>
-          <small v-if="item.techs.length">{{ item.techs.slice(0, 3).join(' · ') }}</small>
+        <span class="grid min-w-0 gap-[0.1rem]">
+          <strong class="text-[0.92rem] font-[650] tracking-[-0.02em]">{{ field(item.titleEn, item.titleFa) }}</strong>
+          <em class="text-[0.72rem] leading-[1.35] text-[var(--text-3)] not-italic">{{ item.year }}</em>
+          <small v-if="item.techs.length" class="truncate text-[0.72rem] leading-[1.35] text-[var(--text-3)]">{{ item.techs.slice(0, 3).join(' · ') }}</small>
         </span>
       </button>
-      <button v-if="projects.length > 1" type="button" class="arrow side" :aria-label="t.projects.next" @click="step(1)">
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <button v-if="projects.length > 1" type="button" class="hidden size-[2.1rem] cursor-pointer place-items-center self-center rounded-full border border-[var(--line-strong)] bg-transparent text-[var(--text)] min-[1080px]:mt-[0.4rem] min-[1080px]:mb-0 min-[1080px]:ml-auto min-[1080px]:grid min-[1080px]:mr-0 rtl:min-[1080px]:mr-auto rtl:min-[1080px]:ml-0" :aria-label="t.projects.next" @click="step(1)">
+        <svg class="size-[0.9rem] rtl:-scale-x-100" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </button>
     </div>
-    <p class="sr">{{ title }}</p>
+    <p class="absolute h-px w-px overflow-hidden [clip:rect(0_0_0_0)]">{{ title }}</p>
   </div>
 </template>
 
 <style scoped>
-.showcase {
-  position: relative;
-  display: grid;
-  gap: 1.75rem;
-  align-items: center;
-}
-
-.display {
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  line-height: 1.05;
-}
-
-.year {
-  margin-top: 0.45rem;
-  color: var(--text-3);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-}
-
-.lede {
-  margin-top: 0.85rem;
-  font-size: 0.95rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 1rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.pills li {
-  padding: 0.28rem 0.65rem;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  color: var(--text-2);
-  font-size: 0.78rem;
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem 0.8rem;
-  margin-top: 1.15rem;
-}
-
-.links :deep(.site-btn) {
-  border-radius: 999px;
-}
-
-.stage {
-  min-width: 0;
-}
-
-.devices {
-  position: relative;
-  padding-bottom: 0.4rem;
-  padding-inline-end: 11%;
-}
-
 .devices::after {
   content: "";
   position: absolute;
@@ -182,119 +117,6 @@ onBeforeUnmount(() => observer?.disconnect())
   filter: blur(8px);
 }
 
-.devices :deep(.phone) {
-  position: absolute;
-  z-index: 2;
-  inset-inline-end: 0;
-  bottom: 0;
-  width: min(30%, 188px);
-}
-
-.picker {
-  display: flex;
-  gap: 0.55rem;
-  overflow-x: auto;
-  padding-bottom: 0.2rem;
-}
-
-.picker > button[role="tab"] {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  flex: none;
-  width: min(100%, 240px);
-  padding: 0.45rem;
-  border: 1px solid transparent;
-  border-radius: 14px;
-  background: transparent;
-  color: var(--text-2);
-  text-align: start;
-  cursor: pointer;
-}
-
-.picker > button[role="tab"].on,
-.picker > button[role="tab"]:hover {
-  border-color: var(--line-strong);
-  background: color-mix(in srgb, var(--text) 5%, transparent);
-  color: var(--text);
-}
-
-.thumb {
-  flex: none;
-  width: 3.1rem;
-  height: 3.1rem;
-  overflow: hidden;
-  border-radius: 10px;
-  background: var(--surface-2);
-}
-
-.thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-}
-
-.info {
-  display: grid;
-  min-width: 0;
-  gap: 0.1rem;
-}
-
-.info strong {
-  font-size: 0.92rem;
-  font-weight: 650;
-  letter-spacing: -0.02em;
-}
-
-.info em,
-.info small {
-  color: var(--text-3);
-  font-style: normal;
-  font-size: 0.72rem;
-  line-height: 1.35;
-}
-
-.info small {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.arrow {
-  display: grid;
-  place-items: center;
-  width: 2.1rem;
-  height: 2.1rem;
-  margin-bottom: 0.8rem;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--text);
-  cursor: pointer;
-}
-
-.arrow svg {
-  width: 0.9rem;
-  height: 0.9rem;
-}
-
-[dir="rtl"] .arrow svg {
-  transform: scaleX(-1);
-}
-
-.arrow.side {
-  display: none;
-}
-
-.sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-}
-
 .swap-enter-active,
 .swap-leave-active {
   transition: opacity 0.35s ease, transform 0.45s var(--ease);
@@ -304,46 +126,6 @@ onBeforeUnmount(() => observer?.disconnect())
 .swap-leave-to {
   opacity: 0;
   transform: translateY(8px);
-}
-
-@media (max-width: 860px) {
-  .devices {
-    padding-inline-end: 0;
-  }
-
-  .devices :deep(.phone) {
-    position: relative;
-    width: min(52%, 190px);
-    margin-top: -22%;
-    margin-inline-start: auto;
-  }
-}
-
-@media (min-width: 1080px) {
-  .showcase {
-    grid-template-columns: minmax(210px, 250px) minmax(0, 1fr) minmax(210px, 250px);
-    gap: 1.25rem 1.5rem;
-  }
-
-  .picker {
-    flex-direction: column;
-    overflow: visible;
-    align-items: stretch;
-  }
-
-  .picker > button[role="tab"] {
-    width: 100%;
-  }
-
-  .arrow.side {
-    display: grid;
-    align-self: center;
-    margin: 0.4rem 0 0 auto;
-  }
-
-  [dir="rtl"] .arrow.side {
-    margin-inline: auto 0;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

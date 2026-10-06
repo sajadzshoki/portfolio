@@ -35,11 +35,13 @@ watch(() => props.url, () => {
 </script>
 
 <template>
-  <div ref="box" class="live" :class="{ ready: loaded }">
+  <div ref="box" class="live absolute inset-0 h-full w-full overflow-hidden">
     <iframe
       v-if="shown"
       :src="url"
       :title="title"
+      class="pointer-events-none absolute top-0 left-0 origin-top-left border-0 bg-white"
+      :class="loaded ? 'opacity-100' : 'opacity-0'"
       :style="{
         width: `${width}px`,
         height: `${height}px`,
@@ -53,27 +55,9 @@ watch(() => props.url, () => {
 
 <style scoped>
 .live {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
   background:
     linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent),
     #10110f;
   background-size: 200% 100%;
-}
-
-.live iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: 0;
-  transform-origin: top left;
-  background: #fff;
-  pointer-events: none;
-}
-
-.live:not(.ready) iframe {
-  opacity: 0;
 }
 </style>

@@ -16,91 +16,32 @@ const links = computed(() => [
 </script>
 
 <template>
-  <footer class="site-footer">
-    <div class="shell-wide foot">
+  <footer class="site-footer border-t border-[var(--line)] pt-[2.2rem] pb-[2.6rem]">
+    <div class="shell-wide grid gap-6 min-[900px]:grid-cols-[1.1fr_1.4fr_1fr] min-[900px]:items-start">
       <div>
-        <p class="name">{{ name }}</p>
-        <p class="role">{{ role }}</p>
+        <p class="text-[1.25rem] font-[650] tracking-[-0.04em] [font-family:var(--font-display)]">{{ name }}</p>
+        <p class="mt-[0.3rem] text-[0.92rem] text-[var(--text-3)]">{{ role }}</p>
       </div>
 
-      <nav :aria-label="t.index">
-        <NuxtLink v-for="link in links" :key="link.to" :to="link.to">{{ link.label }}</NuxtLink>
+      <nav class="flex flex-wrap gap-x-[1.1rem] gap-y-3" :aria-label="t.index">
+        <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="text-[0.92rem] text-[var(--text-2)] hover:text-[var(--text)]">{{ link.label }}</NuxtLink>
       </nav>
 
-      <div class="end">
-        <div class="socials">
+      <div class="min-[900px]:justify-self-end min-[900px]:text-end">
+        <div class="flex flex-wrap gap-x-[1.1rem] gap-y-3 min-[900px]:justify-end">
           <a
             v-for="item in data?.socials || []"
             :key="item.id"
             :href="safeHref(item.url)"
+            class="text-[0.92rem] text-[var(--text-2)] hover:text-[var(--text)]"
             target="_blank"
             rel="noreferrer"
           >
             {{ item.name }}
           </a>
         </div>
-        <p class="copy">© {{ year }} {{ name }}. {{ t.footer.rights }}</p>
+        <p class="mt-[0.3rem] text-[0.92rem] text-[var(--text-3)]">© {{ year }} {{ name }}. {{ t.footer.rights }}</p>
       </div>
     </div>
   </footer>
 </template>
-
-<style scoped>
-.site-footer {
-  border-top: 1px solid var(--line);
-  padding-block: 2.2rem 2.6rem;
-}
-
-.foot {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.name {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 650;
-  letter-spacing: -0.04em;
-}
-
-.role,
-.copy {
-  margin-top: 0.3rem;
-  color: var(--text-3);
-  font-size: 0.92rem;
-}
-
-nav,
-.socials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.1rem;
-}
-
-nav a,
-.socials a {
-  color: var(--text-2);
-  font-size: 0.92rem;
-}
-
-nav a:hover,
-.socials a:hover {
-  color: var(--text);
-}
-
-@media (min-width: 900px) {
-  .foot {
-    grid-template-columns: 1.1fr 1.4fr 1fr;
-    align-items: start;
-  }
-
-  .end {
-    justify-self: end;
-    text-align: end;
-  }
-
-  .socials {
-    justify-content: flex-end;
-  }
-}
-</style>

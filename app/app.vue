@@ -15,7 +15,7 @@ useHead(() => ({
 
 <template>
   <div>
-    <a href="#main" class="skip-link">{{ t.skip }}</a>
+    <a href="#main" class="skip-link absolute start-4 -top-16 z-[100] rounded-lg bg-[var(--text)] px-[0.9rem] py-[0.6rem] text-[var(--bg)] focus:top-4">{{ t.skip }}</a>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

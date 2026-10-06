@@ -25,70 +25,14 @@ function mark(name: string) {
 </script>
 
 <template>
-  <ul v-if="skills.length" class="board">
-    <li v-for="skill in skills" :key="skill.id">
-      <span class="mark">
-        <img v-if="skill.logoUrl" :src="skill.logoUrl" :alt="skill.name" width="52" height="52">
+  <ul v-if="skills.length" class="m-0 grid list-none grid-cols-2 gap-x-4 gap-y-7 p-0 min-[720px]:grid-cols-5 min-[720px]:gap-x-5 min-[720px]:gap-y-9">
+    <li v-for="skill in skills" :key="skill.id" class="grid min-w-0 justify-items-center gap-[0.7rem] text-center">
+      <span class="grid size-[3.25rem] place-items-center font-mono text-[0.78rem] text-[var(--text-2)] min-[720px]:size-[2.85rem]">
+        <img v-if="skill.logoUrl" class="size-[2.65rem] object-contain min-[720px]:size-[2.85rem]" :src="skill.logoUrl" :alt="skill.name" width="52" height="52">
         <span v-else>{{ mark(skill.name) }}</span>
       </span>
-      <span class="name">{{ skill.name }}</span>
+      <span class="text-[0.84rem] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--text-2)]">{{ skill.name }}</span>
     </li>
   </ul>
   <p v-else class="lede">{{ t.skills.empty }}</p>
 </template>
-
-<style scoped>
-.board {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.75rem 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.board li {
-  display: grid;
-  justify-items: center;
-  gap: 0.7rem;
-  min-width: 0;
-  text-align: center;
-}
-
-.mark {
-  display: grid;
-  place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  color: var(--text-2);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-}
-
-.mark img {
-  width: 2.65rem;
-  height: 2.65rem;
-  object-fit: contain;
-}
-
-.name {
-  color: var(--text-2);
-  font-size: 0.84rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-}
-
-@media (min-width: 720px) {
-  .board {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 2.25rem 1.25rem;
-  }
-
-  .mark,
-  .mark img {
-    width: 2.85rem;
-    height: 2.85rem;
-  }
-}
-</style>

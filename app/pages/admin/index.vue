@@ -143,30 +143,31 @@ const tabs = computed(() => [
 
 <template>
   <div>
-    <div class="head">
-      <h1 class="display">{{ t.admin.desk }}</h1>
+    <div class="mb-[1.4rem] flex items-end justify-between gap-4">
+      <h1 class="display text-[2.4rem]">{{ t.admin.desk }}</h1>
       <p v-if="status">{{ status }}</p>
     </div>
 
-    <div class="tabs" role="tablist">
+    <div class="mb-6 flex flex-wrap gap-[0.4rem]" role="tablist">
       <button
         v-for="item in tabs"
         :key="item.id"
         type="button"
-        :class="{ on: tab === item.id }"
+        class="cursor-pointer rounded-full border border-[var(--line)] bg-transparent px-[0.7rem] py-[0.45rem] text-[var(--text-2)]"
+        :class="tab === item.id ? 'border-[var(--text)] bg-[var(--text)] text-[var(--bg)]' : ''"
         @click="tab = item.id"
       >
         {{ item.label }}
       </button>
     </div>
 
-    <form v-if="tab === 'site'" class="grid" @submit.prevent="save('/api/admin/site', site)">
+    <form v-if="tab === 'site'" class="grid grid-cols-1 gap-[0.85rem] min-[800px]:grid-cols-2" @submit.prevent="save('/api/admin/site', site)">
       <div><label class="field-label">Name EN</label><input v-model="site.nameEn"></div>
       <div><label class="field-label">Name FA</label><input v-model="site.nameFa"></div>
       <div><label class="field-label">Role EN</label><input v-model="site.roleEn"></div>
       <div><label class="field-label">Role FA</label><input v-model="site.roleFa"></div>
-      <div class="wide"><label class="field-label">Intro EN</label><textarea v-model="site.introEn" rows="3" /></div>
-      <div class="wide"><label class="field-label">Intro FA</label><textarea v-model="site.introFa" rows="3" /></div>
+      <div class="col-span-full"><label class="field-label">Intro EN</label><textarea v-model="site.introEn" rows="3" /></div>
+      <div class="col-span-full"><label class="field-label">Intro FA</label><textarea v-model="site.introFa" rows="3" /></div>
       <div><label class="field-label">Location EN</label><input v-model="site.locationEn"></div>
       <div><label class="field-label">Location FA</label><input v-model="site.locationFa"></div>
       <div><label class="field-label">Email</label><input v-model="site.email"></div>
@@ -175,26 +176,26 @@ const tabs = computed(() => [
       <div><label class="field-label">Availability FA</label><input v-model="site.availabilityFa"></div>
       <div><label class="field-label">Meta EN</label><input v-model="site.metaEn"></div>
       <div><label class="field-label">Meta FA</label><input v-model="site.metaFa"></div>
-      <div class="wide"><label class="field-label">Contact title EN</label><input v-model="site.contactTitleEn"></div>
-      <div class="wide"><label class="field-label">Contact title FA</label><input v-model="site.contactTitleFa"></div>
-      <div class="wide"><label class="field-label">Contact body EN</label><textarea v-model="site.contactBodyEn" rows="3" /></div>
-      <div class="wide"><label class="field-label">Contact body FA</label><textarea v-model="site.contactBodyFa" rows="3" /></div>
-      <div class="wide">
+      <div class="col-span-full"><label class="field-label">Contact title EN</label><input v-model="site.contactTitleEn"></div>
+      <div class="col-span-full"><label class="field-label">Contact title FA</label><input v-model="site.contactTitleFa"></div>
+      <div class="col-span-full"><label class="field-label">Contact body EN</label><textarea v-model="site.contactBodyEn" rows="3" /></div>
+      <div class="col-span-full"><label class="field-label">Contact body FA</label><textarea v-model="site.contactBodyFa" rows="3" /></div>
+      <div class="col-span-full">
         <label class="field-label">Portrait</label>
         <input v-model="site.portraitUrl">
-        <img v-if="site.portraitUrl" class="preview" :src="site.portraitUrl" alt="">
+        <img v-if="site.portraitUrl" class="mt-[0.6rem] w-[min(100%,280px)] rounded-[10px] border border-[var(--line)]" :src="site.portraitUrl" alt="">
         <input type="file" accept="image/*" @change="onFile($event, url => site.portraitUrl = url)">
       </div>
       <button class="site-btn site-btn-primary" type="submit" :disabled="saving">{{ t.admin.save }}</button>
     </form>
 
-    <form v-else-if="tab === 'about'" class="stack" @submit.prevent="save('/api/admin/about', about)">
+    <form v-else-if="tab === 'about'" class="grid gap-4" @submit.prevent="save('/api/admin/about', about)">
       <div><label class="field-label">Heading EN</label><input v-model="about.headingEn"></div>
       <div><label class="field-label">Heading FA</label><input v-model="about.headingFa"></div>
       <div><label class="field-label">Body EN</label><textarea v-model="about.bodyEn" rows="4" /></div>
       <div><label class="field-label">Body FA</label><textarea v-model="about.bodyFa" rows="4" /></div>
-      <div class="row">
-        <h2>Focus</h2>
+      <div class="flex flex-wrap items-center justify-between gap-[0.6rem]">
+        <h2 class="text-[1.3rem]">Focus</h2>
         <button type="button" class="site-btn site-btn-secondary" @click="addFocus">{{ t.admin.add }}</button>
       </div>
       <div v-for="(item, index) in about.focusAreas" :key="index" class="admin-card">
@@ -207,15 +208,15 @@ const tabs = computed(() => [
       <button class="site-btn site-btn-primary" type="submit" :disabled="saving">{{ t.admin.save }}</button>
     </form>
 
-    <form v-else-if="tab === 'skills'" class="stack" @submit.prevent="save('/api/admin/skills', { skills })">
-      <div class="row">
-        <p class="hint">Order is the list order. Logos are shown on the site.</p>
+    <form v-else-if="tab === 'skills'" class="grid gap-4" @submit.prevent="save('/api/admin/skills', { skills })">
+      <div class="flex flex-wrap items-center justify-between gap-[0.6rem]">
+        <p class="text-[0.9rem] text-[var(--text-3)]">Order is the list order. Logos are shown on the site.</p>
         <button type="button" class="site-btn site-btn-secondary" @click="addSkill">{{ t.admin.add }}</button>
       </div>
       <div v-for="(item, index) in skills" :key="item.id || index" class="admin-card">
-        <div class="logo-row">
-          <img v-if="item.logoUrl" :src="item.logoUrl" alt="">
-          <span v-else class="ph">{{ t.admin.logo }}</span>
+        <div class="grid grid-cols-[4.5rem_minmax(0,1fr)] items-start gap-[0.9rem]">
+          <img v-if="item.logoUrl" class="size-[4.5rem] rounded-xl border border-[var(--line)] bg-[var(--surface-2)] object-contain" :src="item.logoUrl" alt="">
+          <span v-else class="grid size-[4.5rem] place-items-center rounded-xl border border-[var(--line)] bg-[var(--surface-2)] text-[0.72rem] text-[var(--text-3)]">{{ t.admin.logo }}</span>
           <div>
             <label class="field-label">{{ t.admin.logo }}</label>
             <input v-model="item.logoUrl">
@@ -223,14 +224,14 @@ const tabs = computed(() => [
             <button v-if="item.logoUrl" type="button" class="site-btn site-btn-ghost" @click="item.logoUrl = ''">{{ t.admin.clearLogo }}</button>
           </div>
         </div>
-        <div class="split">
+        <div class="grid grid-cols-1 gap-[0.85rem] min-[800px]:grid-cols-2">
           <input v-model="item.name" placeholder="Name">
           <input v-model="item.category" placeholder="Category">
         </div>
         <textarea v-model="item.descriptionEn" rows="2" placeholder="Description EN" />
         <textarea v-model="item.descriptionFa" rows="2" placeholder="Description FA" />
-        <label class="check"><input v-model="item.isActive" type="checkbox"> {{ t.admin.active }}</label>
-        <div class="row">
+        <label class="flex items-center gap-2 text-[0.92rem]"><input v-model="item.isActive" type="checkbox"> {{ t.admin.active }}</label>
+        <div class="flex flex-wrap items-center justify-between gap-[0.6rem]">
           <button type="button" class="site-btn site-btn-secondary" @click="move(skills, index, -1)">{{ t.admin.up }}</button>
           <button type="button" class="site-btn site-btn-secondary" @click="move(skills, index, 1)">{{ t.admin.down }}</button>
           <button type="button" class="site-btn site-btn-ghost" @click="skills.splice(index, 1)">{{ t.admin.remove }}</button>
@@ -239,13 +240,13 @@ const tabs = computed(() => [
       <button class="site-btn site-btn-primary" type="submit" :disabled="saving">{{ t.admin.save }}</button>
     </form>
 
-    <form v-else-if="tab === 'projects'" class="stack" @submit.prevent="save('/api/admin/projects', { projects })">
-      <div class="row">
+    <form v-else-if="tab === 'projects'" class="grid gap-4" @submit.prevent="save('/api/admin/projects', { projects })">
+      <div class="flex flex-wrap items-center justify-between gap-[0.6rem]">
         <span />
         <button type="button" class="site-btn site-btn-secondary" @click="addProject">{{ t.admin.add }}</button>
       </div>
       <div v-for="(item, index) in projects" :key="item.id || index" class="admin-card">
-        <div class="split">
+        <div class="grid grid-cols-1 gap-[0.85rem] min-[800px]:grid-cols-2">
           <input v-model="item.titleEn" placeholder="Title EN">
           <input v-model="item.titleFa" placeholder="Title FA">
           <input v-model="item.slug" placeholder="slug">
@@ -256,23 +257,23 @@ const tabs = computed(() => [
         <div>
           <label class="field-label">{{ t.admin.desktop }}</label>
           <input v-model="item.imageUrl">
-          <img v-if="item.imageUrl" class="shot" :src="item.imageUrl" alt="">
+          <img v-if="item.imageUrl" class="mt-[0.6rem] w-[min(100%,280px)] rounded-[10px] border border-[var(--line)]" :src="item.imageUrl" alt="">
           <input type="file" accept="image/*" @change="onFile($event, url => item.imageUrl = url)">
         </div>
         <div>
           <label class="field-label">{{ t.admin.mobile }}</label>
           <input v-model="item.mobileImageUrl">
-          <img v-if="item.mobileImageUrl" class="shot phone" :src="item.mobileImageUrl" alt="">
+          <img v-if="item.mobileImageUrl" class="mt-[0.6rem] w-[140px] rounded-[10px] border border-[var(--line)]" :src="item.mobileImageUrl" alt="">
           <input type="file" accept="image/*" @change="onFile($event, url => item.mobileImageUrl = url)">
           <button v-if="item.mobileImageUrl" type="button" class="site-btn site-btn-ghost" @click="item.mobileImageUrl = ''">{{ t.admin.remove }}</button>
         </div>
-        <div class="split">
+        <div class="grid grid-cols-1 gap-[0.85rem] min-[800px]:grid-cols-2">
           <input v-model="item.demoUrl" placeholder="Live URL">
           <input v-model="item.githubUrl" placeholder="GitHub URL">
         </div>
         <input :value="item.techs.join(', ')" placeholder="Technologies, comma separated" @change="event => item.techs = (event.target as HTMLInputElement).value.split(',').map(part => part.trim()).filter(Boolean)">
-        <label class="check"><input v-model="item.featured" type="checkbox"> {{ t.projects.featured }}</label>
-        <div class="row">
+        <label class="flex items-center gap-2 text-[0.92rem]"><input v-model="item.featured" type="checkbox"> {{ t.projects.featured }}</label>
+        <div class="flex flex-wrap items-center justify-between gap-[0.6rem]">
           <button type="button" class="site-btn site-btn-secondary" @click="move(projects, index, -1)">{{ t.admin.up }}</button>
           <button type="button" class="site-btn site-btn-secondary" @click="move(projects, index, 1)">{{ t.admin.down }}</button>
           <button type="button" class="site-btn site-btn-ghost" @click="projects.splice(index, 1)">{{ t.admin.remove }}</button>
@@ -281,10 +282,10 @@ const tabs = computed(() => [
       <button class="site-btn site-btn-primary" type="submit" :disabled="saving">{{ t.admin.save }}</button>
     </form>
 
-    <form v-else-if="tab === 'experience'" class="stack" @submit.prevent="save('/api/admin/experience', { experience })">
-      <div class="row"><span /><button type="button" class="site-btn site-btn-secondary" @click="addTimeline(experience)">{{ t.admin.add }}</button></div>
+    <form v-else-if="tab === 'experience'" class="grid gap-4" @submit.prevent="save('/api/admin/experience', { experience })">
+      <div class="flex flex-wrap items-center justify-between gap-[0.6rem]"><span /><button type="button" class="site-btn site-btn-secondary" @click="addTimeline(experience)">{{ t.admin.add }}</button></div>
       <div v-for="(item, index) in experience" :key="index" class="admin-card">
-        <div class="split">
+        <div class="grid grid-cols-1 gap-[0.85rem] min-[800px]:grid-cols-2">
           <input v-model="item.yearStart" placeholder="Start">
           <input v-model="item.yearEnd" placeholder="End">
           <input v-model="item.titleEn" placeholder="Title EN">
@@ -301,10 +302,10 @@ const tabs = computed(() => [
       <button class="site-btn site-btn-primary" type="submit" :disabled="saving">{{ t.admin.save }}</button>
     </form>
 
-    <form v-else-if="tab === 'education'" class="stack" @submit.prevent="save('/api/admin/education', { education })">
-      <div class="row"><span /><button type="button" class="site-btn site-btn-secondary" @click="addTimeline(education)">{{ t.admin.add }}</button></div>
+    <form v-else-if="tab === 'education'" class="grid gap-4" @submit.prevent="save('/api/admin/education', { education })">
+      <div class="flex flex-wrap items-center justify-between gap-[0.6rem]"><span /><button type="button" class="site-btn site-btn-secondary" @click="addTimeline(education)">{{ t.admin.add }}</button></div>
       <div v-for="(item, index) in education" :key="index" class="admin-card">
-        <div class="split">
+        <div class="grid grid-cols-1 gap-[0.85rem] min-[800px]:grid-cols-2">
           <input v-model="item.yearStart" placeholder="Start">
           <input v-model="item.yearEnd" placeholder="End">
           <input v-model="item.titleEn" placeholder="Title EN">
@@ -321,8 +322,8 @@ const tabs = computed(() => [
       <button class="site-btn site-btn-primary" type="submit" :disabled="saving">{{ t.admin.save }}</button>
     </form>
 
-    <form v-else class="stack" @submit.prevent="save('/api/admin/socials', { socials })">
-      <div class="row"><span /><button type="button" class="site-btn site-btn-secondary" @click="addSocial">{{ t.admin.add }}</button></div>
+    <form v-else class="grid gap-4" @submit.prevent="save('/api/admin/socials', { socials })">
+      <div class="flex flex-wrap items-center justify-between gap-[0.6rem]"><span /><button type="button" class="site-btn site-btn-secondary" @click="addSocial">{{ t.admin.add }}</button></div>
       <div v-for="(item, index) in socials" :key="index" class="admin-card">
         <input v-model="item.name" placeholder="Name">
         <input v-model="item.handle" placeholder="Handle">
@@ -333,126 +334,3 @@ const tabs = computed(() => [
     </form>
   </div>
 </template>
-
-<style scoped>
-.head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.4rem;
-}
-
-.display {
-  font-size: 2.4rem;
-}
-
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1.5rem;
-}
-
-.tabs button {
-  padding: 0.45rem 0.7rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--text-2);
-  cursor: pointer;
-}
-
-.tabs button.on {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-}
-
-.grid,
-.stack,
-.admin-card,
-.split {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.stack {
-  gap: 1rem;
-}
-
-.grid {
-  grid-template-columns: 1fr;
-}
-
-.wide {
-  grid-column: 1 / -1;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
-}
-
-.hint {
-  color: var(--text-3);
-  font-size: 0.9rem;
-}
-
-.logo-row {
-  display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr);
-  gap: 0.9rem;
-  align-items: start;
-}
-
-.logo-row img,
-.ph {
-  width: 4.5rem;
-  height: 4.5rem;
-  object-fit: contain;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--surface-2);
-}
-
-.ph {
-  display: grid;
-  place-items: center;
-  color: var(--text-3);
-  font-size: 0.72rem;
-}
-
-.preview,
-.shot {
-  width: min(100%, 280px);
-  margin-top: 0.6rem;
-  border-radius: 10px;
-  border: 1px solid var(--line);
-}
-
-.shot.phone {
-  width: 140px;
-}
-
-.check {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.92rem;
-}
-
-h2 {
-  font-size: 1.3rem;
-}
-
-@media (min-width: 800px) {
-  .grid,
-  .split {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-</style>

@@ -79,25 +79,26 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 
 <template>
   <Teleport to="body">
-    <div v-if="open" class="palette" @click.self="close">
-      <div class="panel" role="dialog" aria-modal="true">
+    <div v-if="open" class="fixed inset-0 z-[90] flex justify-center bg-[color-mix(in_srgb,var(--bg)_40%,transparent)] px-4 pt-[12vh] pb-4" @click.self="close">
+      <div class="w-[min(36rem,100%)] overflow-hidden rounded-2xl border border-[var(--line-strong)] bg-[var(--surface-2)] shadow-[var(--shadow)]" role="dialog" aria-modal="true">
         <input
           ref="input"
           v-model="query"
+          class="rounded-none border-0 border-b border-[var(--line)] bg-transparent px-[1.05rem] py-4 text-[1.05rem] focus:border-[var(--line)]!"
           :placeholder="t.cmd.placeholder"
           autocomplete="off"
           spellcheck="false"
         >
-        <ul>
-          <li v-if="!items.length" class="empty">{{ t.cmd.empty }}</li>
+        <ul class="m-0 max-h-[50vh] list-none overflow-auto p-[0.35rem]">
+          <li v-if="!items.length" class="px-[0.7rem] py-4 font-mono text-[0.9rem] text-[var(--text-3)]">{{ t.cmd.empty }}</li>
           <li v-for="(item, index) in items" :key="item.id">
-            <button type="button" :class="{ on: index === active }" @mouseenter="active = index" @click="run(index)">
+            <button type="button" class="flex w-full cursor-pointer items-center justify-between gap-4 rounded-[10px] border-0 bg-transparent px-[0.7rem] py-3 text-start" :class="index === active ? 'bg-[color-mix(in_srgb,var(--text)_8%,transparent)]' : ''" @mouseenter="active = index" @click="run(index)">
               <span>{{ item.label }}</span>
-              <span>{{ item.hint }}</span>
+              <span class="font-mono text-[0.72rem] text-[var(--text-3)]">{{ item.hint }}</span>
             </button>
           </li>
         </ul>
-        <div class="hint">
+        <div class="flex justify-between border-t border-[var(--line)] px-4 py-[0.65rem] font-mono text-[0.72rem] text-[var(--text-3)]">
           <span>{{ t.cmd.hint }}</span>
           <span>ESC</span>
         </div>
@@ -105,79 +106,3 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
     </div>
   </Teleport>
 </template>
-
-<style scoped>
-.palette {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  display: flex;
-  justify-content: center;
-  padding: 12vh 1rem 1rem;
-  background: color-mix(in srgb, var(--bg) 40%, transparent);
-}
-
-.panel {
-  width: min(36rem, 100%);
-  overflow: hidden;
-  border: 1px solid var(--line-strong);
-  border-radius: 16px;
-  background: var(--surface-2);
-  box-shadow: var(--shadow);
-}
-
-input {
-  border: 0;
-  border-bottom: 1px solid var(--line);
-  border-radius: 0;
-  background: transparent;
-  padding: 1rem 1.05rem;
-  font-size: 1.05rem;
-}
-
-ul {
-  max-height: 50vh;
-  margin: 0;
-  padding: 0.35rem;
-  list-style: none;
-  overflow: auto;
-}
-
-button {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.75rem 0.7rem;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
-  text-align: start;
-  cursor: pointer;
-}
-
-button span:last-child,
-.empty,
-.hint {
-  color: var(--text-3);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-}
-
-button.on {
-  background: color-mix(in srgb, var(--text) 8%, transparent);
-}
-
-.empty {
-  padding: 1rem 0.7rem;
-  font-size: 0.9rem;
-}
-
-.hint {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.65rem 1rem;
-  border-top: 1px solid var(--line);
-}
-</style>

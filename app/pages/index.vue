@@ -44,7 +44,7 @@ useHead(() => ({
   <div>
     <div v-if="pending && !data" class="min-h-dvh" />
     <div v-else-if="error" class="shell page">
-      <h1 class="display" style="font-size: 2.4rem">Content unavailable.</h1>
+      <h1 class="display text-[2.4rem]">Content unavailable.</h1>
     </div>
     <template v-else>
       <HeroSection />

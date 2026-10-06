@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant fa (&:where(html[lang="fa"] *));
 
 /*
   ACCENT — change this single value to recolor the site.
@@ -59,6 +60,7 @@ html.dark {
   --color-danger: var(--danger);
 }
 
+@layer base {
 html {
   background: var(--bg);
   color: var(--text);
@@ -73,14 +75,6 @@ html {
 html[lang="fa"],
 html[dir="rtl"] {
   font-family: var(--font-persian);
-}
-
-html[lang="fa"] .font-display,
-html[dir="rtl"] .font-display,
-html[lang="fa"] .display,
-html[dir="rtl"] .display {
-  font-family: var(--font-persian);
-  letter-spacing: -0.03em;
 }
 
 body {
@@ -119,6 +113,38 @@ a {
   text-decoration: none;
 }
 
+input,
+textarea,
+select {
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  transition: border-color 0.2s ease, background-color 0.3s ease;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="file"] {
+  width: auto;
+  border: none;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+}
+
+html[lang="fa"] .font-display,
+html[dir="rtl"] .font-display,
+html[lang="fa"] .display,
+html[dir="rtl"] .display {
+  font-family: var(--font-persian);
+  letter-spacing: -0.03em;
+}
+
+@layer components {
 .font-display,
 .display {
   font-family: var(--font-display);
@@ -267,72 +293,6 @@ html[lang="fa"] .site-btn {
   transform: scaleX(-1) translateX(3px);
 }
 
-.skip-link {
-  position: absolute;
-  inset-inline-start: 1rem;
-  inset-block-start: -4rem;
-  z-index: 100;
-  background: var(--text);
-  color: var(--bg);
-  padding: 0.6rem 0.9rem;
-  border-radius: 8px;
-}
-
-.skip-link:focus {
-  inset-block-start: 1rem;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-}
-
-.reveal.is-in {
-  opacity: 1;
-  transform: none;
-}
-
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.28s ease, transform 0.28s var(--ease);
-}
-
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  transform: translateY(8px);
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
-  padding: 0.75rem 0.85rem;
-  transition: border-color 0.2s ease, background-color 0.3s ease;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-input[type="checkbox"],
-input[type="radio"],
-input[type="file"] {
-  width: auto;
-  border: none;
-  padding: 0;
-  background: transparent;
-  border-radius: 0;
-}
-
 label.field-label {
   display: block;
   margin-bottom: 0.4rem;
@@ -357,6 +317,36 @@ label.field-label {
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.01em;
+}
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.28s ease, transform 0.28s var(--ease);
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {

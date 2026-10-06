@@ -26,10 +26,10 @@ async function submit() {
 </script>
 
 <template>
-  <div class="login">
+  <div class="max-w-[28rem] pt-8">
     <p class="eyebrow">{{ t.admin.desk }}</p>
-    <h1 class="display">{{ t.admin.login }}</h1>
-    <form @submit.prevent="submit">
+    <h1 class="display mt-[0.7rem] text-[3rem]">{{ t.admin.login }}</h1>
+    <form class="mt-[1.6rem] grid gap-4" @submit.prevent="submit">
       <div>
         <label class="field-label" for="email">Email</label>
         <input id="email" v-model="email" type="email" autocomplete="username" required>
@@ -38,31 +38,8 @@ async function submit() {
         <label class="field-label" for="password">Password</label>
         <input id="password" v-model="password" type="password" autocomplete="current-password" required>
       </div>
-      <p v-if="error" class="err">{{ error }}</p>
+      <p v-if="error" class="text-[0.92rem] text-[var(--danger)]">{{ error }}</p>
       <button class="site-btn site-btn-primary" type="submit">{{ loading ? '…' : t.admin.login }}</button>
     </form>
   </div>
 </template>
-
-<style scoped>
-.login {
-  max-width: 28rem;
-  padding-top: 2rem;
-}
-
-.display {
-  margin-top: 0.7rem;
-  font-size: 3rem;
-}
-
-form {
-  display: grid;
-  gap: 1rem;
-  margin-top: 1.6rem;
-}
-
-.err {
-  color: var(--danger);
-  font-size: 0.92rem;
-}
-</style>

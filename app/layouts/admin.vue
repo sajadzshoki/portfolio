@@ -9,11 +9,11 @@ async function logout() {
 </script>
 
 <template>
-  <div class="admin">
-    <header>
-      <div class="shell bar">
-        <NuxtLink to="/admin" class="mark">{{ t.admin.desk }}</NuxtLink>
-        <div class="tools">
+  <div class="min-h-dvh bg-[var(--bg)] text-[var(--text)]">
+    <header class="border-b border-[var(--line)]">
+      <div class="shell flex min-h-[4.25rem] items-center justify-between gap-4">
+        <NuxtLink to="/admin" class="text-[1.15rem] font-bold tracking-[-0.04em] [font-family:var(--font-display)]">{{ t.admin.desk }}</NuxtLink>
+        <div class="flex flex-wrap items-center gap-2">
           <LanguageSwitcher />
           <ThemeSwitcher />
           <NuxtLink to="/" class="site-btn site-btn-secondary">{{ t.nav.home }}</NuxtLink>
@@ -28,46 +28,8 @@ async function logout() {
         </div>
       </div>
     </header>
-    <main class="shell">
+    <main class="shell pt-8 pb-16">
       <slot />
     </main>
   </div>
 </template>
-
-<style scoped>
-.admin {
-  min-height: 100dvh;
-  background: var(--bg);
-  color: var(--text);
-}
-
-header {
-  border-bottom: 1px solid var(--line);
-}
-
-.bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  min-height: 4.25rem;
-}
-
-.mark {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-}
-
-.tools {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-main {
-  padding-block: 2rem 4rem;
-}
-</style>

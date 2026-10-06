@@ -47,10 +47,10 @@ const stops = computed(() => {
   <div v-if="stops.length" class="rail" :style="{ '--count': stops.length }">
     <article v-for="item in stops" :key="item.id">
       <span class="dot" :class="{ now: item.current }" aria-hidden="true" />
-      <p class="when">{{ item.when }}</p>
-      <h3>{{ item.heading }}</h3>
-      <p v-if="item.sub && item.sub !== item.heading" class="sub">{{ item.sub }}</p>
-      <p v-if="item.body" class="body">{{ item.body }}</p>
+      <p class="inline-block font-mono text-[0.75rem] text-[var(--text-3)] [direction:ltr] [unicode-bidi:isolate]">{{ item.when }}</p>
+      <h3 class="mt-[0.35rem] text-[1.15rem] font-[650] tracking-[-0.03em]">{{ item.heading }}</h3>
+      <p v-if="item.sub && item.sub !== item.heading" class="mt-[0.35rem] text-[0.92rem] leading-[1.65] text-[var(--text-2)]">{{ item.sub }}</p>
+      <p v-if="item.body" class="mt-[0.35rem] leading-[1.65] text-[var(--text-2)]">{{ item.body }}</p>
     </article>
   </div>
 </template>
@@ -92,33 +92,6 @@ article {
 .dot.now {
   background: var(--accent);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 28%, transparent);
-}
-
-.when {
-  display: inline-block;
-  direction: ltr;
-  unicode-bidi: isolate;
-  color: var(--text-3);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-
-h3 {
-  margin-top: 0.35rem;
-  font-size: 1.15rem;
-  font-weight: 650;
-  letter-spacing: -0.03em;
-}
-
-.sub,
-.body {
-  margin-top: 0.35rem;
-  color: var(--text-2);
-  line-height: 1.65;
-}
-
-.sub {
-  font-size: 0.92rem;
 }
 
 @media (min-width: 900px) {

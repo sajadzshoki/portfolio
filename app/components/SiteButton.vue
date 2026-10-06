@@ -21,7 +21,7 @@ const external = computed(() => Boolean(props.href && /^https?:/i.test(props.hre
 const classes = computed(() => [
   'site-btn',
   props.variant === 'primary' ? 'site-btn-primary' : props.variant === 'ghost' ? 'site-btn-ghost' : 'site-btn-secondary',
-  props.size === 'lg' ? 'site-btn-lg' : ''
+  props.size === 'lg' ? 'min-h-12 px-[1.2rem] text-[1rem]' : ''
 ])
 </script>
 
@@ -42,11 +42,3 @@ const classes = computed(() => [
     </svg>
   </component>
 </template>
-
-<style scoped>
-.site-btn-lg {
-  min-height: 3rem;
-  padding-inline: 1.2rem;
-  font-size: 1rem;
-}
-</style>

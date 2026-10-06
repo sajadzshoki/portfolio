@@ -20,136 +20,53 @@ function printPage() {
 <template>
   <div class="page">
     <div class="shell sheet">
-      <div class="top no-print">
+      <div class="no-print flex flex-wrap items-center justify-between gap-[0.8rem]">
         <NuxtLink to="/">{{ name }}</NuxtLink>
         <button type="button" class="site-btn site-btn-primary" @click="printPage">{{ t.resume.print }}</button>
       </div>
 
       <header>
         <p class="eyebrow">{{ t.resume.title }}</p>
-        <h1 class="display">{{ name }}</h1>
-        <p class="role">{{ role }}</p>
-        <p class="meta-line">
+        <h1 class="display mt-[0.7rem] text-[clamp(2.8rem,7vw,4.6rem)]">{{ name }}</h1>
+        <p class="mt-[0.8rem]">{{ role }}</p>
+        <p class="mt-[0.7rem] flex flex-wrap items-center justify-start gap-[0.8rem] font-mono text-[0.78rem] text-[var(--text-3)]">
           <span>{{ site ? field(site.locationEn, site.locationFa) : '' }}</span>
           <a v-if="site?.email" :href="`mailto:${site.email}`">{{ site.email }}</a>
         </p>
       </header>
 
-      <p class="lede">{{ data ? field(data.about.bodyEn, data.about.bodyFa) : '' }}</p>
+      <p class="lede mt-[0.8rem]">{{ data ? field(data.about.bodyEn, data.about.bodyFa) : '' }}</p>
 
-      <section v-if="data?.experience.length">
-        <h2>{{ t.experience.work }}</h2>
-        <article v-for="item in data.experience" :key="item.id">
-          <p class="when">{{ item.yearStart }} — {{ item.yearEnd }}</p>
-          <h3>{{ field(item.titleEn, item.titleFa) }} — {{ field(item.orgEn, item.orgFa) }}</h3>
-          <p>{{ field(item.bodyEn, item.bodyFa) }}</p>
+      <section v-if="data?.experience.length" class="mt-[2.2rem]">
+        <h2 class="border-b border-[var(--line)] pb-[0.45rem] font-mono text-[0.78rem] font-medium tracking-[0.12em] text-[var(--text-3)] uppercase fa:text-[0.95rem] fa:tracking-normal fa:normal-case">{{ t.experience.work }}</h2>
+        <article v-for="item in data.experience" :key="item.id" class="border-b border-[var(--line)] py-[0.9rem]">
+          <p class="font-mono text-[0.75rem] text-[var(--accent-contrast)]">{{ item.yearStart }} — {{ item.yearEnd }}</p>
+          <h3 class="mt-[0.2rem] text-[1.15rem] font-semibold">{{ field(item.titleEn, item.titleFa) }} — {{ field(item.orgEn, item.orgFa) }}</h3>
+          <p class="mt-[0.35rem] leading-[1.65] font-normal text-[var(--text-2)]">{{ field(item.bodyEn, item.bodyFa) }}</p>
         </article>
       </section>
 
-      <section v-if="data?.education.length">
-        <h2>{{ t.experience.education }}</h2>
-        <article v-for="item in data.education" :key="item.id">
-          <p class="when">{{ item.yearStart }} — {{ item.yearEnd }}</p>
-          <h3>{{ field(item.titleEn, item.titleFa) }}</h3>
-          <p>{{ field(item.orgEn, item.orgFa) }}<span v-if="field(item.locationEn, item.locationFa)"> · {{ field(item.locationEn, item.locationFa) }}</span></p>
+      <section v-if="data?.education.length" class="mt-[2.2rem]">
+        <h2 class="border-b border-[var(--line)] pb-[0.45rem] font-mono text-[0.78rem] font-medium tracking-[0.12em] text-[var(--text-3)] uppercase fa:text-[0.95rem] fa:tracking-normal fa:normal-case">{{ t.experience.education }}</h2>
+        <article v-for="item in data.education" :key="item.id" class="border-b border-[var(--line)] py-[0.9rem]">
+          <p class="font-mono text-[0.75rem] text-[var(--accent-contrast)]">{{ item.yearStart }} — {{ item.yearEnd }}</p>
+          <h3 class="mt-[0.2rem] text-[1.15rem] font-semibold">{{ field(item.titleEn, item.titleFa) }}</h3>
+          <p class="mt-[0.35rem] leading-[1.65] font-normal text-[var(--text-2)]">{{ field(item.orgEn, item.orgFa) }}<span v-if="field(item.locationEn, item.locationFa)"> · {{ field(item.locationEn, item.locationFa) }}</span></p>
         </article>
       </section>
 
-      <section v-if="data?.skills.length">
-        <h2>{{ t.skills.title }}</h2>
-        <p class="tools">{{ data.skills.filter(skill => skill.isActive !== false).map(skill => skill.name).join(' · ') }}</p>
+      <section v-if="data?.skills.length" class="mt-[2.2rem]">
+        <h2 class="border-b border-[var(--line)] pb-[0.45rem] font-mono text-[0.78rem] font-medium tracking-[0.12em] text-[var(--text-3)] uppercase fa:text-[0.95rem] fa:tracking-normal fa:normal-case">{{ t.skills.title }}</h2>
+        <p class="mt-[0.9rem] leading-[1.8]">{{ data.skills.filter(skill => skill.isActive !== false).map(skill => skill.name).join(' · ') }}</p>
       </section>
 
-      <section v-if="data?.projects.length">
-        <h2>{{ t.projects.title }}</h2>
-        <article v-for="item in data.projects" :key="item.id">
-          <h3>{{ field(item.titleEn, item.titleFa) }} <span>{{ item.year }}</span></h3>
-          <p>{{ field(item.descriptionEn, item.descriptionFa) }}</p>
+      <section v-if="data?.projects.length" class="mt-[2.2rem]">
+        <h2 class="border-b border-[var(--line)] pb-[0.45rem] font-mono text-[0.78rem] font-medium tracking-[0.12em] text-[var(--text-3)] uppercase fa:text-[0.95rem] fa:tracking-normal fa:normal-case">{{ t.projects.title }}</h2>
+        <article v-for="item in data.projects" :key="item.id" class="border-b border-[var(--line)] py-[0.9rem]">
+          <h3 class="mt-[0.2rem] text-[1.15rem] font-semibold">{{ field(item.titleEn, item.titleFa) }} <span class="font-normal text-[var(--text-2)]">{{ item.year }}</span></h3>
+          <p class="mt-[0.35rem] leading-[1.65] font-normal text-[var(--text-2)]">{{ field(item.descriptionEn, item.descriptionFa) }}</p>
         </article>
       </section>
     </div>
   </div>
 </template>
-
-<style scoped>
-.top,
-.meta-line {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-}
-
-.display {
-  margin-top: 0.7rem;
-  font-size: clamp(2.8rem, 7vw, 4.6rem);
-}
-
-.role,
-.lede {
-  margin-top: 0.8rem;
-}
-
-.meta-line {
-  justify-content: flex-start;
-  margin-top: 0.7rem;
-  color: var(--text-3);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-}
-
-section {
-  margin-top: 2.2rem;
-}
-
-h2 {
-  padding-bottom: 0.45rem;
-  border-bottom: 1px solid var(--line);
-  font-size: 0.78rem;
-  font-family: var(--font-mono);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-
-html[lang="fa"] h2 {
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: 0.95rem;
-}
-
-article {
-  padding-block: 0.9rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.when {
-  color: var(--accent-contrast);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-
-h3 {
-  margin-top: 0.2rem;
-  font-size: 1.15rem;
-  font-weight: 600;
-}
-
-h3 span,
-article p {
-  color: var(--text-2);
-  font-weight: 400;
-}
-
-article p {
-  margin-top: 0.35rem;
-  line-height: 1.65;
-}
-
-.tools {
-  margin-top: 0.9rem;
-  line-height: 1.8;
-}
-</style>
