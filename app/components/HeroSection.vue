@@ -25,7 +25,7 @@ function scrollToProjects() {
       <div class="shots absolute inset-0">
         <img
           class="shot shot-dark absolute inset-0 block h-full w-full object-cover object-[62%_center]"
-          src="/images/sajad-hero-dark.png"
+          src="/images/sajad-hero-dark.webp"
           alt=""
           width="1774"
           height="887"
@@ -34,7 +34,7 @@ function scrollToProjects() {
         >
         <img
           class="shot shot-light absolute inset-0 block h-full w-full object-cover object-[62%_center]"
-          src="/images/sajad-hero-light.png"
+          src="/images/sajad-hero-light.webp"
           alt=""
           width="2019"
           height="779"
