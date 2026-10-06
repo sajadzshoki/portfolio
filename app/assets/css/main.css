@@ -29,7 +29,33 @@
   --page-gutter: clamp(1.5rem, 5.5vw, 4.75rem);
   --radius: 12px;
   color-scheme: light;
+  transition:
+    --bg 0.65s var(--ease),
+    --surface 0.65s var(--ease),
+    --surface-2 0.65s var(--ease),
+    --text 0.65s var(--ease),
+    --text-2 0.65s var(--ease),
+    --text-3 0.65s var(--ease),
+    --line 0.65s var(--ease),
+    --line-strong 0.65s var(--ease),
+    --accent-contrast 0.65s var(--ease),
+    --ok 0.65s var(--ease),
+    --danger 0.65s var(--ease),
+    background-color 0.65s var(--ease),
+    color 0.65s var(--ease);
 }
+
+@property --bg { syntax: "<color>"; inherits: true; initial-value: #f3f0e8; }
+@property --surface { syntax: "<color>"; inherits: true; initial-value: #faf8f3; }
+@property --surface-2 { syntax: "<color>"; inherits: true; initial-value: #fffdf9; }
+@property --text { syntax: "<color>"; inherits: true; initial-value: #1c1b17; }
+@property --text-2 { syntax: "<color>"; inherits: true; initial-value: #3e3b34; }
+@property --text-3 { syntax: "<color>"; inherits: true; initial-value: #6f6a60; }
+@property --line { syntax: "<color>"; inherits: true; initial-value: rgba(28, 27, 23, 0.12); }
+@property --line-strong { syntax: "<color>"; inherits: true; initial-value: rgba(28, 27, 23, 0.22); }
+@property --accent-contrast { syntax: "<color>"; inherits: true; initial-value: #a56a32; }
+@property --ok { syntax: "<color>"; inherits: true; initial-value: #2c7a45; }
+@property --danger { syntax: "<color>"; inherits: true; initial-value: #b42318; }
 
 html.dark {
   --accent-contrast: var(--accent);

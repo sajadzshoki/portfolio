@@ -22,23 +22,25 @@ function scrollToProjects() {
 <template>
   <section id="top" class="hero relative flex min-h-[70dvh] items-center overflow-hidden bg-[var(--bg)] pt-[var(--header-h)] pb-[4.5rem] max-[860px]:block max-[860px]:min-h-0" :class="{ ready }">
     <div class="media absolute inset-y-0 end-0 z-0 w-[min(68%,920px)] max-[860px]:relative max-[860px]:end-auto max-[860px]:h-[min(40.6vw,224px)] max-[860px]:w-full" aria-hidden="true">
-      <img
-        class="shot invisible absolute inset-0 block h-full w-full object-cover object-[62%_center] dark:visible"
-        src="/images/sajad-hero-dark.png"
-        alt=""
-        width="1774"
-        height="887"
-        fetchpriority="high"
-        decoding="async"
-      >
-      <img
-        class="shot absolute inset-0 block h-full w-full object-cover object-[62%_center] dark:invisible"
-        src="/images/sajad-hero-light.png"
-        alt=""
-        width="2019"
-        height="779"
-        decoding="async"
-      >
+      <div class="shots absolute inset-0">
+        <img
+          class="shot shot-dark absolute inset-0 block h-full w-full object-cover object-[62%_center]"
+          src="/images/sajad-hero-dark.png"
+          alt=""
+          width="1774"
+          height="887"
+          fetchpriority="high"
+          decoding="async"
+        >
+        <img
+          class="shot shot-light absolute inset-0 block h-full w-full object-cover object-[62%_center]"
+          src="/images/sajad-hero-light.png"
+          alt=""
+          width="2019"
+          height="779"
+          decoding="async"
+        >
+      </div>
     </div>
 
     <div class="shell-wide relative z-[1] max-[860px]:pt-7">
@@ -78,6 +80,34 @@ function scrollToProjects() {
     linear-gradient(to left, var(--bg) 0%, color-mix(in srgb, var(--bg) 72%, transparent) 18%, transparent 46%),
     linear-gradient(to top, var(--bg) 0%, transparent 28%),
     linear-gradient(to right, color-mix(in srgb, var(--bg) 35%, transparent), transparent 18%);
+}
+
+.shots {
+  transition: transform 0.65s var(--ease);
+}
+
+[dir="rtl"] .shots {
+  transform: scaleX(-1);
+}
+
+.shot {
+  transition: opacity 0.65s var(--ease);
+}
+
+.shot-dark {
+  opacity: 0;
+}
+
+.shot-light {
+  opacity: 1;
+}
+
+html.dark .shot-dark {
+  opacity: 1;
+}
+
+html.dark .shot-light {
+  opacity: 0;
 }
 
 .ready .shot {

@@ -34,7 +34,7 @@ function isPresent(value: string) {
     <div class="shell-wide grid items-center gap-7 min-[860px]:grid-cols-[minmax(200px,260px)_minmax(0,1fr)] min-[860px]:gap-x-10 min-[860px]:gap-y-8 min-[1100px]:grid-cols-[minmax(220px,280px)_minmax(0,1fr)_minmax(9rem,12rem)]">
       <figure v-if="site?.portraitUrl" class="m-0 flex items-center gap-[0.85rem]">
         <span v-if="role" class="flex-none font-mono text-[0.72rem] tracking-[0.16em] text-[var(--text-3)] uppercase [writing-mode:vertical-rl] fa:font-persian fa:text-[0.86rem] fa:tracking-normal fa:normal-case">{{ role }}</span>
-        <img class="block aspect-[4/5] w-[min(100%,280px)] object-cover object-[center_16%]" :src="site.portraitUrl" :alt="t.hero.portrait" width="720" height="900">
+        <img class="portrait block aspect-[4/5] w-[min(100%,280px)] object-cover object-[center_16%]" :src="site.portraitUrl" :alt="t.hero.portrait" width="720" height="900">
       </figure>
 
       <div>
@@ -88,3 +88,13 @@ function isPresent(value: string) {
     </div>
   </section>
 </template>
+
+<style scoped>
+.portrait {
+  transition: transform 0.65s var(--ease);
+}
+
+[dir="rtl"] .portrait {
+  transform: scaleX(-1);
+}
+</style>
