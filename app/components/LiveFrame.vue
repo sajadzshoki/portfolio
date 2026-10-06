@@ -7,14 +7,21 @@ const props = defineProps<{
 }>()
 
 const box = ref<HTMLElement | null>(null)
-const scale = ref(0.2)
+const scale = ref(1)
+const offsetX = ref(0)
+const offsetY = ref(0)
 const loaded = ref(false)
 const shown = ref(false)
 
 function measure() {
   if (!box.value) return
-  const next = box.value.clientWidth / props.width
-  if (next > 0) scale.value = next
+  const boxWidth = box.value.clientWidth
+  const boxHeight = box.value.clientHeight
+  if (boxWidth <= 0 || boxHeight <= 0) return
+  const next = Math.max(boxWidth / props.width, boxHeight / props.height)
+  scale.value = next
+  offsetX.value = (boxWidth - props.width * next) / 2
+  offsetY.value = (boxHeight - props.height * next) / 2
 }
 
 let observer: ResizeObserver | null = null
@@ -45,7 +52,7 @@ watch(() => props.url, () => {
       :style="{
         width: `${width}px`,
         height: `${height}px`,
-        transform: `scale(${scale})`
+        transform: `translate(${offsetX}px, ${offsetY}px) scale(${scale})`
       }"
       referrerpolicy="strict-origin-when-cross-origin"
       @load="loaded = true"

@@ -17,6 +17,7 @@ if (data.value && !project.value) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' })
 }
 
+const projectIndex = computed(() => projects.value.findIndex(item => item.slug === slug.value))
 const titleText = computed(() => project.value ? field(project.value.titleEn, project.value.titleFa) : '')
 const description = computed(() => project.value ? field(project.value.descriptionEn, project.value.descriptionFa) : '')
 const pageTitle = computed(() => data.value ? `${titleText.value} — ${field(data.value.site.nameEn, data.value.site.nameFa)}` : titleText.value)
@@ -54,7 +55,7 @@ useHead(() => ({
       </div>
 
       <div class="mt-10 grid items-end gap-6 min-[900px]:grid-cols-[minmax(0,1fr)_230px]">
-        <LaptopFrame :src="project.imageUrl" :alt="titleText" :live="project.demoUrl ? safeHref(project.demoUrl) : ''" />
+        <LaptopFrame :src="project.imageUrl" :alt="titleText" :variant="projectIndex % 2 === 0 ? 'silver' : 'slim'" :live="project.demoUrl ? safeHref(project.demoUrl) : ''" />
         <PhoneFrame class="w-[min(100%,240px)] justify-self-center min-[900px]:justify-self-end" :src="project.mobileImageUrl || project.imageUrl" :alt="titleText" :live="project.demoUrl ? safeHref(project.demoUrl) : ''" />
       </div>
 

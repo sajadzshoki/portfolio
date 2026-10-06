@@ -9,8 +9,10 @@ const { t, field } = useLocale()
 const active = ref(0)
 const armed = ref(false)
 const root = ref<HTMLElement | null>(null)
+const listEl = ref<HTMLElement | null>(null)
 
 const project = computed(() => props.projects[active.value] || props.projects[0])
+const laptopVariant = computed(() => active.value % 2 === 0 ? 'silver' : 'slim')
 const title = computed(() => project.value ? field(project.value.titleEn, project.value.titleFa) : '')
 const description = computed(() => project.value ? field(project.value.descriptionEn, project.value.descriptionFa) : '')
 const live = computed(() => {
@@ -25,6 +27,15 @@ watch(() => props.projects, (list) => {
 function select(index: number) {
   active.value = index
 }
+
+function toneAt(index: number) {
+  return projectTone(index)
+}
+
+watch(active, async () => {
+  await nextTick()
+  listEl.value?.querySelector<HTMLElement>('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+})
 
 function step(direction: number) {
   const count = props.projects.length
@@ -70,15 +81,28 @@ onBeforeUnmount(() => observer?.disconnect())
     <div class="min-w-0">
       <Transition name="swap" mode="out-in">
         <div :key="project.id" class="devices relative pe-[11%] pb-[0.4rem] max-[860px]:pe-0">
-          <LaptopFrame :src="project.imageUrl" :alt="title" :live="armed ? live : ''" />
-          <div class="absolute end-0 bottom-0 z-[2] w-[min(30%,188px)] max-[860px]:relative max-[860px]:end-auto max-[860px]:bottom-auto max-[860px]:z-auto max-[860px]:mt-[-22%] max-[860px]:ms-auto max-[860px]:w-[min(52%,190px)]">
-            <PhoneFrame :src="project.mobileImageUrl || project.imageUrl" :alt="title" :live="armed ? live : ''" />
+          <component
+            :is="live ? 'a' : 'div'"
+            class="device-hit device-hit-laptop"
+            v-bind="live ? { href: live, target: '_blank', rel: 'noreferrer' } : {}"
+          >
+            <LaptopFrame :src="project.imageUrl" :alt="title" :variant="laptopVariant" :live="armed ? live : ''" />
+          </component>
+          <div class="phone-slot absolute end-0 bottom-0 z-[2] w-[min(30%,188px)] max-[860px]:relative max-[860px]:end-auto max-[860px]:bottom-auto max-[860px]:z-auto max-[860px]:mt-[-22%] max-[860px]:ms-auto max-[860px]:w-[min(52%,190px)]">
+            <component
+              :is="live ? 'a' : 'div'"
+              class="device-hit device-hit-phone"
+              v-bind="live ? { href: live, target: '_blank', rel: 'noreferrer' } : {}"
+            >
+              <PhoneFrame :src="project.mobileImageUrl || project.imageUrl" :alt="title" :live="armed ? live : ''" />
+            </component>
           </div>
         </div>
       </Transition>
     </div>
 
-    <div class="flex gap-[0.55rem] overflow-x-auto pb-[0.2rem] min-[1080px]:flex-col min-[1080px]:items-stretch min-[1080px]:overflow-visible" role="tablist" :aria-label="t.projects.title">
+    <div class="picker min-h-0">
+    <div ref="listEl" class="picker-scroll flex gap-[0.55rem] overflow-x-auto pb-[0.2rem] min-[1080px]:flex-col min-[1080px]:items-stretch" role="tablist" :aria-label="t.projects.title">
       <button
         v-for="(item, index) in projects"
         :key="item.id"
@@ -88,8 +112,9 @@ onBeforeUnmount(() => observer?.disconnect())
         :aria-selected="index === active"
         @click="select(index)"
       >
-        <span class="size-[3.1rem] flex-none overflow-hidden rounded-[10px] bg-[var(--surface-2)]">
+        <span class="grid size-[3.1rem] flex-none place-items-center overflow-hidden rounded-[10px] font-mono text-[0.78rem] text-[#1a2433]" :style="{ background: toneAt(index) }">
           <img v-if="item.imageUrl" class="size-full object-cover object-top" :src="item.imageUrl" alt="">
+          <template v-else>{{ field(item.titleEn, item.titleFa).slice(0, 1) }}</template>
         </span>
         <span class="grid min-w-0 gap-[0.1rem]">
           <strong class="text-[0.92rem] font-[650] tracking-[-0.02em]">{{ field(item.titleEn, item.titleFa) }}</strong>
@@ -101,11 +126,73 @@ onBeforeUnmount(() => observer?.disconnect())
         <svg class="size-[0.9rem] rtl:-scale-x-100" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </button>
     </div>
+    </div>
     <p class="absolute h-px w-px overflow-hidden [clip:rect(0_0_0_0)]">{{ title }}</p>
   </div>
 </template>
 
 <style scoped>
+.picker {
+  min-width: 0;
+}
+
+@media (min-width: 1080px) {
+  .picker {
+    position: relative;
+    align-self: stretch;
+    min-height: 26rem;
+  }
+
+  .picker-scroll {
+    position: absolute;
+    inset: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+}
+
+.device-hit {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.45s var(--ease), filter 0.45s var(--ease);
+}
+
+a.device-hit {
+  cursor: pointer;
+}
+
+.device-hit-laptop {
+  position: relative;
+  z-index: 1;
+  transform-origin: center;
+}
+
+.device-hit-laptop:hover,
+.device-hit-laptop:focus-visible {
+  z-index: 5;
+  transform: scale(1.62);
+  filter: drop-shadow(0 30px 46px rgba(0, 0, 0, 0.38));
+}
+
+.phone-slot {
+  transform-origin: bottom right;
+  transition: transform 0.45s var(--ease), filter 0.45s var(--ease);
+}
+
+.phone-slot:hover,
+.phone-slot:focus-within {
+  z-index: 6;
+  transform: scale(1.48);
+  filter: drop-shadow(0 26px 40px rgba(0, 0, 0, 0.4));
+}
+
+:global(html[dir="rtl"]) .phone-slot {
+  transform-origin: bottom left;
+}
+
 .devices::after {
   content: "";
   position: absolute;
@@ -128,9 +215,27 @@ onBeforeUnmount(() => observer?.disconnect())
   transform: translateY(8px);
 }
 
+@media (max-width: 860px) {
+  .device-hit-laptop:hover,
+  .device-hit-laptop:focus-visible {
+    transform: scale(1.12);
+  }
+
+  .phone-slot {
+    transform-origin: center;
+  }
+
+  .phone-slot:hover,
+  .phone-slot:focus-within {
+    transform: scale(1.18);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .swap-enter-active,
-  .swap-leave-active {
+  .swap-leave-active,
+  .device-hit,
+  .phone-slot {
     transition: none;
   }
 }

@@ -8,6 +8,7 @@ const open = ref(false)
 const mark = computed(() => initials(data.value?.site.nameEn || 'Sajad Shokraei'))
 
 const links = computed(() => [
+  { to: '/', label: t.value.nav.home },
   { to: '/projects', label: t.value.nav.projects },
   { to: '/about', label: t.value.nav.about },
   { to: '/skills', label: t.value.nav.skills },
@@ -18,6 +19,7 @@ const links = computed(() => [
 const solid = computed(() => route.path !== '/' || scrolled.value || open.value)
 
 function current(path: string) {
+  if (path === '/') return route.path === '/'
   return route.path === path || route.path.startsWith(`${path}/`)
 }
 

@@ -11,17 +11,17 @@
   --accent-soft: color-mix(in srgb, var(--accent) 16%, transparent);
   --accent-contrast: color-mix(in srgb, var(--accent) 62%, #3a2208);
 
-  --bg: #f3f0e8;
-  --surface: #faf8f3;
-  --surface-2: #fffdf9;
-  --text: #1c1b17;
-  --text-2: #3e3b34;
-  --text-3: #6f6a60;
-  --line: rgba(28, 27, 23, 0.12);
-  --line-strong: rgba(28, 27, 23, 0.22);
+  --bg: #e8e8e8;
+  --surface: #e9e9e9;
+  --surface-2: #f3f6fb;
+  --text: #1a2433;
+  --text-2: #3c4a5e;
+  --text-3: #667589;
+  --line: rgba(26, 36, 51, 0.12);
+  --line-strong: rgba(26, 36, 51, 0.22);
   --ok: #2c7a45;
   --danger: #b42318;
-  --shadow: 0 24px 60px rgba(28, 27, 23, 0.08);
+  --shadow: 0 24px 60px rgba(26, 36, 51, 0.1);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --header-h: 4.5rem;
   --container: 1180px;
@@ -45,14 +45,14 @@
     color 0.65s var(--ease);
 }
 
-@property --bg { syntax: "<color>"; inherits: true; initial-value: #f3f0e8; }
-@property --surface { syntax: "<color>"; inherits: true; initial-value: #faf8f3; }
-@property --surface-2 { syntax: "<color>"; inherits: true; initial-value: #fffdf9; }
-@property --text { syntax: "<color>"; inherits: true; initial-value: #1c1b17; }
-@property --text-2 { syntax: "<color>"; inherits: true; initial-value: #3e3b34; }
-@property --text-3 { syntax: "<color>"; inherits: true; initial-value: #6f6a60; }
-@property --line { syntax: "<color>"; inherits: true; initial-value: rgba(28, 27, 23, 0.12); }
-@property --line-strong { syntax: "<color>"; inherits: true; initial-value: rgba(28, 27, 23, 0.22); }
+@property --bg { syntax: "<color>"; inherits: true; initial-value: #d5deea; }
+@property --surface { syntax: "<color>"; inherits: true; initial-value: #e7eef6; }
+@property --surface-2 { syntax: "<color>"; inherits: true; initial-value: #f3f6fb; }
+@property --text { syntax: "<color>"; inherits: true; initial-value: #1a2433; }
+@property --text-2 { syntax: "<color>"; inherits: true; initial-value: #3c4a5e; }
+@property --text-3 { syntax: "<color>"; inherits: true; initial-value: #667589; }
+@property --line { syntax: "<color>"; inherits: true; initial-value: rgba(26, 36, 51, 0.12); }
+@property --line-strong { syntax: "<color>"; inherits: true; initial-value: rgba(26, 36, 51, 0.22); }
 @property --accent-contrast { syntax: "<color>"; inherits: true; initial-value: #a56a32; }
 @property --ok { syntax: "<color>"; inherits: true; initial-value: #2c7a45; }
 @property --danger { syntax: "<color>"; inherits: true; initial-value: #b42318; }

@@ -3,7 +3,293 @@ import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
+const projects = [
+  {
+    index: 0,
+    slug: 'workquest',
+    titleEn: 'WorkQuest',
+    titleFa: 'ورک‌کوئست',
+    descriptionEn: 'Personal project. Multi-tenant SaaS for employee performance: tasks, scored reviews, XP and coins, peer recognition, challenges, and company analytics. Persian-first, with phone OTP and revocable sessions.',
+    descriptionFa: 'پروژه شخصی. سامانه چندمستأجری مدیریت عملکرد کارکنان: تسک، امتیازدهی، XP و سکه، قدردانی همکاران، چالش و داشبورد تحلیلی. فارسی‌محور، با ورود OTP.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: 'https://work-quest.netlify.app',
+    githubUrl: 'https://github.com/sajadzshoki/WorkQuest',
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Tailwind CSS', 'Prisma', 'PostgreSQL'])
+  },
+  {
+    index: 1,
+    slug: 'invoicer',
+    titleEn: 'Nasq',
+    titleFa: 'نسق',
+    descriptionEn: 'Personal project. Persian accounting for small businesses: invoices, checks, parties, and products, with a local ledger that keeps financial history intact when records change.',
+    descriptionFa: 'پروژه شخصی. حسابداری فارسی برای کسب‌وکارهای کوچک: فاکتور، چک، طرف‌حساب و کالا، با دفتر محلی که سابقه مالی را موقع ویرایش حفظ می‌کند.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: null,
+    githubUrl: 'https://github.com/sajadzshoki/Invoicer',
+    layout: 'image-end',
+    featured: true,
+    techs: JSON.stringify(['React', 'TypeScript', 'Vite'])
+  },
+  {
+    index: 2,
+    slug: 'sazan',
+    titleEn: 'Sazan',
+    titleFa: 'سازان',
+    descriptionEn: 'Personal project. Bilingual studio site: marketing pages, portfolio, a guided project request, contact, and a protected admin for projects, services, categories, and requests.',
+    descriptionFa: 'پروژه شخصی. سایت دوزبانه استودیو: معرفی، نمونه‌کار، درخواست پروژه، تماس، و پنل مدیریت پروژه‌ها، سرویس‌ها و درخواست‌ها.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: null,
+    githubUrl: 'https://github.com/sajadzshoki/sazan',
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'UnoCSS', 'MongoDB'])
+  },
+  {
+    index: 3,
+    slug: 'waqtino',
+    titleEn: 'Waqtino',
+    titleFa: 'وقتینو',
+    descriptionEn: 'Personal project. Mobile-first appointment booking. Customers search and book; owners manage services, staff, and appointments. Persian RTL, shaped for an Android build with Capacitor.',
+    descriptionFa: 'پروژه شخصی. رزرو نوبت، موبایل‌محور: جستجو و رزرو برای مشتری، و مدیریت سرویس، پرسنل و نوبت برای صاحب کسب‌وکار. آماده ساخت اندروید با Capacitor.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: 'https://waqtino.netlify.app/',
+    githubUrl: 'https://github.com/sajadzshoki/arena-waqtino',
+    layout: 'image-end',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Capacitor'])
+  },
+  {
+    index: 4,
+    slug: 'trado',
+    titleEn: 'Trado',
+    titleFa: 'ترادو',
+    descriptionEn: 'Personal project. A spot-trading journal, not an exchange. Buys and sells stay in trades you define, with USD and Toman amounts, manual prices, and portfolio performance.',
+    descriptionFa: 'پروژه شخصی. دفتر معاملات اسپات، نه صرافی. خرید و فروش داخل معامله‌هایی که خودتان می‌سازید، با دلار و تومان، قیمت دستی و عملکرد پرتفوی.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: null,
+    githubUrl: 'https://github.com/sajadzshoki/Trado',
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Drizzle'])
+  },
+  {
+    index: 5,
+    slug: 'ham-sakhteman',
+    titleEn: 'Ham Sakhteman',
+    titleFa: 'هم‌ساختمان',
+    descriptionEn: 'Personal project. Persian RTL building management: this month’s charge, announcements, units and residents, and service requests you can track.',
+    descriptionFa: 'پروژه شخصی. مدیریت ساختمان، فارسی و راست‌به‌چپ: شارژ ماه، اطلاعیه‌ها، واحدها و ساکنان، و ثبت و پیگیری درخواست خدمات.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: 'https://ham-sakhteman2.netlify.app/',
+    githubUrl: 'https://github.com/sajadzshoki/ham-sakhteman',
+    layout: 'image-end',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Tailwind CSS'])
+  },
+  {
+    index: 6,
+    slug: 'artivo',
+    titleEn: 'Artivo',
+    titleFa: 'آرتیوو',
+    descriptionEn: 'Personal project. Marketplace connecting clients with graphic designers and photographers. Project wizard, central pricing, open jobs, services, photo locations, accounts, and an admin panel.',
+    descriptionFa: 'پروژه شخصی. مارکت‌پلیس اتصال کارفرما به طراح و عکاس: ویزارد پروژه، قیمت‌گذاری مرکزی، آگهی، سرویس، لوکیشن عکاسی، حساب کاربری و پنل مدیریت.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: null,
+    githubUrl: 'https://github.com/sajadzshoki/Artivo',
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript'])
+  },
+  {
+    index: 7,
+    slug: 'tuneroom',
+    titleEn: 'TuneRoom',
+    titleFa: 'تیون‌روم',
+    descriptionEn: 'Personal project. A shared music room for a small group. People add tracks by upload or link, queue them, and each listener controls their own playback.',
+    descriptionFa: 'پروژه شخصی. اتاق موسیقی مشترک برای یک گروه کوچک. هر کس آهنگ آپلود می‌کند یا لینک می‌دهد، صف می‌سازد، و پخش را روی دستگاه خودش کنترل می‌کند.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: null,
+    githubUrl: 'https://github.com/sajadzshoki/TuneRoom',
+    layout: 'image-end',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Drizzle'])
+  },
+  {
+    index: 8,
+    slug: 'chapkhaneh',
+    titleEn: 'Chapkhaneh',
+    titleFa: 'چاپخانه',
+    descriptionEn: 'Personal project. Website system for a large printing company, demoed as Mobin Bartar. Persian-first and bilingual, with catalog content in PostgreSQL and an admin panel.',
+    descriptionFa: 'پروژه شخصی. وب‌سایت شرکت چاپ، با برند نمونه مبین برتر. فارسی‌محور و دوزبانه، محتوا در PostgreSQL و پنل مدیریت.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: 'https://mobin-bartar.netlify.app/',
+    githubUrl: 'https://github.com/sajadzshoki/chapkhaneh',
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'UnoCSS', 'PostgreSQL', 'Drizzle'])
+  },
+  {
+    index: 9,
+    slug: 'motomeet',
+    titleEn: 'MotoMeet',
+    titleFa: 'موتومیت',
+    descriptionEn: 'Personal project. Social platform for motorcycle riders: rides, clubs, a garage, chat, notifications, and moderation. Persian RTL, with phone auth and Prisma.',
+    descriptionFa: 'پروژه شخصی. شبکه اجتماعی موتورسوارها: تور، کلاب، گاراژ، چت، اعلان و مدیریت گزارش‌ها. فارسی و راست‌به‌چپ، با احراز هویت موبایل و Prisma.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: null,
+    githubUrl: 'https://github.com/sajadzshoki/motomeet-ar',
+    layout: 'image-end',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Tailwind CSS', 'Prisma'])
+  },
+  {
+    index: 10,
+    slug: 'motofix',
+    titleEn: 'MotoFix',
+    titleFa: 'موتوفیکس',
+    descriptionEn: 'Personal project. Find nearby motorcycle services: repair, tires, oil, parts, and roadside help. Map discovery, business pages, an owner dashboard, and admin review.',
+    descriptionFa: 'پروژه شخصی. پیدا کردن خدمات موتورسیکلت در نزدیکی: تعمیر، لاستیک، روغن، قطعه و امداد. نقشه، صفحه کسب‌وکار، داشبورد مالک و بررسی ادمین.',
+    year: '2026',
+    imageUrl: '',
+    demoUrl: null,
+    githubUrl: 'https://github.com/sajadzshoki/motofix',
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['React', 'TypeScript', 'Vite'])
+  },
+  {
+    index: 11,
+    slug: 'dayan',
+    titleEn: 'Dayan',
+    titleFa: 'دایان',
+    descriptionEn: 'Vista. Cloud accounting for expenses, sales, customer ledgers, custom invoices, and a live price list, on phone and web. I built the Nuxt frontend and the Adonis backend.',
+    descriptionFa: 'ویستا. حسابداری ابری برای هزینه، فروش، دفتر مشتریان، فاکتور اختصاصی و لیست قیمت آنلاین، روی موبایل و وب. فرانت Nuxt و بک‌اند Adonis را خودم ساختم.',
+    year: '2025',
+    imageUrl: '',
+    demoUrl: 'https://app.dayanapp.com/',
+    githubUrl: null,
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'AdonisJS'])
+  },
+  {
+    index: 12,
+    slug: 'vitsell',
+    titleEn: 'Vitsell',
+    titleFa: 'ویتسل',
+    descriptionEn: 'Vista. Online store for phones and digital goods: catalog, filters, cart, and content pages. I built the Nuxt storefront and the Adonis backend.',
+    descriptionFa: 'ویستا. فروشگاه آنلاین موبایل و کالای دیجیتال: کاتالوگ، فیلتر، سبد خرید و صفحه‌های محتوا. ویترین Nuxt و بک‌اند Adonis را خودم ساختم.',
+    year: '2025',
+    imageUrl: '',
+    demoUrl: 'https://vitsell.ir/',
+    githubUrl: null,
+    layout: 'image-end',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'AdonisJS'])
+  },
+  {
+    index: 13,
+    slug: 'qotbnama',
+    titleEn: 'Qotbnama',
+    titleFa: 'قطب‌نما',
+    descriptionEn: 'Vista. Bilingual frontend for country pages and maps. I built the Nuxt interface; Prisma sits on the data layer.',
+    descriptionFa: 'ویستا. فرانت دوزبانه برای صفحه‌های کشور و نقشه. رابط Nuxt را ساختم و داده از Prisma می‌آید.',
+    year: '2025',
+    imageUrl: '',
+    demoUrl: 'https://qotbnama.vistatest.top/country',
+    githubUrl: null,
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Prisma'])
+  },
+  {
+    index: 14,
+    slug: 'cex',
+    titleEn: 'Nova',
+    titleFa: 'نوا',
+    descriptionEn: 'Vista. Crypto exchange frontend: spot, futures, margin, OTC, and KYC, with markets and account screens. Nuxt on the client, Prisma on the data layer.',
+    descriptionFa: 'ویستا. فرانت صرافی ارز دیجیتال: اسپات، فیوچرز، مارجین، OTC و احراز هویت، با بازارها و صفحه‌های حساب. Nuxt در کلاینت و Prisma در لایه داده.',
+    year: '2025',
+    imageUrl: '',
+    demoUrl: 'https://cex.vistatest.top/',
+    githubUrl: null,
+    layout: 'image-end',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Prisma'])
+  },
+  {
+    index: 15,
+    slug: 'sooraya',
+    titleEn: 'Sooraya',
+    titleFa: 'ثریا',
+    descriptionEn: 'Vista. Digital bookstore: books, magazines, podcasts, audiobooks, films, and exams, plus publisher entry and book requests. Nuxt frontend with Prisma.',
+    descriptionFa: 'ویستا. کتاب‌فروشی دیجیتال: کتاب، مجله، پادکست، کتاب صوتی، فیلم و آزمون، به‌همراه ورود ناشر و درخواست کتاب. فرانت Nuxt و Prisma.',
+    year: '2025',
+    imageUrl: '',
+    demoUrl: 'https://sooraya.vistatest.top/',
+    githubUrl: null,
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Prisma'])
+  },
+  {
+    index: 16,
+    slug: 'dandoonet',
+    titleEn: 'Dandoonet',
+    titleFa: 'دندونت',
+    descriptionEn: 'Vista. Dental network. Patients find clinics on a map, with a dentist mode and OTP sign-in. I built the Nuxt frontend; Prisma is the data layer.',
+    descriptionFa: 'ویستا. شبکه دندان‌پزشکی: پیدا کردن مطب روی نقشه، حالت دندان‌پزشک و ورود با OTP. فرانت Nuxt را ساختم و داده با Prisma است.',
+    year: '2025',
+    imageUrl: '',
+    demoUrl: 'https://dandoonet.ir/',
+    githubUrl: null,
+    layout: 'image-end',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Prisma'])
+  },
+  {
+    index: 17,
+    slug: 'abi',
+    titleEn: 'Abi',
+    titleFa: 'آبی',
+    descriptionEn: 'Vista. Restaurant product with separate waiter and kitchen views. Nuxt frontend and Prisma.',
+    descriptionFa: 'ویستا. محصول رستوران با نمای جدا برای گارسون و آشپزخانه. فرانت Nuxt و Prisma.',
+    year: '2025',
+    imageUrl: '',
+    demoUrl: 'https://abi.vistatest.top/',
+    githubUrl: null,
+    layout: 'image-start',
+    featured: true,
+    techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Prisma'])
+  }
+]
+
+async function replaceProjects() {
+  await prisma.$executeRawUnsafe(
+    'ALTER TABLE "Project" ADD COLUMN "mobileImageUrl" TEXT NOT NULL DEFAULT \'\''
+  ).catch(() => {})
+  await prisma.project.deleteMany()
+  await prisma.project.createMany({ data: projects })
+}
+
 async function main() {
+  if (process.argv.includes('--projects-only')) {
+    await replaceProjects()
+    return
+  }
+
   const email = process.env.ADMIN_EMAIL || 'admin@atlas.dev'
   const password = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'atlas-admin', 10)
 
@@ -89,25 +375,7 @@ async function main() {
     ]
   })
 
-  await prisma.project.createMany({
-    data: [
-      {
-        index: 0,
-        slug: 'dayan',
-        titleEn: 'Dayan',
-        titleFa: 'Dayan',
-        descriptionEn: 'Financial management platform built with Nuxt, Vue and Prisma. Reusable components, responsive RTL interfaces, and structured financial entities.',
-        descriptionFa: 'پلتفرم مدیریت مالی ساخته‌شده با Nuxt، Vue و Prisma. کامپوننت‌های قابل استفاده مجدد، رابط‌های پاسخگو و ساختار داده مالی.',
-        year: '2024',
-        imageUrl: '/images/projects/dayan.jpg',
-        demoUrl: null,
-        githubUrl: null,
-        layout: 'image-start',
-        featured: true,
-        techs: JSON.stringify(['Nuxt', 'Vue', 'TypeScript', 'Prisma', 'UnoCSS'])
-      }
-    ]
-  })
+  await replaceProjects()
 
   await prisma.experience.createMany({
     data: [
