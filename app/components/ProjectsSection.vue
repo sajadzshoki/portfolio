@@ -10,7 +10,7 @@ const projects = computed(() => {
 </script>
 
 <template>
-  <section v-if="projects.length" id="projects" class="band">
+  <section v-if="projects.length" id="projects" class="band band-seamless">
     <div class="shell-wide">
       <SectionHeader :eyebrow="t.projects.eyebrow" :title="t.projects.title">
         <template #action>

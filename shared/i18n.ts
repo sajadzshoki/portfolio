@@ -26,7 +26,10 @@ export const ui = {
       scroll: 'Scroll',
       portrait: 'Portrait',
       based: 'Based in',
-      vol: ''
+      vol: '',
+      bridgeLead: 'I build interfaces',
+      bridgeRest: 'people enjoy using.',
+      keywords: ['Vue', 'Nuxt', 'TypeScript', 'UI', 'Interaction']
     },
     about: {
       eyebrow: 'About',
@@ -42,7 +45,66 @@ export const ui = {
       title: 'Technologies I work with',
       lede: 'Tools I use to design, build, and ship interfaces.',
       all: 'View all skills',
-      empty: 'No technologies published yet.'
+      empty: 'No technologies published yet.',
+      categories: {
+        framework: 'Framework',
+        ui: 'UI',
+        language: 'Language',
+        markup: 'Markup',
+        styling: 'Styling',
+        data: 'Data',
+        realtime: 'Realtime',
+        auth: 'Auth',
+        mobile: 'Mobile',
+        devops: 'DevOps',
+        backend: 'Backend'
+      },
+      notes: {
+        nuxt: ['SSR', 'Routing', 'Nitro', 'Server APIs'],
+        vue: ['Composition API', 'Reactivity', 'Components', 'Composables'],
+        typescript: ['Types', 'Interfaces', 'Generics', 'Strict typing'],
+        javascript: ['Modules', 'Async', 'DOM'],
+        html5: ['Semantics', 'Structure', 'Accessibility'],
+        css3: ['Layout', 'Responsive', 'Motion'],
+        unocss: ['Utilities', 'Tokens', 'Variants'],
+        tailwindcss: ['Utilities', 'Responsive', 'Tokens'],
+        prisma: ['Schema', 'Queries', 'Postgres'],
+        restapis: ['Integration', 'Endpoints', 'Data'],
+        websockets: ['Live data', 'Events', 'Realtime'],
+        redis: ['Cache', 'Sessions'],
+        jwt: ['Tokens', 'Sessions'],
+        otp: ['Phone auth', 'Verification'],
+        capacitor: ['Android', 'Native shell'],
+        docker: ['Images', 'Deploy'],
+        react: ['Components', 'UI'],
+        adonisjs: ['Backend', 'APIs']
+      }
+    },
+    craft: {
+      eyebrow: 'Craft',
+      kicker: 'Craft',
+      title: 'Code becomes interface',
+      lede: 'Read the code, then look at the panel beside it. That panel is the interface the code draws. Scroll, and each line takes effect.',
+      codeLabel: 'Code',
+      uiLabel: 'Interface',
+      previewTitle: 'Interface',
+      previewAction: 'Open',
+      partHeader: 'Header',
+      partContent: 'Content',
+      partAction: 'Action',
+      rows: ['Home', 'Work', 'Notes', 'Contact'],
+      effect: {
+        idle: 'This is the interface before any line is active.',
+        responsive: 'This line fits the layout to a phone.',
+        interactive: 'This line turns the button on.',
+        scalable: 'This line makes room for more content.',
+        maintainable: 'This line names each part: header, content, action.'
+      }
+    },
+    cursor: {
+      view: 'View',
+      project: 'Project',
+      explore: 'Explore'
     },
     projects: {
       eyebrow: 'Selected work',
@@ -105,9 +167,10 @@ export const ui = {
       print: 'Print'
     },
     cmd: {
-      placeholder: 'Go somewhere…',
+      placeholder: 'Search or jump to…',
       empty: 'No matches',
-      hint: 'Navigate'
+      hint: 'Navigate',
+      label: 'Command palette'
     },
     admin: {
       desk: 'Desk',
@@ -162,7 +225,10 @@ export const ui = {
       scroll: 'پایین',
       portrait: 'پرتره',
       based: 'مستقر در',
-      vol: ''
+      vol: '',
+      bridgeLead: 'رابط می‌سازم',
+      bridgeRest: 'که کار کردن با آن خوشایند است.',
+      keywords: ['Vue', 'Nuxt', 'TypeScript', 'رابط', 'تعامل']
     },
     about: {
       eyebrow: 'درباره',
@@ -178,7 +244,66 @@ export const ui = {
       title: 'تکنولوژی‌هایی که با آن‌ها کار می‌کنم',
       lede: 'ابزارهایی که برای طراحی و ساخت رابط‌ها استفاده می‌کنم.',
       all: 'همه مهارت‌ها',
-      empty: 'هنوز تکنولوژی‌ای منتشر نشده.'
+      empty: 'هنوز تکنولوژی‌ای منتشر نشده.',
+      categories: {
+        framework: 'فریم‌ورک',
+        ui: 'رابط',
+        language: 'زبان',
+        markup: 'نشانه‌گذاری',
+        styling: 'استایل',
+        data: 'داده',
+        realtime: 'بلادرنگ',
+        auth: 'احراز هویت',
+        mobile: 'موبایل',
+        devops: 'استقرار',
+        backend: 'بک‌اند'
+      },
+      notes: {
+        nuxt: ['SSR', 'مسیریابی', 'Nitro', 'API سرور'],
+        vue: ['Composition API', 'واکنش‌پذیری', 'کامپوننت', 'Composable'],
+        typescript: ['تایپ', 'اینترفیس', 'جنریک', 'تایپ سخت‌گیرانه'],
+        javascript: ['ماژول', 'ناهمگام', 'DOM'],
+        html5: ['معنا', 'ساختار', 'دسترسی‌پذیری'],
+        css3: ['چیدمان', 'واکنش‌گرا', 'موشن'],
+        unocss: ['یوتیلیتی', 'توکن', 'واریانت'],
+        tailwindcss: ['یوتیلیتی', 'واکنش‌گرا', 'توکن'],
+        prisma: ['اسکیما', 'کوئری', 'Postgres'],
+        restapis: ['یکپارچه‌سازی', 'اندپوینت', 'داده'],
+        websockets: ['داده زنده', 'رویداد', 'بلادرنگ'],
+        redis: ['کش', 'نشست'],
+        jwt: ['توکن', 'نشست'],
+        otp: ['ورود با موبایل', 'تأیید'],
+        capacitor: ['اندروید', 'پوسته بومی'],
+        docker: ['ایمیج', 'استقرار'],
+        react: ['کامپوننت', 'رابط'],
+        adonisjs: ['بک‌اند', 'API']
+      }
+    },
+    craft: {
+      eyebrow: 'ساخت',
+      kicker: 'ساخت',
+      title: 'کد به رابط تبدیل می‌شود',
+      lede: 'کد را بخوان و پنل کنارش را ببین. آن پنل همان رابطی است که کد می‌سازد. اسکرول کن تا هر خط اثرش را نشان بدهد.',
+      codeLabel: 'کد',
+      uiLabel: 'رابط',
+      previewTitle: 'رابط',
+      previewAction: 'باز',
+      partHeader: 'سربرگ',
+      partContent: 'محتوا',
+      partAction: 'عمل',
+      rows: ['خانه', 'کارها', 'یادداشت', 'تماس'],
+      effect: {
+        idle: 'این رابط است، قبل از اینکه خطی فعال شود.',
+        responsive: 'این خط چیدمان را برای اندازه موبایل جمع می‌کند.',
+        interactive: 'این خط دکمه را روشن می‌کند.',
+        scalable: 'این خط جا برای محتوای بیشتر باز می‌کند.',
+        maintainable: 'این خط هر بخش را اسم‌گذاری می‌کند: سربرگ، محتوا، عمل.'
+      }
+    },
+    cursor: {
+      view: 'مشاهده',
+      project: 'پروژه',
+      explore: 'ببین'
     },
     projects: {
       eyebrow: 'کارها',
@@ -241,9 +366,10 @@ export const ui = {
       print: 'چاپ'
     },
     cmd: {
-      placeholder: 'برو به…',
+      placeholder: 'جستجو یا پرش به…',
       empty: 'موردی نیست',
-      hint: 'پیمایش'
+      hint: 'پیمایش',
+      label: 'پالت فرمان'
     },
     admin: {
       desk: 'میز کار',

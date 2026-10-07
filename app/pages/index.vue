@@ -50,6 +50,7 @@ useHead(() => ({
       <HeroSection />
       <ProjectsSection />
       <SkillsSection />
+      <CodeInterfaceSection />
       <AboutSection />
       <TimelineSection />
       <ContactSection />

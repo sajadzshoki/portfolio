@@ -5,6 +5,8 @@
       <slot />
     </main>
     <AppFooter />
+    <SectionIndex />
+    <SiteCursor />
     <CommandPalette />
   </div>
 </template>

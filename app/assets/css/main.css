@@ -23,6 +23,9 @@
   --danger: #b42318;
   --shadow: 0 24px 60px rgba(26, 36, 51, 0.1);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-fast: 180ms;
+  --motion-normal: 320ms;
+  --motion-slow: 650ms;
   --header-h: 4.5rem;
   --container: 1180px;
   --container-wide: 1320px;
@@ -87,6 +90,11 @@ html.dark {
 }
 
 @layer base {
+html.cmd-open,
+html.cmd-open body {
+  overflow: hidden;
+}
+
 html {
   background: var(--bg);
   color: var(--text);
@@ -235,6 +243,10 @@ html[lang="fa"] .eyebrow {
   border-top: 1px solid var(--line);
 }
 
+.band-seamless {
+  border-top-color: transparent;
+}
+
 .page {
   padding-top: calc(var(--header-h) + 2.75rem);
   padding-bottom: clamp(4rem, 8vw, 6rem);
@@ -375,6 +387,21 @@ select:focus {
   border-color: var(--accent);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none !important;
+  }
+
+  html.has-cursor input,
+  html.has-cursor textarea,
+  html.has-cursor select,
+  html.has-cursor option,
+  html.has-cursor [contenteditable='true'] {
+    cursor: text !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -399,7 +426,9 @@ select:focus {
   .site-header,
   .site-footer,
   .skip-link,
-  .no-print {
+  .no-print,
+  .site-cursor,
+  .section-index {
     display: none !important;
   }
 

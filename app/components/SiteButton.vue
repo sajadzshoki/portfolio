@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<{
   type?: 'button' | 'submit'
   download?: string
   arrow?: boolean
+  cursor?: string
 }>(), {
   variant: 'secondary',
   magnetic: false,
@@ -35,6 +36,7 @@ const classes = computed(() => [
     :class="classes"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noreferrer' : undefined"
+    :data-cursor="cursor || 'button'"
   >
     <slot />
     <svg v-if="arrow" class="arrow" viewBox="0 0 16 16" aria-hidden="true">

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { t } = useLocale()
+const { toggle: togglePalette } = useCommandPalette()
+const mod = ref('Ctrl')
 const { data } = usePortfolio()
 const route = useRoute()
 const scrolled = ref(false)
@@ -38,6 +40,8 @@ watch(() => route.fullPath, () => {
 
 onMounted(() => {
   onScroll()
+  const platform = `${navigator.platform || ''} ${navigator.userAgent || ''}`
+  mod.value = /Mac|iPhone|iPad/.test(platform) ? '⌘' : 'Ctrl'
   window.addEventListener('scroll', onScroll, { passive: true })
 })
 
@@ -65,6 +69,17 @@ onBeforeUnmount(() => {
       </nav>
 
       <div class="flex items-center gap-[0.55rem]">
+        <button
+          type="button"
+          class="hidden h-9 items-center gap-1 border-0 bg-transparent px-1 font-mono text-[0.68rem] tracking-[0.06em] text-[var(--text-3)] min-[980px]:inline-flex"
+          :aria-label="t.cmd.label"
+          aria-keyshortcuts="Control+K Meta+K"
+          dir="ltr"
+          @click="togglePalette()"
+        >
+          <kbd class="rounded border border-[var(--line)] px-[0.28rem] py-[0.08rem]">{{ mod }}</kbd>
+          <kbd class="rounded border border-[var(--line)] px-[0.28rem] py-[0.08rem]">K</kbd>
+        </button>
         <LanguageSwitcher />
         <ThemeSwitcher />
         <SiteButton class="hidden min-[980px]:inline-flex" to="/contact" variant="primary" arrow>{{ t.nav.talk }}</SiteButton>

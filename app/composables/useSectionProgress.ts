@@ -1,58 +1,95 @@
-export const SECTIONS = [
-  { id: 'top', num: '01', labelKey: 'hero' },
-  { id: 'about', num: '02', labelKey: 'about' },
-  { id: 'skills', num: '03', labelKey: 'skills' },
-  { id: 'work', num: '04', labelKey: 'projects' },
-  { id: 'studio', num: '05', labelKey: 'experience' },
-  { id: 'social', num: '06', labelKey: 'social' },
-  { id: 'contact', num: '07', labelKey: 'contact' }
+export const HOME_SECTIONS = [
+  { id: 'projects', num: '01', labelKey: 'projects' },
+  { id: 'skills', num: '02', labelKey: 'skills' },
+  { id: 'craft', num: '03', labelKey: 'craft' },
+  { id: 'about', num: '04', labelKey: 'about' },
+  { id: 'experience', num: '05', labelKey: 'experience' },
+  { id: 'contact', num: '06', labelKey: 'contact' }
 ] as const
 
-export type SectionId = typeof SECTIONS[number]['id']
+export type SectionId = typeof HOME_SECTIONS[number]['id']
 
 export function useSectionProgress() {
-  const current = useState<SectionId>('section-id', () => 'top')
-  const booted = useState('section-io-booted', () => false)
+  const route = useRoute()
+  const current = useState<SectionId | ''>('section-id', () => '')
+  const available = useState('section-index-on', () => false)
+  let frame = 0
+
+  function sync() {
+    const nodes = HOME_SECTIONS
+      .map(section => document.getElementById(section.id))
+      .filter((node): node is HTMLElement => Boolean(node))
+
+    available.value = nodes.length >= 4
+    if (!available.value) {
+      current.value = ''
+      return
+    }
+
+    const mark = window.innerHeight * 0.42
+    let found: SectionId | '' = ''
+    for (const section of HOME_SECTIONS) {
+      const node = document.getElementById(section.id)
+      if (!node) continue
+      const rect = node.getBoundingClientRect()
+      if (rect.top <= mark && rect.bottom >= mark) {
+        found = section.id
+        break
+      }
+    }
+    if (found !== current.value) current.value = found
+  }
+
+  function onScroll() {
+    if (frame) return
+    frame = window.requestAnimationFrame(() => {
+      frame = 0
+      sync()
+    })
+  }
 
   onMounted(() => {
-    if (booted.value) return
-    booted.value = true
-
-    const nodes = SECTIONS
-      .map(s => document.getElementById(s.id))
-      .filter((n): n is HTMLElement => Boolean(n))
-
-    if (!nodes.length) return
-
-    const io = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-      const id = visible[0]?.target.id as SectionId | undefined
-      if (id) current.value = id
-    }, {
-      rootMargin: '-18% 0px -58% 0px',
-      threshold: [0.1, 0.25, 0.5, 0.75]
-    })
-
-    nodes.forEach(n => io.observe(n))
-    onBeforeUnmount(() => io.disconnect())
+    sync()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
   })
 
-  const active = computed(() => SECTIONS.find(s => s.id === current.value) || SECTIONS[0])
+  watch(() => route.path, async () => {
+    await nextTick()
+    sync()
+  })
 
-  function sectionLabel(t: ReturnType<typeof useLocale>['t']['value']) {
+  onBeforeUnmount(() => {
+    if (frame) cancelAnimationFrame(frame)
+    window.removeEventListener('scroll', onScroll)
+    window.removeEventListener('resize', onScroll)
+  })
+
+  const active = computed(() => HOME_SECTIONS.find(section => section.id === current.value) || null)
+  const activeIndex = computed(() => {
+    const index = HOME_SECTIONS.findIndex(section => section.id === current.value)
+    return index < 0 ? 0 : index
+  })
+
+  function sectionLabel(copy: {
+    projects: { kicker: string }
+    skills: { kicker: string }
+    about: { kicker: string }
+    experience: { kicker: string }
+    contact: { kicker: string }
+    craft: { kicker: string }
+  }) {
+    if (!active.value) return ''
     const map = {
-      hero: t.hero.kicker,
-      about: t.about.title,
-      skills: t.skills.title,
-      projects: t.projects.title,
-      experience: t.experience.title,
-      social: t.social.title,
-      contact: t.contact.kicker
+      projects: copy.projects.kicker,
+      skills: copy.skills.kicker,
+      craft: copy.craft.kicker,
+      about: copy.about.kicker,
+      experience: copy.experience.kicker,
+      contact: copy.contact.kicker
     }
     return map[active.value.labelKey]
   }
 
-  return { current, active, sections: SECTIONS, sectionLabel }
+  return { current, active, activeIndex, available, sections: HOME_SECTIONS, sectionLabel }
 }

@@ -74,7 +74,7 @@ onBeforeUnmount(() => observer?.disconnect())
       <div class="mt-[1.15rem] flex flex-wrap gap-x-[0.8rem] gap-y-[0.45rem]">
         <SiteButton v-if="live" :href="live" variant="secondary" arrow class="rounded-full">{{ t.projects.demo }}</SiteButton>
         <SiteButton v-if="project.githubUrl" :href="safeHref(project.githubUrl)" variant="ghost" class="rounded-full">{{ t.projects.code }}</SiteButton>
-        <SiteButton :to="`/projects/${project.slug}`" variant="ghost" arrow class="rounded-full">{{ t.projects.view }}</SiteButton>
+        <SiteButton :to="`/projects/${project.slug}`" variant="ghost" arrow cursor="project" class="rounded-full">{{ t.projects.view }}</SiteButton>
       </div>
     </div>
 
@@ -84,6 +84,7 @@ onBeforeUnmount(() => observer?.disconnect())
           <component
             :is="live ? 'a' : 'div'"
             class="device-hit device-hit-laptop"
+            data-cursor="image"
             v-bind="live ? { href: live, target: '_blank', rel: 'noreferrer' } : {}"
           >
             <LaptopFrame :src="project.imageUrl" :alt="title" :variant="laptopVariant" :live="armed ? live : ''" />
@@ -92,6 +93,7 @@ onBeforeUnmount(() => observer?.disconnect())
             <component
               :is="live ? 'a' : 'div'"
               class="device-hit device-hit-phone"
+              data-cursor="image"
               v-bind="live ? { href: live, target: '_blank', rel: 'noreferrer' } : {}"
             >
               <PhoneFrame :src="project.mobileImageUrl || project.imageUrl" :alt="title" :live="armed ? live : ''" />
@@ -109,6 +111,7 @@ onBeforeUnmount(() => observer?.disconnect())
         type="button"
         role="tab"
         class="flex w-[min(100%,240px)] flex-none cursor-pointer items-center gap-[0.7rem] rounded-[14px] border border-transparent bg-transparent p-[0.45rem] text-start text-[var(--text-2)] hover:border-[var(--line-strong)] hover:bg-[color-mix(in_srgb,var(--text)_5%,transparent)] hover:text-[var(--text)] aria-selected:border-[var(--line-strong)] aria-selected:bg-[color-mix(in_srgb,var(--text)_5%,transparent)] aria-selected:text-[var(--text)] min-[1080px]:w-full"
+        data-cursor="project"
         :aria-selected="index === active"
         @click="select(index)"
       >
