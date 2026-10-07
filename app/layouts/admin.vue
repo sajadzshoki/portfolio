@@ -9,10 +9,12 @@ async function logout() {
 </script>
 
 <template>
-  <div class="min-h-dvh bg-[var(--bg)] text-[var(--text)]">
-    <header class="border-b border-[var(--line)]">
-      <div class="shell flex min-h-[4.25rem] items-center justify-between gap-4">
-        <NuxtLink to="/admin" class="text-[1.15rem] font-bold tracking-[-0.04em] [font-family:var(--font-display)]">{{ t.admin.desk }}</NuxtLink>
+  <div class="admin-shell min-h-dvh bg-[var(--bg)] text-[var(--text)]">
+    <header class="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--bg)]">
+      <div class="shell flex min-h-[3.4rem] items-center justify-between gap-4">
+        <NuxtLink to="/admin" class="brand" :aria-label="t.admin.desk">
+          <img src="/sajad-logo.png" alt="" width="512" height="512">
+        </NuxtLink>
         <div class="flex flex-wrap items-center gap-2">
           <LanguageSwitcher />
           <ThemeSwitcher />
@@ -28,8 +30,28 @@ async function logout() {
         </div>
       </div>
     </header>
-    <main class="shell pt-8 pb-16">
+    <main class="shell pt-5 pb-28">
       <slot />
     </main>
   </div>
 </template>
+
+<style scoped>
+.brand {
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  overflow: hidden;
+}
+
+.brand img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5.6rem;
+  max-width: none;
+  height: 5.6rem;
+  transform: translate(-50%, -50%);
+}
+</style>

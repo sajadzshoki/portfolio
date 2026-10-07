@@ -1,11 +1,8 @@
 <script setup lang="ts">
 const { t } = useLocale()
-const { data } = usePortfolio()
 const route = useRoute()
 const scrolled = ref(false)
 const open = ref(false)
-
-const mark = computed(() => initials(data.value?.site.nameEn || 'Sajad Shokraei'))
 
 const links = computed(() => [
   { to: '/', label: t.value.nav.home },
@@ -50,7 +47,9 @@ onBeforeUnmount(() => {
 <template>
   <header class="site-header fixed inset-x-0 top-0 z-[70] h-[var(--header-h)] text-[var(--text)]" :class="{ 'is-open': open, 'border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_92%,transparent)]': solid }">
     <div class="shell-wide flex h-full items-center justify-between gap-4">
-      <NuxtLink to="/" class="text-[1.15rem] font-bold tracking-[-0.06em] [font-family:var(--font-display)]" :aria-label="t.nav.home">{{ mark }}</NuxtLink>
+      <NuxtLink to="/" class="brand" :aria-label="t.nav.home">
+        <img src="/sajad-logo.png" alt="" width="512" height="512">
+      </NuxtLink>
 
       <nav class="hidden items-center gap-[1.35rem] min-[980px]:inline-flex" :aria-label="t.index">
         <NuxtLink
@@ -102,6 +101,24 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.brand {
+  position: relative;
+  width: 2.9rem;
+  height: 2.9rem;
+  flex: none;
+  overflow: hidden;
+}
+
+.brand img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6.5rem;
+  max-width: none;
+  height: 6.5rem;
+  transform: translate(-50%, -50%);
+}
+
 .menu-btn span {
   transition: transform 0.3s var(--ease);
 }
